@@ -1,0 +1,7 @@
+{
+  "username": "Kullanıcı Adı",
+  "password": "Şifre",
+  "login": "Giriş Yap",
+  "internet_disconnected": "Bağlantı kesildi.",
+  "reconnected": "Yeniden bağlanıldı."
+}
