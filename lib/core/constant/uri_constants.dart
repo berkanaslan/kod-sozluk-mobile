@@ -1,1 +1,3 @@
-class URLConstants {}
+class URLConstants {
+  static const String URL = "";
+}
