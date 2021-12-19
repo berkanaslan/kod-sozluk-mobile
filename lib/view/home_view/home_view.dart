@@ -26,12 +26,14 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
     return safeArea;
   }
 
-  Widget get safeArea => SafeArea(
-        child: Column(
-          children: [
-            tabBar,
-            body,
-          ],
+  Widget get safeArea => Scaffold(
+        body: SafeArea(
+          child: Column(
+            children: [
+              tabBar,
+              body,
+            ],
+          ),
         ),
       );
 
@@ -43,8 +45,10 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
       labelColor: Colors.black,
       unselectedLabelColor: Colors.grey,
       isScrollable: true,
+      indicatorWeight: 3,
       indicatorSize: TabBarIndicatorSize.label,
       tabs: const [
+        // TODO: TO Constants
         Tab(text: "bugün"),
         Tab(text: "gündem"),
         Tab(text: "debe"),

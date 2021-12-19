@@ -7,12 +7,12 @@ import 'package:kod_sozluk_mobile/core/constant/app_constants.dart';
 import 'package:kod_sozluk_mobile/core/locator.dart';
 import 'package:kod_sozluk_mobile/core/shared_preferences/shared_preferences.dart';
 import 'package:kod_sozluk_mobile/core/ui/theme/app_theme.dart';
-import 'package:kod_sozluk_mobile/core/ui/widget/animations/fade_route.dart';
 import 'package:kod_sozluk_mobile/core/ui/widget/scaffold/connection_listener.dart';
-import 'package:kod_sozluk_mobile/view/home_view/home_view.dart';
-import 'package:kod_sozluk_mobile/view/topic_view/topic_view.dart';
+import 'package:kod_sozluk_mobile/root_view.dart';
+import 'package:kod_sozluk_mobile/view/navigation/navigation_provider.dart';
 import 'package:kod_sozluk_mobile/viewmodel/connectivity_view_model.dart';
 import 'package:kod_sozluk_mobile/viewmodel/topic_viewmodel.dart';
+import 'package:provider/provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -32,13 +32,18 @@ Future<void> main() async {
   configLoadingIndicator();
 }
 
-MultiBlocProvider buildBlocProviders() {
-  return MultiBlocProvider(
+MultiProvider buildBlocProviders() {
+  return MultiProvider(
     providers: [
-      BlocProvider<ConnectivityViewModel>(create: (BuildContext context) => ConnectivityViewModel(), lazy: false),
-      BlocProvider<TopicViewModel>(create: (BuildContext context) => TopicViewModel()),
+      ChangeNotifierProvider<NavigationProvider>(create: (context) => NavigationProvider(), lazy: false),
     ],
-    child: const KodSozlukApplication(),
+    child: MultiBlocProvider(
+      providers: [
+        BlocProvider<ConnectivityViewModel>(create: (BuildContext context) => ConnectivityViewModel(), lazy: false),
+        BlocProvider<TopicViewModel>(create: (BuildContext context) => TopicViewModel()),
+      ],
+      child: const KodSozlukApplication(),
+    ),
   );
 }
 
@@ -54,17 +59,8 @@ class KodSozlukApplication extends StatelessWidget {
       localizationsDelegates: context.localizationDelegates,
       builder: EasyLoading.init(builder: (context, child) => ConnectivityListener(child: child!)),
       theme: theme,
-      initialRoute: HomeView.PATH,
-      onGenerateRoute: onGenerateRoute,
+      initialRoute: RootView.PATH,
+      onGenerateRoute: NavigationProvider.of(context).onGenerateRoute,
     );
-  }
-
-  Route<dynamic>? onGenerateRoute(RouteSettings settings) {
-    switch (settings.name) {
-      case HomeView.PATH:
-        return FadeRoute(page: const HomeView());
-      case TopicView.PATH:
-        return FadeRoute(page: const TopicView());
-    }
   }
 }
