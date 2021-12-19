@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kod_sozluk_mobile/core/ui/widget/list_tile/topic_tile.dart';
+import 'package:kod_sozluk_mobile/view/navigation/navigation_provider.dart';
 import 'package:kod_sozluk_mobile/viewmodel/topic_viewmodel.dart';
 import 'package:provider/provider.dart';
 
@@ -37,6 +38,7 @@ class _TopicViewState extends State<TopicView> with AutomaticKeepAliveClientMixi
     return RefreshIndicator(
       onRefresh: viewModel.refresh,
       child: ListView.builder(
+        controller: NavigationProvider.of(context).screens[HOME_SCREEN].scrollController,
         shrinkWrap: true,
         itemCount: context.watch<TopicViewModel>().topics.length,
         itemBuilder: (context, i) {

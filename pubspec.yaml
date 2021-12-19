@@ -18,13 +18,14 @@ dependencies:
   json_serializable: ^5.0.2             # JSON Serializer Helper
   json_annotation: ^4.1.0               # JSON Serializer Dependency
 
-  cupertino_icons: ^1.0.2
+  # UI
   google_fonts: ^2.1.0                  # Google Fonts
+  eva_icons_flutter: ^3.0.2             # Icon Pack
   flutter_easyloading: ^3.0.3           # Loading Indicator
-  font_awesome_flutter: ^9.1.0          # Icons
   material_color_generator: ^1.1.0      # Material Color Generator
 
   # STATE & DATA MANAGEMENT & CONVERTING
+  provider: ^6.0.1                      # Provider
   intl: ^0.17.0                         # Date Time Parsing & Formatting
   get: ^4.3.8                           # Get Library
   get_it: ^7.2.0                        # Dependency Injection Alternative
@@ -32,7 +33,6 @@ dependencies:
   shared_preferences: ^2.0.8            # Persistent Storage
   easy_localization: ^3.0.0             # Multi-Lang Support
   connectivity: ^3.0.6                  # Connection controller
-  provider: ^6.0.1                      # Provider
 
 dev_dependencies:
   flutter_test:
