@@ -1,11 +1,11 @@
 {
-  "username": "Kullanıcı Adı",
-  "password": "Şifre",
-  "login": "Giriş Yap",
-  "internet_disconnected": "Bağlantı kesildi.",
-  "reconnected": "Yeniden bağlanıldı.",
-  "error": "Hata!",
-  "close": "Kapat",
-  "connection_timeout": "Bağlantı zaman aşımı",
-  "connection_timeout_please_try_again": "Bağlantı zaman aşımına uğradı. Lütfen tekrar deneyin."
+  "username": "kullanıcı Adı",
+  "password": "şifre",
+  "login": "giriş yap",
+  "internet_disconnected": "bağlantı kesildi.",
+  "reconnected": "yeniden bağlanıldı.",
+  "error": "hata!",
+  "close": "kapat",
+  "connection_timeout": "bağlantı zaman aşımı",
+  "connection_timeout_please_try_again": "bağlantı zaman aşımına uğradı. Lütfen tekrar deneyin."
 }

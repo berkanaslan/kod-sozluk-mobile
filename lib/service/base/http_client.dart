@@ -43,10 +43,8 @@ class HttpClient {
 
     if (dioError.type == DioErrorType.connectTimeout) {
       final NetworkError networkError = NetworkError(
-        result: Result(
-          message: LocaleKeys.connection_timeout.locale,
-          detail: LocaleKeys.connection_timeout_please_try_again.locale,
-        ),
+        status: LocaleKeys.connection_timeout.locale,
+        detail: LocaleKeys.connection_timeout_please_try_again.locale,
       );
 
       return handler.next(networkError);
@@ -73,8 +71,8 @@ class HttpClient {
       "X-Locale-Info": AppConstants.localeKey
     });
 
-    if (authorizationToken != null) {
-      options.headers.addAll({"Authorization": "Bearer $authorizationToken}"});
+    if (authorizationToken != null && authorizationToken.isNotEmpty) {
+      options.headers.addAll({"Authorization": "Bearer $authorizationToken"});
     }
 
     return handler.next(options);

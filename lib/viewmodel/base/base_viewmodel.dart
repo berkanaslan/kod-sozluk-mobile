@@ -5,8 +5,6 @@ import 'package:get/get.dart';
 import 'package:kod_sozluk_mobile/core/constant/app_constants.dart';
 import 'package:kod_sozluk_mobile/core/constant/extension/string_extension.dart';
 import 'package:kod_sozluk_mobile/core/constant/lang/locale_keys.g.dart';
-import 'package:kod_sozluk_mobile/core/ui/theme/app_icons.dart';
-import 'package:kod_sozluk_mobile/core/ui/theme/app_theme.dart';
 import 'package:kod_sozluk_mobile/core/ui/widget/sized_box/app_sized_box.dart';
 import 'package:kod_sozluk_mobile/model/base/network_error.dart';
 import 'package:kod_sozluk_mobile/model/base/page.dart';
@@ -39,7 +37,6 @@ class BaseViewModel<T extends Serializable> extends Cubit<BaseEntityState> imple
       EasyLoading.dismiss();
     }
   }
-
 
   // -------------------------------------------------------------------------------------------------------------------
   // HTTP REQUEST WRAPPERS                                                                                             /
@@ -84,7 +81,7 @@ class BaseViewModel<T extends Serializable> extends Cubit<BaseEntityState> imple
   Future<Page<T>?> getPaged({
     int pn = 0,
     int ps = AppConstants.PER_PAGE_20,
-    String? sb,
+    String sb = "",
     String sd = AppConstants.SORT_DESC,
     String requestParams = "",
   }) async {
@@ -178,7 +175,7 @@ class BaseViewModel<T extends Serializable> extends Cubit<BaseEntityState> imple
     required Serializable requestBody,
     int pn = 0,
     int ps = AppConstants.PER_PAGE_20,
-    String? sb,
+    String sb = "",
     String sd = AppConstants.SORT_DESC,
     String requestParams = "",
   }) async {
@@ -233,21 +230,10 @@ class BaseViewModel<T extends Serializable> extends Cubit<BaseEntityState> imple
           opacity: a1.value,
           child: AlertDialog(
             titlePadding: const EdgeInsets.fromLTRB(8.0, 16.0, 8.0, 8.0),
-            shape: OutlineInputBorder(borderRadius: BorderRadius.circular(16.0)),
-            title: Center(
-              child: Column(
-                children: [
-                  const Icon(AppIcons.warning, color: AppColors.error),
-                  Text(
-                    error.result?.message == null ? LocaleKeys.error.locale : error.result!.message!,
-                    style: const TextStyle(fontWeight: FontWeight.bold, color: AppColors.primary),
-                    textAlign: TextAlign.center,
-                  ),
-                ],
-              ),
-            ),
-            content: Text(error.result?.detail == null ? LocaleKeys.error.locale : error.result!.detail!),
-            actions: [TextButton(child: Text(LocaleKeys.close.locale), onPressed: () => Get.back())],
+            shape: OutlineInputBorder(borderRadius: BorderRadius.circular(16.0), borderSide: BorderSide.none),
+            title: _buildDialogTitle(error, context),
+            content: _buildDialogContent(error, context),
+            actions: [_buildDialogCloseButton()],
           ),
         ),
       ),
@@ -257,4 +243,19 @@ class BaseViewModel<T extends Serializable> extends Cubit<BaseEntityState> imple
       pageBuilder: (context, animation1, animation2) => const AppSizedBox(style: AppBoxStyle.EMPTY),
     );
   }
+
+  Text _buildDialogTitle(NetworkError error, BuildContext context) {
+    return Text(
+      error.status == null ? LocaleKeys.error.locale : error.status!,
+      textAlign: TextAlign.center,
+      style: context.theme.textTheme.bodyText1,
+    );
+  }
+
+  Text _buildDialogContent(NetworkError error, BuildContext context) {
+    return Text(error.detail == null ? LocaleKeys.error.locale : error.detail!,
+        style: context.theme.textTheme.bodyText1);
+  }
+
+  TextButton _buildDialogCloseButton() => TextButton(child: Text(LocaleKeys.close.locale), onPressed: () => Get.back());
 }

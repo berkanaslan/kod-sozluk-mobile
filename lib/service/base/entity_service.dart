@@ -47,7 +47,7 @@ class EntityService<T extends Serializable> extends HttpClient implements IEntit
   Future<Page<T>?> getPaged({
     int pn = 0,
     int ps = AppConstants.PER_PAGE_20,
-    String? sb,
+    String sb = "",
     String sd = AppConstants.SORT_DESC,
     String requestParams = "",
   }) async {
@@ -122,7 +122,7 @@ class EntityService<T extends Serializable> extends HttpClient implements IEntit
     required Serializable requestBody,
     int pn = 0,
     int ps = AppConstants.PER_PAGE_20,
-    String? sb,
+    String sb = "",
     String sd = AppConstants.SORT_DESC,
     String requestParams = "",
   }) async {
