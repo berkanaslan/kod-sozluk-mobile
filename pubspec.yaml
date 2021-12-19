@@ -32,6 +32,7 @@ dependencies:
   shared_preferences: ^2.0.8            # Persistent Storage
   easy_localization: ^3.0.0             # Multi-Lang Support
   connectivity: ^3.0.6                  # Connection controller
+  provider: ^6.0.1                      # Provider
 
 dev_dependencies:
   flutter_test:
@@ -42,11 +43,6 @@ dev_dependencies:
 flutter:
   uses-material-design: true
 
-#  fonts:
-#    - family: Icons
-#      fonts:
-#        - asset: assets/icons/Icons.ttf
-#
   assets:
     - assets/images/
     - assets/languages/

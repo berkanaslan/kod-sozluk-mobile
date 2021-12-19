@@ -6,7 +6,6 @@ import 'package:material_color_generator/material_color_generator.dart';
 enum MessageType { Info, Success, Warning, Error }
 
 class AppColors {
-  static const Color logo = Color(0xffc1282d);
   static const Color white = Color(0xffFFFFFF);
   static const Color grey = Color(0xfff8f8f8);
   static const Color grey2 = Color(0xffD2D5DC);
@@ -16,13 +15,9 @@ class AppColors {
   static const Color grey6 = Color(0xff384152);
   static const Color grey7 = Color(0xff202938);
   static const Color black = Color(0xff000000);
-  static const Color secondary = Color(0xffFD4E5D);
-  static const Color secondary2 = Color(0xffD9DDE8);
-  static const Color secondary3 = Color(0xffB3CEE3);
   static const Color secondary4 = Color(0xff192233);
 
-  static const Color primary = Color(0xff1c212d);
-  static const lightGreen = Color(0xff35dba3);
+  static const Color primary = Color(0xff784384);
 
   // State Colors
   static const Color info = Color(0xffA0C2FF);
@@ -55,15 +50,13 @@ ThemeData get theme => ThemeData(
 
 IconThemeData get iconThemeData => const IconThemeData(color: AppColors.grey5);
 
-AppBarTheme get appBarTheme => const AppBarTheme(
-    centerTitle: true,
-    titleTextStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.bold));
+AppBarTheme get appBarTheme =>
+    const AppBarTheme(centerTitle: true, titleTextStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.bold));
 
 void configLoadingIndicator() {
   EasyLoading.instance
     ..loadingStyle = EasyLoadingStyle.light
     ..backgroundColor = AppColors.primary
-    ..indicatorWidget = const CircularProgressIndicator(
-        valueColor: AlwaysStoppedAnimation<Color>(AppColors.primary))
+    ..indicatorWidget = const CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(AppColors.primary))
     ..dismissOnTap = false;
 }

@@ -10,7 +10,9 @@ import 'package:kod_sozluk_mobile/core/ui/theme/app_theme.dart';
 import 'package:kod_sozluk_mobile/core/ui/widget/animations/fade_route.dart';
 import 'package:kod_sozluk_mobile/core/ui/widget/scaffold/connection_listener.dart';
 import 'package:kod_sozluk_mobile/view/home_view/home_view.dart';
+import 'package:kod_sozluk_mobile/view/topic_view/topic_view.dart';
 import 'package:kod_sozluk_mobile/viewmodel/connectivity_view_model.dart';
+import 'package:kod_sozluk_mobile/viewmodel/topic_viewmodel.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,20 +22,21 @@ Future<void> main() async {
 
   await SharedPrefs().init();
 
-  runApp(
-    EasyLocalization(
-      path: AppConstants.ASSETS_LANG_PATH,
-      supportedLocales: AppConstants.SUPPORTED_LOCALE,
-      fallbackLocale: AppConstants.TR_LOCALE,
-      child: buildBlocProviders(),
-    ),
-  );
+  runApp(EasyLocalization(
+    path: AppConstants.ASSETS_LANG_PATH,
+    supportedLocales: AppConstants.SUPPORTED_LOCALE,
+    fallbackLocale: AppConstants.TR_LOCALE,
+    child: buildBlocProviders(),
+  ));
+
+  configLoadingIndicator();
 }
 
 MultiBlocProvider buildBlocProviders() {
   return MultiBlocProvider(
     providers: [
       BlocProvider<ConnectivityViewModel>(create: (BuildContext context) => ConnectivityViewModel(), lazy: false),
+      BlocProvider<TopicViewModel>(create: (BuildContext context) => TopicViewModel()),
     ],
     child: const KodSozlukApplication(),
   );
@@ -45,6 +48,7 @@ class KodSozlukApplication extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      debugShowCheckedModeBanner: false,
       locale: context.locale,
       supportedLocales: context.supportedLocales,
       localizationsDelegates: context.localizationDelegates,
@@ -59,6 +63,8 @@ class KodSozlukApplication extends StatelessWidget {
     switch (settings.name) {
       case HomeView.PATH:
         return FadeRoute(page: const HomeView());
+      case TopicView.PATH:
+        return FadeRoute(page: const TopicView());
     }
   }
 }

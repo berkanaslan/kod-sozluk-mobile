@@ -2,39 +2,14 @@ import 'package:dio/dio.dart';
 import 'package:kod_sozluk_mobile/model/base/serializable.dart';
 
 class NetworkError extends DioError implements Serializable {
-  Result? result;
-
-  NetworkError({this.result}) : super(requestOptions: RequestOptions(path: ""));
-
-  static NetworkError fromJson(Map<String, dynamic> json) {
-    final NetworkError networkErrorHandler = NetworkError();
-    networkErrorHandler.result = json["result"] != null ? Result.fromJson(json["result"] as Map<String, dynamic>) : null;
-    return networkErrorHandler;
-  }
-
-  @override
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-
-    if (result != null) {
-      data["result"] = result!.toJson();
-    }
-
-    return data;
-  }
-}
-
-class Result implements Serializable {
-  int? statusCode;
-  String? message;
+  String? status;
   String? detail;
 
-  Result({this.statusCode, this.message, this.detail});
+  NetworkError({this.status, this.detail}) : super(requestOptions: RequestOptions(path: ""));
 
-  static Result fromJson(Map<String, dynamic> json) {
-    final Result result = Result();
-    result.statusCode = json["statusCode"] as int;
-    result.message = json["message"] as String;
+  static NetworkError fromJson(Map<String, dynamic> json) {
+    final NetworkError result = NetworkError();
+    result.status = json["status"] as String;
     result.detail = json["detail"] as String;
     return result;
   }
@@ -42,14 +17,13 @@ class Result implements Serializable {
   @override
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data["statusCode"] = statusCode;
-    data["message"] = message;
+    data["status"] = status;
     data["detail"] = detail;
     return data;
   }
 
   @override
   String toString() {
-    return 'Result{statusCode: $statusCode, message: $message, detail: $detail}';
+    return 'NetworkError{statusCode: $status, detail: $detail}';
   }
 }
