@@ -42,6 +42,7 @@ class AppColors {
 
 ThemeData get theme => ThemeData(
       fontFamily: GoogleFonts.openSans().fontFamily,
+      scaffoldBackgroundColor: AppColors.white,
       primarySwatch: generateMaterialColor(color: AppColors.primary),
       iconTheme: iconThemeData,
       textTheme: const TextTheme(headline6: TextStyle(color: AppColors.white)),

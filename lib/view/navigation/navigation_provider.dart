@@ -4,7 +4,11 @@ import 'package:kod_sozluk_mobile/core/ui/widget/animations/fade_route.dart';
 import 'package:kod_sozluk_mobile/core/ui/widget/dialog/app_exit_dialog.dart';
 import 'package:kod_sozluk_mobile/model/base/screen.dart';
 import 'package:kod_sozluk_mobile/root_view.dart';
+import 'package:kod_sozluk_mobile/view/followed_topics/followed_topics_view.dart';
 import 'package:kod_sozluk_mobile/view/home_view/home_view.dart';
+import 'package:kod_sozluk_mobile/view/message_view/messages_view.dart';
+import 'package:kod_sozluk_mobile/view/profile/profile_view.dart';
+import 'package:kod_sozluk_mobile/view/search_view/search_view.dart';
 import 'package:kod_sozluk_mobile/view/topic_view/topic_view.dart';
 import 'package:provider/provider.dart';
 
@@ -27,6 +31,14 @@ class NavigationProvider extends ChangeNotifier {
         return FadeRoute(page: const HomeView());
       case TopicView.PATH:
         return FadeRoute(page: const TopicView());
+      case SearchView.PATH:
+        return FadeRoute(page: const SearchView());
+      case MessagesView.PATH:
+        return FadeRoute(page: const MessagesView());
+      case FollowedTopicsView.PATH:
+        return FadeRoute(page: const FollowedTopicsView());
+      case ProfileView.PATH:
+        return FadeRoute(page: const ProfileView());
       default:
         return FadeRoute(page: const RootView());
     }
@@ -40,51 +52,66 @@ class NavigationProvider extends ChangeNotifier {
       initialRoute: HomeView.PATH,
       navigatorState: GlobalKey<NavigatorState>(),
       onGenerateRoute: (settings) {
-        return MaterialPageRoute(builder: (_) => const HomeView());
+        switch (settings.name) {
+          default:
+            return FadeRoute(page: const HomeView());
+        }
       },
       scrollController: ScrollController(),
     ),
     SEARCH_SCREEN: Screen(
       title: 'SEARCH_SCREEN',
       icon: EvaIcons.search,
-      child: const HomeView(),
+      child: const SearchView(),
       initialRoute: HomeView.PATH,
       navigatorState: GlobalKey<NavigatorState>(),
       onGenerateRoute: (settings) {
-        return MaterialPageRoute(builder: (_) => const HomeView());
+        switch (settings.name) {
+          default:
+            return FadeRoute(page: const SearchView());
+        }
       },
       scrollController: ScrollController(),
     ),
     MESSAGES_SCREEN: Screen(
       title: 'MESSAGES_SCREEN',
       icon: EvaIcons.messageCircleOutline,
-      child: const HomeView(),
+      child: const MessagesView(),
       initialRoute: HomeView.PATH,
       navigatorState: GlobalKey<NavigatorState>(),
       onGenerateRoute: (settings) {
-        return MaterialPageRoute(builder: (_) => const HomeView());
+        switch (settings.name) {
+          default:
+            return FadeRoute(page: const MessagesView());
+        }
       },
       scrollController: ScrollController(),
     ),
     FOLLOWED_TOPICS_SCREEN: Screen(
       title: 'FOLLOWED_TOPICS_SCREEN',
       icon: EvaIcons.bellOutline,
-      child: const HomeView(),
+      child: const FollowedTopicsView(),
       initialRoute: HomeView.PATH,
       navigatorState: GlobalKey<NavigatorState>(),
       onGenerateRoute: (settings) {
-        return MaterialPageRoute(builder: (_) => const HomeView());
+        switch (settings.name) {
+          default:
+            return FadeRoute(page: const FollowedTopicsView());
+        }
       },
       scrollController: ScrollController(),
     ),
     PROFILE_SCREEN: Screen(
       title: 'PROFILE_SCREEN',
       icon: EvaIcons.personOutline,
-      child: const HomeView(),
+      child: const ProfileView(),
       initialRoute: HomeView.PATH,
       navigatorState: GlobalKey<NavigatorState>(),
       onGenerateRoute: (settings) {
-        return MaterialPageRoute(builder: (_) => const HomeView());
+        switch (settings.name) {
+          default:
+            return FadeRoute(page: const ProfileView());
+        }
       },
       scrollController: ScrollController(),
     )

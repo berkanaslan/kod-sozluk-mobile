@@ -26,7 +26,7 @@ class BaseViewModel<T extends Serializable> extends Cubit<BaseEntityState> imple
   void showLoading() {
     if (!isLoading) {
       isLoading = !isLoading;
-      EasyLoading.show(status: "Loading");
+      EasyLoading.show();
       emit(const LoadingState());
     }
   }

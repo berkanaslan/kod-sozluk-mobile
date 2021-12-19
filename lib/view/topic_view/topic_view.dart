@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kod_sozluk_mobile/core/constant/logger.dart';
 import 'package:kod_sozluk_mobile/core/ui/widget/list_tile/topic_tile.dart';
 import 'package:kod_sozluk_mobile/view/navigation/navigation_provider.dart';
 import 'package:kod_sozluk_mobile/viewmodel/topic_viewmodel.dart';
@@ -35,6 +36,8 @@ class _TopicViewState extends State<TopicView> with AutomaticKeepAliveClientMixi
   @override
   // ignore: must_call_super
   Widget build(BuildContext context) {
+    Logger.buildLogger("TopicView");
+
     return RefreshIndicator(
       onRefresh: viewModel.refresh,
       child: ListView.builder(

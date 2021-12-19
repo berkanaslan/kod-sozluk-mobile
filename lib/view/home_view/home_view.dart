@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:kod_sozluk_mobile/core/constant/logger.dart';
 import 'package:kod_sozluk_mobile/view/topic_view/topic_view.dart';
+import 'package:kod_sozluk_mobile/viewmodel/home_viewmodel.dart';
+import 'package:provider/provider.dart';
 
 class HomeView extends StatefulWidget {
   static const String PATH = "/home";
@@ -12,12 +14,21 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
-  late final TabController _tabController;
+  late final HomeViewModel viewModel;
+  late TabController _tabController;
 
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 9, vsync: this);
+    viewModel = context.read<HomeViewModel>();
+    _tabController = TabController(length: 0, vsync: this);
+    Future.microtask(() => viewModel.getAllHeads());
+  }
+
+  @override
+  void didChangeDependencies() {
+    _tabController = TabController(length: viewModel.heads.length, vsync: this);
+    super.didChangeDependencies();
   }
 
   @override
@@ -47,18 +58,7 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
       isScrollable: true,
       indicatorWeight: 3,
       indicatorSize: TabBarIndicatorSize.label,
-      tabs: const [
-        // TODO: TO Constants
-        Tab(text: "bugün"),
-        Tab(text: "gündem"),
-        Tab(text: "debe"),
-        Tab(text: "sorunsallar"),
-        Tab(text: "takip"),
-        Tab(text: "tarihte bugün"),
-        Tab(text: "son"),
-        Tab(text: "kenar"),
-        Tab(text: "çaylaklar"),
-      ],
+      tabs: context.watch<HomeViewModel>().heads.map((head) => Tab(text: head.name)).toList(),
     );
   }
 
@@ -66,7 +66,10 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
     return Expanded(
       child: TabBarView(
         controller: _tabController,
-        children: List.generate(9, (index) => const TopicView()),
+        children: List.generate(context.watch<HomeViewModel>().heads.length, (index) {
+          if (index == 0) return const TopicView();
+          return const Center(child: Text("inşaat devam ediyor."));
+        }),
       ),
     );
   }

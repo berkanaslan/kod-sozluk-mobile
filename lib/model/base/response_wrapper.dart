@@ -10,7 +10,8 @@ class ResponseWrapper<T extends Serializable> {
 
   ResponseWrapper({this.result, this.data, this.dataList});
 
-  factory ResponseWrapper.fromJson({required Map<String, dynamic> json, required Function(Map<String, dynamic>) mapper}) {
+  factory ResponseWrapper.fromJson(
+      {required Map<String, dynamic> json, required Function(Map<String, dynamic>) mapper}) {
     final ResponseWrapper<T> rw = ResponseWrapper<T>();
 
     rw.data = mapper(json["data"] as Map<String, dynamic>) as T;
@@ -22,7 +23,8 @@ class ResponseWrapper<T extends Serializable> {
     return rw;
   }
 
-  factory ResponseWrapper.fromJsonList({required Map<String, dynamic> json, required Function(Map<String, dynamic>) mapper}) {
+  factory ResponseWrapper.fromJsonList(
+      {required Map<String, dynamic> json, required Function(Map<String, dynamic>) mapper}) {
     final ResponseWrapper<T> rw = ResponseWrapper<T>();
 
     if (json["result"] != null) rw.result = Result.fromJson(json["result"] as Map<String, dynamic>);
@@ -30,9 +32,7 @@ class ResponseWrapper<T extends Serializable> {
     if (json['data'] != null) {
       rw.dataList = <T>[];
 
-      json['data'].forEach((Map<String, dynamic> v) {
-        rw.dataList!.add(mapper(v) as T);
-      });
+      rw.dataList = (json['data'] as List).map<T>((data) => mapper(data as Map<String, dynamic>) as T).toList();
     }
 
     return rw;
