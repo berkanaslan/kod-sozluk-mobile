@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kod_sozluk_mobile/core/constant/logger.dart';
 import 'package:kod_sozluk_mobile/view/navigation/navigation_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -9,10 +10,13 @@ class RootView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Logger.buildLogger("RootView");
+
     return Consumer<NavigationProvider>(
       builder: (context, provider, child) {
-        final bottomNavigationBarItems =
-            provider.screens.map((screen) => BottomNavigationBarItem(icon: Icon(screen.icon), label: "")).toList();
+        final bottomNavigationBarItems = provider.screens
+            .map((screen) => BottomNavigationBarItem(icon: Icon(screen.icon), label: screen.title))
+            .toList();
 
         final screenNavigators = provider.screens
             .map((screen) => Navigator(key: screen.navigatorState, onGenerateRoute: screen.onGenerateRoute))
