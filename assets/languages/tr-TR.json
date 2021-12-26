@@ -1,4 +1,5 @@
 {
+  "title": "kod sözlük",
   "username": "kullanıcı Adı",
   "password": "şifre",
   "login": "giriş yap",
@@ -7,5 +8,17 @@
   "error": "hata!",
   "close": "kapat",
   "connection_timeout": "bağlantı zaman aşımı",
-  "connection_timeout_please_try_again": "bağlantı zaman aşımına uğradı. Lütfen tekrar deneyin."
+  "connection_timeout_please_try_again": "bağlantı zaman aşımına uğradı. Lütfen tekrar deneyin.",
+  "favs_all": "şükela tümü",
+  "favs_today": "şükela bugün",
+  "nothing_found": "yok ki öyle bir şey.",
+  "exit": "çıkıyorsun?",
+  "are_you_sure_to_exit_app": "uygulamadan çıkmak istediğinden emin misin?",
+  "home": "anasayfa",
+  "search": "ara",
+  "messages": "mesajlar",
+  "followings": "takip ettiklerim",
+  "following_topics": "takip ettiğim başlıklar",
+  "profile": "profil",
+  "ask_question": "soru sor"
 }

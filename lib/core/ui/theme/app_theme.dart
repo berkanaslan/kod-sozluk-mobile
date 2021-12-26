@@ -6,6 +6,7 @@ import 'package:material_color_generator/material_color_generator.dart';
 enum MessageType { Info, Success, Warning, Error }
 
 class AppColors {
+  static const Color transparent = Colors.transparent;
   static const Color white = Color(0xffFFFFFF);
   static const Color grey = Color(0xfff8f8f8);
   static const Color grey2 = Color(0xffD2D5DC);

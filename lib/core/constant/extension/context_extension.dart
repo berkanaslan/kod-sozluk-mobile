@@ -34,14 +34,6 @@ extension NavigationExtension on BuildContext {
 
   void pop() => navigator.pop();
 
-  Future<Object?> pushNamed(String routeName) => navigator.pushNamed(routeName).whenComplete(() {});
-
-  Future<Object?> pushReplacementNamed(String routeName) =>
-      navigator.pushReplacementNamed(routeName).whenComplete(() {});
-
-  Future<Object?> pushNamedAndRemoveUntil(String routeName) =>
-      navigator.pushNamedAndRemoveUntil(routeName, (Route<dynamic> route) => false).whenComplete(() {});
-
   NavigatorState get rootNavigator => Navigator.of(this, rootNavigator: true);
 }
 

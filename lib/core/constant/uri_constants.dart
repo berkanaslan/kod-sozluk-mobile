@@ -6,4 +6,5 @@ class URLConstants {
 
   static const String HEAD = "/head";
   static const String TOPIC = "/topic";
+  static const String ENTRY = "/entry";
 }
