@@ -21,6 +21,7 @@ dependencies:
   # UI
   google_fonts: ^2.1.0                  # Google Fonts
   eva_icons_flutter: ^3.0.2             # Icon Pack
+  font_awesome_flutter: ^9.2.0          # Icon Pack
   flutter_easyloading: ^3.0.3           # Loading Indicator
   material_color_generator: ^1.1.0      # Material Color Generator
 

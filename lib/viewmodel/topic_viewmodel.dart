@@ -29,11 +29,11 @@ class TopicViewModel extends BaseViewModel<Topic> {
   }
 
   Future<void> refresh() async {
-    clean();
+    clear();
     await getPagedTopics();
   }
 
-  clean() {
+  clear() {
     topics.clear();
     _pageNumber = 0;
     _totalPages = null;

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:kod_sozluk_mobile/core/ui/widget/appbar/appbar.dart';
+import 'package:kod_sozluk_mobile/core/constant/extension/string_extension.dart';
+import 'package:kod_sozluk_mobile/core/constant/lang/locale_keys.g.dart';
+import 'package:kod_sozluk_mobile/core/ui/widget/scaffold/app_scaffold.dart';
 
 class SearchView extends StatefulWidget {
   static const String PATH = "/search";
@@ -13,9 +15,9 @@ class SearchView extends StatefulWidget {
 class _SearchViewState extends State<SearchView> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      appBar: CustomAppBar(title: "ara"),
-      body: Center(child: Text("inşaat devam ediyor.")),
+    return AppScaffold(
+      title: LocaleKeys.search.locale,
+      body: Center(child: Text(LocaleKeys.nothing_found.locale)),
     );
   }
 }

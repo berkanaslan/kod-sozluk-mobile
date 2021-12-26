@@ -53,8 +53,7 @@ class EntityService<T extends Serializable> extends HttpClient implements IEntit
   }) async {
     cancelToken = CancelToken();
 
-    final String divider = requestParams.isEmpty ? "?" : "&";
-    final String url = "${getURL(requestParams)}${divider}pn=$pn&ps=$ps&sb=$sb&sd=$sd";
+    final String url = "${getURL(requestParams)}?pn=$pn&ps=$ps&sb=$sb&sd=$sd";
 
     final Response response = await client.get(url, cancelToken: cancelToken);
     final Map<String, dynamic> responseData = response.data["data"] as Map<String, dynamic>;
@@ -128,8 +127,7 @@ class EntityService<T extends Serializable> extends HttpClient implements IEntit
   }) async {
     cancelToken = CancelToken();
 
-    final String divider = requestParams.isEmpty ? "&" : "?";
-    final String url = "${getURL(requestParams)}${divider}pn=$pn&ps=$ps&sb=$sb&sd=$sd";
+    final String url = "${getURL(requestParams)}?pn=$pn&ps=$ps&sb=$sb&sd=$sd";
 
     final Response response = await client.post(url, data: jsonEncode(requestBody.toJson()), cancelToken: cancelToken);
     final Map<String, dynamic> responseData = response.data["data"] as Map<String, dynamic>;

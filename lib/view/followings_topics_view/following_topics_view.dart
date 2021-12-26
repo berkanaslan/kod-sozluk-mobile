@@ -3,20 +3,20 @@ import 'package:kod_sozluk_mobile/core/constant/extension/string_extension.dart'
 import 'package:kod_sozluk_mobile/core/constant/lang/locale_keys.g.dart';
 import 'package:kod_sozluk_mobile/core/ui/widget/scaffold/app_scaffold.dart';
 
-class MessagesView extends StatefulWidget {
-  static const String PATH = "/message";
+class FollowingTopicsView extends StatefulWidget {
+  static const String PATH = "/followings";
 
-  const MessagesView({Key? key}) : super(key: key);
+  const FollowingTopicsView({Key? key}) : super(key: key);
 
   @override
-  _MessagesViewState createState() => _MessagesViewState();
+  _FollowingTopicsViewState createState() => _FollowingTopicsViewState();
 }
 
-class _MessagesViewState extends State<MessagesView> {
+class _FollowingTopicsViewState extends State<FollowingTopicsView> {
   @override
   Widget build(BuildContext context) {
     return AppScaffold(
-      title: LocaleKeys.messages.locale,
+      title: LocaleKeys.following_topics.locale,
       body: Center(child: Text(LocaleKeys.nothing_found.locale)),
     );
   }

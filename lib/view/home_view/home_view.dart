@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:kod_sozluk_mobile/core/constant/extension/string_extension.dart';
+import 'package:kod_sozluk_mobile/core/constant/lang/locale_keys.g.dart';
 import 'package:kod_sozluk_mobile/core/constant/logger.dart';
 import 'package:kod_sozluk_mobile/view/topic_view/topic_view.dart';
 import 'package:kod_sozluk_mobile/viewmodel/home_viewmodel.dart';
@@ -68,7 +70,7 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
         controller: _tabController,
         children: List.generate(context.watch<HomeViewModel>().heads.length, (index) {
           if (index == 0) return const TopicView();
-          return const Center(child: Text("inşaat devam ediyor."));
+          return Center(child: Text(LocaleKeys.nothing_found.locale));
         }),
       ),
     );
