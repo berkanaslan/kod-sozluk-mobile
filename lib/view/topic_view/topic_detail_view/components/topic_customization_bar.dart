@@ -8,10 +8,10 @@ import 'package:kod_sozluk_mobile/core/ui/widget/button/icon_chip_button.dart';
 import 'package:kod_sozluk_mobile/core/ui/widget/button/text_chip_button.dart';
 import 'package:kod_sozluk_mobile/view/root_view.dart';
 
-class CustomizationBar extends StatelessWidget {
+class TopicCustomizationBar extends StatelessWidget {
   final String title;
 
-  const CustomizationBar({Key? key, required this.title}) : super(key: key);
+  const TopicCustomizationBar({Key? key, required this.title}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

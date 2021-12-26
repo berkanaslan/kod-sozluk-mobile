@@ -23,5 +23,6 @@ abstract class  LocaleKeys {
   static const following_topics = 'following_topics';
   static const profile = 'profile';
   static const ask_question = 'ask_question';
+  static const read_more = 'read_more';
 
 }
