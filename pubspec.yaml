@@ -52,3 +52,9 @@ flutter:
   assets:
     - assets/images/
     - assets/languages/
+    -
+
+  fonts:
+    - family: AppCustomFont
+      fonts:
+        - asset: assets/fonts/AppCustomFont.ttf

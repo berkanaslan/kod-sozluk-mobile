@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:material_color_generator/material_color_generator.dart';
@@ -52,8 +53,17 @@ ThemeData get theme => ThemeData(
 
 IconThemeData get iconThemeData => const IconThemeData(color: AppColors.grey5);
 
-AppBarTheme get appBarTheme =>
-    const AppBarTheme(centerTitle: true, titleTextStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.bold));
+AppBarTheme get appBarTheme => const AppBarTheme(
+      centerTitle: true,
+      titleTextStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+    );
+
+// TODO: Apply:
+SystemUiOverlayStyle get systemOverlayStyle => const SystemUiOverlayStyle(
+      statusBarColor: AppColors.transparent,
+      statusBarIconBrightness: Brightness.dark,
+      statusBarBrightness: Brightness.light,
+    );
 
 void configLoadingIndicator() {
   EasyLoading.instance

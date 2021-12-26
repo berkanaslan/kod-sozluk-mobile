@@ -16,6 +16,18 @@ class Entry extends Serializable {
   List<User>? favorites;
   int? favoritesCount;
 
+  @JsonKey(ignore: true)
+  bool? _expanded;
+
+  bool? get expanded {
+    if (_expanded == null) return message != null && message!.length <= 240;
+    return _expanded;
+  }
+
+  set expanded(bool? expanded) {
+    _expanded = expanded;
+  }
+
   Entry({
     this.id,
     this.createdBy,
