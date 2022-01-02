@@ -44,6 +44,7 @@ class _TopicViewState extends State<TopicView> with AutomaticKeepAliveClientMixi
     return RefreshIndicator(
       onRefresh: viewModel.refresh,
       child: ListView.builder(
+        physics: const AlwaysScrollableScrollPhysics(),
         controller: NavigationProvider.of(context).screens[HOME_SCREEN].scrollController,
         shrinkWrap: true,
         itemCount: context.watch<TopicViewModel>().topics.length,

@@ -37,3 +37,4 @@ class ErrorState extends BaseEntityState {
 
   const ErrorState(this.networkError);
 }
+

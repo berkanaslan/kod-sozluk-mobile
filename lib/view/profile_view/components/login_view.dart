@@ -9,8 +9,7 @@ import 'package:kod_sozluk_mobile/core/ui/widget/button/rounded_button.dart';
 import 'package:kod_sozluk_mobile/core/ui/widget/image/logo.dart';
 import 'package:kod_sozluk_mobile/core/ui/widget/text_field/app_text_field.dart';
 import 'package:kod_sozluk_mobile/model/user.dart';
-import 'package:kod_sozluk_mobile/view/root_view.dart';
-import 'package:kod_sozluk_mobile/viewmodel/auth_viewmodel.dart';
+import 'package:kod_sozluk_mobile/viewmodel/login_viewmodel.dart';
 import 'package:provider/provider.dart';
 
 class LoginView extends StatefulWidget {
@@ -23,12 +22,12 @@ class LoginView extends StatefulWidget {
 }
 
 class _LoginViewState extends State<LoginView> {
-  late final AuthViewModel viewModel;
+  late final LoginViewModel viewModel;
 
   @override
   void initState() {
     super.initState();
-    viewModel = context.read<AuthViewModel>();
+    viewModel = context.read<LoginViewModel>();
   }
 
   @override
@@ -96,7 +95,7 @@ class _LoginViewState extends State<LoginView> {
         title: LocaleKeys.try_login.locale,
         onPressed: () async {
           final User? user = await viewModel.onLoginButtonPressed();
-          if (user != null) context.rootNavigator.pushNamedAndRemoveUntil(RootView.PATH, ModalRoute.withName('/'));
+          if (user != null) context.navigator.pop();
         },
       );
 }

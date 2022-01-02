@@ -10,6 +10,6 @@ void setupLocator() {
   locator.registerLazySingleton(() => HeadService());
   locator.registerLazySingleton(() => TopicService());
   locator.registerLazySingleton(() => EntryService());
-  locator.registerLazySingleton(() => AuthService());
+  locator.registerLazySingleton(() => LoginService());
   locator.registerLazySingleton(() => UserService());
 }

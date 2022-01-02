@@ -10,10 +10,11 @@ import 'package:kod_sozluk_mobile/core/ui/theme/app_theme.dart';
 import 'package:kod_sozluk_mobile/core/ui/widget/scaffold/connection_listener.dart';
 import 'package:kod_sozluk_mobile/view/navigation_provider.dart';
 import 'package:kod_sozluk_mobile/view/root_view.dart';
-import 'package:kod_sozluk_mobile/viewmodel/auth_viewmodel.dart';
-import 'package:kod_sozluk_mobile/viewmodel/connectivity_view_model.dart';
+import 'package:kod_sozluk_mobile/viewmodel/connectivity_viewmodel.dart';
 import 'package:kod_sozluk_mobile/viewmodel/entry_viewmodel.dart';
 import 'package:kod_sozluk_mobile/viewmodel/home_viewmodel.dart';
+import 'package:kod_sozluk_mobile/viewmodel/login_viewmodel.dart';
+import 'package:kod_sozluk_mobile/viewmodel/register_viewmodel.dart';
 import 'package:kod_sozluk_mobile/viewmodel/topic_viewmodel.dart';
 import 'package:provider/provider.dart';
 
@@ -43,10 +44,11 @@ MultiProvider buildBlocProviders() {
     child: MultiBlocProvider(
       providers: [
         BlocProvider<ConnectivityViewModel>(create: (context) => ConnectivityViewModel(), lazy: false),
+        BlocProvider<LoginViewModel>(create: (context) => LoginViewModel(), lazy: false),
+        BlocProvider<RegisterViewModel>(create: (context) => RegisterViewModel()),
         BlocProvider<HomeViewModel>(create: (context) => HomeViewModel()),
         BlocProvider<TopicViewModel>(create: (context) => TopicViewModel()),
         BlocProvider<EntryViewModel>(create: (context) => EntryViewModel()),
-        BlocProvider<AuthViewModel>(create: (context) => AuthViewModel()),
       ],
       child: const KodSozlukApplication(),
     ),

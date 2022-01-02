@@ -52,10 +52,6 @@ class NavigationProvider extends ChangeNotifier {
         return SlideLeftRoute(page: const FollowingTopicsView());
       case ProfileView.PATH:
         return SlideLeftRoute(page: const ProfileView());
-      case RegisterView.PATH:
-        return FadeRoute(page: const RegisterView());
-      case LoginView.PATH:
-        return FadeRoute(page: const LoginView());
       default:
         return SlideLeftRoute(page: const RootView());
     }
@@ -126,6 +122,10 @@ class NavigationProvider extends ChangeNotifier {
       navigatorState: GlobalKey<NavigatorState>(),
       onGenerateRoute: (settings) {
         switch (settings.name) {
+          case RegisterView.PATH:
+            return FadeRoute(page: const RegisterView());
+          case LoginView.PATH:
+            return FadeRoute(page: const LoginView());
           default:
             return SlideLeftRoute(page: const ProfileView());
         }
