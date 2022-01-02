@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kod_sozluk_mobile/core/constant/extension/string_extension.dart';
 import 'package:kod_sozluk_mobile/core/constant/lang/locale_keys.g.dart';
 import 'package:kod_sozluk_mobile/core/ui/theme/snackbar.dart';
-import 'package:kod_sozluk_mobile/viewmodel/connectivity_view_model.dart';
+import 'package:kod_sozluk_mobile/viewmodel/connectivity_viewmodel.dart';
 
 class ConnectivityListener extends StatelessWidget {
   final Widget child;

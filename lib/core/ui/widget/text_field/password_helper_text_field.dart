@@ -4,7 +4,7 @@ import 'package:kod_sozluk_mobile/core/constant/extension/string_extension.dart'
 import 'package:kod_sozluk_mobile/core/constant/lang/locale_keys.g.dart';
 import 'package:kod_sozluk_mobile/core/ui/theme/app_theme.dart';
 import 'package:kod_sozluk_mobile/core/ui/widget/text_field/form_field_wrapper.dart';
-import 'package:kod_sozluk_mobile/viewmodel/auth_viewmodel.dart';
+import 'package:kod_sozluk_mobile/viewmodel/register_viewmodel.dart';
 import 'package:provider/provider.dart';
 
 class PasswordHelperTextField extends StatefulWidget {
@@ -24,7 +24,7 @@ class _PasswordHelperTextFieldState extends State<PasswordHelperTextField> {
   void initState() {
     super.initState();
     Future.microtask(() {
-      final controller = context.read<AuthViewModel>().newPasswordController;
+      final controller = context.read<RegisterViewModel>().newPasswordController;
 
       controller.addListener(() {
         isGreaterThanEight = RegExp(AppConstants.EIGHT_CHAR_REGEX).hasMatch(controller.text);

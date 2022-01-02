@@ -15,7 +15,7 @@ import 'package:kod_sozluk_mobile/core/ui/widget/text_field/gender_text_field.da
 import 'package:kod_sozluk_mobile/core/ui/widget/text_field/password_helper_text_field.dart';
 import 'package:kod_sozluk_mobile/model/user.dart';
 import 'package:kod_sozluk_mobile/view/profile_view/components/login_view.dart';
-import 'package:kod_sozluk_mobile/viewmodel/auth_viewmodel.dart';
+import 'package:kod_sozluk_mobile/viewmodel/register_viewmodel.dart';
 import 'package:provider/provider.dart';
 
 class RegisterView extends StatefulWidget {
@@ -28,12 +28,12 @@ class RegisterView extends StatefulWidget {
 }
 
 class _RegisterViewState extends State<RegisterView> {
-  late final AuthViewModel viewModel;
+  late final RegisterViewModel viewModel;
 
   @override
   void initState() {
     super.initState();
-    viewModel = context.read<AuthViewModel>();
+    viewModel = context.read<RegisterViewModel>();
   }
 
   @override
@@ -146,7 +146,7 @@ class _RegisterViewState extends State<RegisterView> {
       labelText: LocaleKeys.new_password_again.locale,
       obscureText: true,
       validator: (value) {
-        if (value != viewModel.userDTO.password) return LocaleKeys.passwords_are_not_same.locale;
+        if (value != viewModel.newPasswordController.text) return LocaleKeys.passwords_are_not_same.locale;
         return null;
       });
 
@@ -168,7 +168,7 @@ class _RegisterViewState extends State<RegisterView> {
         title: LocaleKeys.register_like_that.locale,
         onPressed: () async {
           final User? user = await viewModel.onRegisterButtonPressed();
-          if (user != null) context.rootNavigator.pushReplacementNamed(LoginView.PATH);
+          if (user != null) context.navigator.pushReplacementNamed(LoginView.PATH);
         },
       );
 }

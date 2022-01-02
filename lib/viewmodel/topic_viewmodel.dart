@@ -1,3 +1,4 @@
+import 'package:kod_sozluk_mobile/core/constant/app_constants.dart';
 import 'package:kod_sozluk_mobile/core/locator.dart';
 import 'package:kod_sozluk_mobile/model/base/page.dart';
 import 'package:kod_sozluk_mobile/model/topic.dart';
@@ -17,7 +18,7 @@ class TopicViewModel extends BaseViewModel<Topic> {
     if (isLoading) return;
 
     if (_totalPages == null || _pageNumber < _totalPages!) {
-      Page<Topic>? pagedTopic = await getPaged();
+      Page<Topic>? pagedTopic = await getPaged(pn: _pageNumber, sb: "id", sd: AppConstants.SORT_DESC);
 
       if (pagedTopic != null) {
         topics.addAll(pagedTopic.content!);
