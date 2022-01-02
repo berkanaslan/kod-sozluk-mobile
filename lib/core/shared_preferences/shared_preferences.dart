@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:kod_sozluk_mobile/core/constant/app_constants.dart';
 import 'package:kod_sozluk_mobile/model/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -13,14 +14,13 @@ class SharedPrefs {
 
   Future<void> init() async {
     _sharedPrefs ??= await SharedPreferences.getInstance();
-    // We deleted the before user data because of we don't hold sessions.
-    removeUserData();
   }
 
   // -------------------------------------------------------------------------------------------------------------------
   // USER                                                                                                              /
   // -------------------------------------------------------------------------------------------------------------------
   static const String _userKey = "user";
+  static const String _authTokenKey = AppConstants.X_TOKEN;
 
   static Future<void> setUser(User user) async {
     _memoryPrefs[_userKey] = jsonEncode(user);
@@ -42,6 +42,14 @@ class SharedPrefs {
     }
 
     return user;
+  }
+
+  static Future<void> setAuthToken(String token) async {
+    setString(_authTokenKey, token);
+  }
+
+  static String? getAuthToken() {
+    return getString(_authTokenKey);
   }
 
   // -------------------------------------------------------------------------------------------------------------------

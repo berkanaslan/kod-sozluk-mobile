@@ -2,12 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:kod_sozluk_mobile/core/constant/extension/string_extension.dart';
 import 'package:kod_sozluk_mobile/core/constant/lang/locale_keys.g.dart';
 import 'package:kod_sozluk_mobile/core/ui/theme/app_icons.dart';
+import 'package:kod_sozluk_mobile/core/ui/widget/animations/fade_route.dart';
 import 'package:kod_sozluk_mobile/core/ui/widget/animations/slide_left_route.dart';
 import 'package:kod_sozluk_mobile/core/ui/widget/dialog/app_exit_dialog.dart';
 import 'package:kod_sozluk_mobile/model/base/screen.dart';
 import 'package:kod_sozluk_mobile/view/followings_topics_view/following_topics_view.dart';
 import 'package:kod_sozluk_mobile/view/home_view/home_view.dart';
 import 'package:kod_sozluk_mobile/view/message_view/messages_view.dart';
+import 'package:kod_sozluk_mobile/view/profile_view/components/login_view.dart';
+import 'package:kod_sozluk_mobile/view/profile_view/components/register_view.dart';
 import 'package:kod_sozluk_mobile/view/profile_view/profile_view.dart';
 import 'package:kod_sozluk_mobile/view/root_view.dart';
 import 'package:kod_sozluk_mobile/view/search_view/search_view.dart';
@@ -49,6 +52,10 @@ class NavigationProvider extends ChangeNotifier {
         return SlideLeftRoute(page: const FollowingTopicsView());
       case ProfileView.PATH:
         return SlideLeftRoute(page: const ProfileView());
+      case RegisterView.PATH:
+        return FadeRoute(page: const RegisterView());
+      case LoginView.PATH:
+        return FadeRoute(page: const LoginView());
       default:
         return SlideLeftRoute(page: const RootView());
     }
@@ -162,6 +169,7 @@ class NavigationProvider extends ChangeNotifier {
       return false;
     }
 
-    return await AppAlertDialog.show(LocaleKeys.exit.locale, LocaleKeys.are_you_sure_to_exit_app.locale);
+    return await AppAlertDialog.showConfirmationDialog(
+        LocaleKeys.exit.locale, LocaleKeys.are_you_sure_to_exit_app.locale);
   }
 }

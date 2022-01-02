@@ -26,11 +26,26 @@ mixin AppConstants {
     return TR_LOCALE_STRING;
   }
 
-
   // ------------------------------------------------------------------------------------------------------------------
   // HTTP - REST SERVICE CONSTANTS                                                                                    /
   // ------------------------------------------------------------------------------------------------------------------
   static const int PER_PAGE_20 = 20;
-  static const String SORT_DESC = "d";
   static const String SORT_ASC = "a";
+  static const String SORT_DESC = "d";
+  static const String X_TOKEN = "X-TOKEN";
+
+  // ------------------------------------------------------------------------------------------------------------------
+  // IMAGE PATHs                                                                                                      /
+  // ------------------------------------------------------------------------------------------------------------------
+  static const String LOGO = "assets/images/kod-sozluk-logo.png";
+
+  // ------------------------------------------------------------------------------------------------------------------
+  // REGEX                                                                                                   /
+  // ------------------------------------------------------------------------------------------------------------------
+  static const String EMAIL_REGEX = r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+";
+  static const String PASSWORD_REGEX = r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$';
+  static const String UPPERCASE_REGEX = "[A-Z]";
+  static const String LOWERCASE_REGEX = "[a-z]";
+  static const String EIGHT_CHAR_REGEX = ".{8,}";
+  static const String DIGIT_REGEX = "[0-9]";
 }

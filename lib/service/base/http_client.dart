@@ -4,7 +4,8 @@ import 'package:dio/dio.dart';
 import 'package:kod_sozluk_mobile/core/constant/app_constants.dart';
 import 'package:kod_sozluk_mobile/core/constant/extension/string_extension.dart';
 import 'package:kod_sozluk_mobile/core/constant/lang/locale_keys.g.dart';
-import 'package:kod_sozluk_mobile/core/constant/util/app_util.dart';
+import 'package:kod_sozluk_mobile/core/constant/uri_constants.dart';
+import 'package:kod_sozluk_mobile/core/shared_preferences/shared_preferences.dart';
 import 'package:kod_sozluk_mobile/model/base/network_error.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
@@ -19,8 +20,8 @@ class HttpClient {
   Dio createDio() {
     return Dio(
       BaseOptions(
-        connectTimeout: 60000, // 60sec
-        receiveTimeout: 60000, // 60sec
+        connectTimeout: 15000, // 60sec
+        receiveTimeout: 15000, // 60sec
       ),
     );
   }
@@ -61,7 +62,7 @@ class HttpClient {
   }
 
   dynamic requestInterceptor(RequestOptions options, RequestInterceptorHandler handler) async {
-    final String? authorizationToken = AppUtil.authorizationToken;
+    final String? authorizationToken = SharedPrefs.getAuthToken();
 
     options.headers.addAll({
       "Content-Encoding": "gzip",
@@ -79,6 +80,12 @@ class HttpClient {
   }
 
   dynamic responseInterceptor(Response response, ResponseInterceptorHandler handler) async {
+    if (URLConstants.LOGIN.contains(response.realUri.path)) {
+      if (response.headers.value(AppConstants.X_TOKEN) != null) {
+        SharedPrefs.setAuthToken(response.headers.value(AppConstants.X_TOKEN)!);
+      }
+    }
+
     return handler.next(response);
   }
 }

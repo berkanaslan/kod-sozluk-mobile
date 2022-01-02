@@ -10,6 +10,7 @@ import 'package:kod_sozluk_mobile/core/ui/theme/app_theme.dart';
 import 'package:kod_sozluk_mobile/core/ui/widget/scaffold/connection_listener.dart';
 import 'package:kod_sozluk_mobile/view/navigation_provider.dart';
 import 'package:kod_sozluk_mobile/view/root_view.dart';
+import 'package:kod_sozluk_mobile/viewmodel/auth_viewmodel.dart';
 import 'package:kod_sozluk_mobile/viewmodel/connectivity_view_model.dart';
 import 'package:kod_sozluk_mobile/viewmodel/entry_viewmodel.dart';
 import 'package:kod_sozluk_mobile/viewmodel/home_viewmodel.dart';
@@ -45,6 +46,7 @@ MultiProvider buildBlocProviders() {
         BlocProvider<HomeViewModel>(create: (context) => HomeViewModel()),
         BlocProvider<TopicViewModel>(create: (context) => TopicViewModel()),
         BlocProvider<EntryViewModel>(create: (context) => EntryViewModel()),
+        BlocProvider<AuthViewModel>(create: (context) => AuthViewModel()),
       ],
       child: const KodSozlukApplication(),
     ),
