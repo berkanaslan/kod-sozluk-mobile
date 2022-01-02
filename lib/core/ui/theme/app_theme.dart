@@ -4,8 +4,6 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:material_color_generator/material_color_generator.dart';
 
-enum MessageType { Info, Success, Warning, Error }
-
 class AppColors {
   static const Color transparent = Colors.transparent;
   static const Color white = Color(0xffFFFFFF);
@@ -22,22 +20,10 @@ class AppColors {
   static const Color primary = Color(0xff784384);
 
   // State Colors
-  static const Color info = Color(0xffA0C2FF);
+  static const Color info = Color(0xff417adc);
   static const Color success = Color(0xff76CB66);
   static const Color warning = Color(0xffFBC757);
   static const Color error = Color(0xffBA0001);
-
-  // Text Colors
-  static const Color closedText = Color(0xff418b88);
-  static const Color cancelledText = Color(0xffe5a24f);
-  static const Color openText = Color(0xffdd635b);
-
-  static const Color defaultText = Color(0xfff9e7e6);
-
-  // Text Background Colors
-  static const Color closedBackground = Color(0xfff3fdfc);
-  static const Color cancelledBackground = Color(0xfffff6e9);
-  static const Color openBackground = Color(0xfffae7e6);
 
   static const Color defaultBackground = Color(0xfff9e7e6);
 }

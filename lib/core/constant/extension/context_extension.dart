@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:kod_sozluk_mobile/core/ui/theme/app_theme.dart';
 
 extension ContextExtension on BuildContext {
   MediaQueryData get mediaQuery => MediaQuery.of(this);
@@ -37,39 +36,3 @@ extension NavigationExtension on BuildContext {
   NavigatorState get rootNavigator => Navigator.of(this, rootNavigator: true);
 }
 
-extension SnackBarExtension on BuildContext {
-  ScaffoldFeatureController showSnackBar({
-    required String message,
-    int duration = 4,
-    MessageType? type,
-  }) {
-    final ScaffoldMessengerState scaffoldState = ScaffoldMessenger.of(this);
-
-    Color? backgroundColor;
-
-    if (type == MessageType.Success) {
-      backgroundColor = AppColors.success;
-    } else if (type == MessageType.Warning) {
-      backgroundColor = AppColors.warning;
-    } else if (type == MessageType.Error) {
-      backgroundColor = AppColors.error;
-    } else if (type == MessageType.Info) {
-      backgroundColor = AppColors.info;
-    } else {
-      backgroundColor = AppColors.primary;
-    }
-
-    // Remove if exist snack bar:
-    scaffoldState.removeCurrentSnackBar();
-
-    // Show new:
-    return scaffoldState.showSnackBar(
-      SnackBar(
-        content: Text(message),
-        behavior: SnackBarBehavior.floating,
-        backgroundColor: backgroundColor,
-        duration: Duration(seconds: duration),
-      ),
-    );
-  }
-}

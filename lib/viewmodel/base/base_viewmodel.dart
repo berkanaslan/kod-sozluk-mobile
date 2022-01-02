@@ -1,11 +1,9 @@
-import 'package:flutter/material.dart' hide Page;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:get/get.dart';
 import 'package:kod_sozluk_mobile/core/constant/app_constants.dart';
 import 'package:kod_sozluk_mobile/core/constant/extension/string_extension.dart';
 import 'package:kod_sozluk_mobile/core/constant/lang/locale_keys.g.dart';
-import 'package:kod_sozluk_mobile/core/ui/widget/sized_box/app_sized_box.dart';
+import 'package:kod_sozluk_mobile/core/ui/widget/dialog/app_exit_dialog.dart';
 import 'package:kod_sozluk_mobile/model/base/network_error.dart';
 import 'package:kod_sozluk_mobile/model/base/page.dart';
 import 'package:kod_sozluk_mobile/model/base/serializable.dart';
@@ -82,7 +80,7 @@ class BaseViewModel<T extends Serializable> extends Cubit<BaseEntityState> imple
     int pn = 0,
     int ps = AppConstants.PER_PAGE_20,
     String sb = "",
-    String sd = AppConstants.SORT_DESC,
+    String sd = AppConstants.SORT_ASC,
     String requestParams = "",
   }) async {
     try {
@@ -176,7 +174,7 @@ class BaseViewModel<T extends Serializable> extends Cubit<BaseEntityState> imple
     int pn = 0,
     int ps = AppConstants.PER_PAGE_20,
     String sb = "",
-    String sd = AppConstants.SORT_DESC,
+    String sd = AppConstants.SORT_ASC,
     String requestParams = "",
   }) async {
     try {
@@ -222,40 +220,9 @@ class BaseViewModel<T extends Serializable> extends Cubit<BaseEntityState> imple
   }
 
   void showNetworkError(NetworkError error) {
-    Get.generalDialog(
-      barrierColor: Colors.black.withOpacity(0.5),
-      transitionBuilder: (context, a1, a2, widget) => Transform.scale(
-        scale: a1.value,
-        child: Opacity(
-          opacity: a1.value,
-          child: AlertDialog(
-            titlePadding: const EdgeInsets.fromLTRB(8.0, 16.0, 8.0, 8.0),
-            shape: OutlineInputBorder(borderRadius: BorderRadius.circular(16.0), borderSide: BorderSide.none),
-            title: _buildDialogTitle(error, context),
-            content: _buildDialogContent(error, context),
-            actions: [_buildDialogCloseButton()],
-          ),
-        ),
-      ),
-      transitionDuration: const Duration(milliseconds: 200),
-      barrierLabel: "",
-      barrierDismissible: true,
-      pageBuilder: (context, animation1, animation2) => const AppSizedBox(style: AppBoxStyle.EMPTY),
-    );
-  }
-
-  Text _buildDialogTitle(NetworkError error, BuildContext context) {
-    return Text(
+    AppAlertDialog.show(
       error.status == null ? LocaleKeys.error.locale : error.status!,
-      textAlign: TextAlign.center,
-      style: context.theme.textTheme.bodyText1,
+      error.detail == null ? LocaleKeys.error.locale : error.detail!,
     );
   }
-
-  Text _buildDialogContent(NetworkError error, BuildContext context) {
-    return Text(error.detail == null ? LocaleKeys.error.locale : error.detail!,
-        style: context.theme.textTheme.bodyText1);
-  }
-
-  TextButton _buildDialogCloseButton() => TextButton(child: Text(LocaleKeys.close.locale), onPressed: () => Get.back());
 }

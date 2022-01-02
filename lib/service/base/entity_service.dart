@@ -48,7 +48,7 @@ class EntityService<T extends Serializable> extends HttpClient implements IEntit
     int pn = 0,
     int ps = AppConstants.PER_PAGE_20,
     String sb = "",
-    String sd = AppConstants.SORT_DESC,
+    String sd = AppConstants.SORT_ASC,
     String requestParams = "",
   }) async {
     cancelToken = CancelToken();
@@ -122,7 +122,7 @@ class EntityService<T extends Serializable> extends HttpClient implements IEntit
     int pn = 0,
     int ps = AppConstants.PER_PAGE_20,
     String sb = "",
-    String sd = AppConstants.SORT_DESC,
+    String sd = AppConstants.SORT_ASC,
     String requestParams = "",
   }) async {
     cancelToken = CancelToken();

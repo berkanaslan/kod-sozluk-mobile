@@ -1,4 +1,5 @@
 import 'package:get_it/get_it.dart';
+import 'package:kod_sozluk_mobile/service/auth_service.dart';
 import 'package:kod_sozluk_mobile/service/entry_service.dart';
 import 'package:kod_sozluk_mobile/service/head_service.dart';
 import 'package:kod_sozluk_mobile/service/topic_service.dart';
@@ -9,4 +10,6 @@ void setupLocator() {
   locator.registerLazySingleton(() => HeadService());
   locator.registerLazySingleton(() => TopicService());
   locator.registerLazySingleton(() => EntryService());
+  locator.registerLazySingleton(() => AuthService());
+  locator.registerLazySingleton(() => UserService());
 }

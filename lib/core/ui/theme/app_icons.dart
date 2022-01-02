@@ -18,6 +18,9 @@ class AppIcons {
   static const IconData down = FontAwesomeIcons.caretSquareDown;
   static const IconData up = FontAwesomeIcons.caretSquareUp;
   static const IconData ellipsis = FontAwesomeIcons.ellipsisH;
+  static const IconData mail = EvaIcons.emailOutline;
+  static const IconData calendar = EvaIcons.calendarOutline;
+  static const IconData password = Icons.vpn_key;
   static const IconData edit = IconData(0xe800, fontFamily: "AppCustomFont", fontPackage: null);
   static const IconData more = IconData(0xf318, fontFamily: "AppCustomFont", fontPackage: null);
 }
