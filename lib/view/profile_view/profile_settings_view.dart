@@ -5,6 +5,8 @@ import 'package:kod_sozluk_mobile/core/constant/ui_constants.dart';
 import 'package:kod_sozluk_mobile/core/shared_preferences/shared_preferences.dart';
 import 'package:kod_sozluk_mobile/core/ui/theme/app_icons.dart';
 import 'package:kod_sozluk_mobile/core/ui/theme/app_theme.dart';
+import 'package:kod_sozluk_mobile/core/ui/widget/list_tile/settings_list_tile.dart';
+import 'package:kod_sozluk_mobile/core/ui/widget/list_tile/settings_list_toggle_tile.dart';
 import 'package:kod_sozluk_mobile/core/ui/widget/scaffold/app_scaffold.dart';
 import 'package:kod_sozluk_mobile/viewmodel/login_viewmodel.dart';
 import 'package:provider/provider.dart';
@@ -38,7 +40,7 @@ class _ProfileSettingsViewState extends State<ProfileSettingsView> {
           const SettingsListTile(title: "e-mail adresimi değiştir"),
           const SettingsListTile(title: "şifremi değiştir"),
           buildDarkModeToggle(context),
-          const SettingsListTile(title: "uygulama içi bildirimler", isToggle: true),
+          buildInAppNotificationsOption(context),
           const SettingsListTile(title: "kullanıcı sözleşmesi"),
           const SettingsListTile(title: "gizlilik politikası"),
           const SettingsListTile(title: "kullanım koşulları"),
@@ -56,6 +58,17 @@ class _ProfileSettingsViewState extends State<ProfileSettingsView> {
         value: AdaptiveTheme.of(context).mode == AdaptiveThemeMode.dark,
         onTap: () {},
         onChanged: (value) => setState(() => AdaptiveTheme.of(context).toggleThemeMode()),
+      ),
+    );
+  }
+
+  StatefulBuilder buildInAppNotificationsOption(BuildContext context) {
+    return StatefulBuilder(
+      builder: (context, setState) => SettingsListToggleTile(
+        title: "uygulama içi bildirimler",
+        value: true,
+        onTap: () {},
+        onChanged: (value) => {},
       ),
     );
   }
@@ -103,47 +116,6 @@ class _ProfileSettingsViewState extends State<ProfileSettingsView> {
       radius: 16,
       backgroundColor: AppColors.lightGrey,
       child: Icon(AppIcons.person, color: AppColors.white),
-    );
-  }
-}
-
-class SettingsListTile extends StatelessWidget {
-  final String title;
-  final void Function()? onPressed;
-  final bool isToggle;
-
-  const SettingsListTile({
-    Key? key,
-    required this.title,
-    this.onPressed,
-    this.isToggle = false,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return ListTile(
-      title: Text(title),
-      onTap: onPressed ?? () {},
-      trailing: const Icon(AppIcons.forward),
-    );
-  }
-}
-
-class SettingsListToggleTile extends StatelessWidget {
-  final String title;
-  final void Function()? onTap;
-  final void Function(bool value)? onChanged;
-  final bool value;
-
-  const SettingsListToggleTile({Key? key, required this.title, this.onChanged, this.value = false, this.onTap})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return ListTile(
-      title: Text(title),
-      trailing: Switch(value: value, onChanged: onChanged),
-      onTap: onTap,
     );
   }
 }
