@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:kod_sozluk_mobile/model/base/serializable.dart';
 
@@ -9,7 +10,15 @@ class Head extends Serializable {
   String? name;
   String? path;
 
-  Head({this.id, this.name, this.path});
+  @JsonKey(ignore: true)
+  Widget? body;
+
+  Head({
+    this.id,
+    this.name,
+    this.path,
+    this.body,
+  });
 
   static Head fromJson(Map<String, dynamic> json) => _$HeadFromJson(json);
 

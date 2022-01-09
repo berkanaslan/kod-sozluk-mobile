@@ -16,7 +16,7 @@ class TopicTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       title: Text(topic.name ?? ""),
-      trailing: Text("${topic.id ?? ""}", style: const TextStyle(color: AppColors.lightGrey)),
+      trailing: Text("${topic.dailyTotalEntryCount ?? ""}", style: const TextStyle(color: AppColors.lightGrey)),
       onTap: onTap,
     );
   }
