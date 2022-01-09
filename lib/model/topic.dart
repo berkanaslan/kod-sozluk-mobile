@@ -7,8 +7,9 @@ part 'topic.g.dart';
 class Topic extends Serializable {
   int? id;
   String? name;
+  int? dailyTotalEntryCount;
 
-  Topic({this.id, this.name});
+  Topic({this.id, this.name, this.dailyTotalEntryCount});
 
   static Topic fromJson(Map<String, dynamic> json) => _$TopicFromJson(json);
 

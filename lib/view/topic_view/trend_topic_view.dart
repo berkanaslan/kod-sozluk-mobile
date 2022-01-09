@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kod_sozluk_mobile/core/constant/extension/context_extension.dart';
+import 'package:kod_sozluk_mobile/core/constant/extension/string_extension.dart';
+import 'package:kod_sozluk_mobile/core/constant/lang/locale_keys.g.dart';
 import 'package:kod_sozluk_mobile/core/constant/logger.dart';
 import 'package:kod_sozluk_mobile/core/ui/widget/list_tile/topic_tile.dart';
 import 'package:kod_sozluk_mobile/model/topic.dart';
@@ -8,16 +10,14 @@ import 'package:kod_sozluk_mobile/view/topic_view/topic_detail_view/topic_detail
 import 'package:kod_sozluk_mobile/viewmodel/topic_viewmodel.dart';
 import 'package:provider/provider.dart';
 
-class TopicView extends StatefulWidget {
-  static const String PATH = "/topic";
-
-  const TopicView({Key? key}) : super(key: key);
+class TrendTopicView extends StatefulWidget {
+  const TrendTopicView({Key? key}) : super(key: key);
 
   @override
-  _TopicViewState createState() => _TopicViewState();
+  _LatestTopicViewState createState() => _LatestTopicViewState();
 }
 
-class _TopicViewState extends State<TopicView> with AutomaticKeepAliveClientMixin {
+class _LatestTopicViewState extends State<TrendTopicView> with AutomaticKeepAliveClientMixin {
   @override
   bool get wantKeepAlive => true;
 
@@ -27,29 +27,30 @@ class _TopicViewState extends State<TopicView> with AutomaticKeepAliveClientMixi
   void initState() {
     super.initState();
     viewModel = context.read<TopicViewModel>();
-    Future.microtask(() => viewModel.getPagedTopics());
+    Future.microtask(() => viewModel.getPagedTrendTopics());
   }
 
   @override
   void deactivate() {
-    viewModel.clear();
+    viewModel.clearTrendTopics();
     super.deactivate();
   }
 
   @override
   // ignore: must_call_super
   Widget build(BuildContext context) {
-    Logger.buildLogger("TopicView");
+    Logger.buildLogger("TrendTopic");
 
     return RefreshIndicator(
-      onRefresh: viewModel.refresh,
+      onRefresh: viewModel.refreshTrendTopics,
       child: ListView.builder(
         physics: const AlwaysScrollableScrollPhysics(),
         controller: NavigationProvider.of(context).screens[HOME_SCREEN].scrollController,
         shrinkWrap: true,
-        itemCount: context.watch<TopicViewModel>().topics.length,
+        itemCount: context.watch<TopicViewModel>().trendTopics.length,
         itemBuilder: (context, i) {
-          return TopicTile(topic: viewModel.topics[i], onTap: () => onTopicSelected(viewModel.topics[i]));
+          if (viewModel.trendTopics.isEmpty) return Text(LocaleKeys.nothing_found.locale);
+          return TopicTile(topic: viewModel.trendTopics[i], onTap: () => onTopicSelected(viewModel.trendTopics[i]));
         },
       ),
     );

@@ -9,34 +9,73 @@ import 'package:kod_sozluk_mobile/viewmodel/base/i_base_viewmodel.dart';
 class TopicViewModel extends BaseViewModel<Topic> {
   TopicViewModel() : super(const InitialState(), locator<TopicService>());
 
-  List<Topic> topics = [];
+  // -------------------------------------------------------------------------------------------------------------------
+  // LATEST TOPICS                                                                                                     /
+  // /topic/today                                                                                                      /
+  // -------------------------------------------------------------------------------------------------------------------
+  List<Topic> latestTopics = [];
 
-  int _pageNumber = 0;
-  int? _totalPages;
+  int _latestTopicPageNumber = 0;
+  int? _latestTopicTotalPages;
 
-  Future<void> getPagedTopics() async {
+  Future<void> getPagedLatestTopics() async {
     if (isLoading) return;
 
-    if (_totalPages == null || _pageNumber < _totalPages!) {
-      Page<Topic>? pagedTopic = await getPaged(pn: _pageNumber, sb: "id", sd: AppConstants.SORT_DESC);
+    if (_latestTopicTotalPages == null || _latestTopicPageNumber < _latestTopicTotalPages!) {
+      Page<Topic>? response = await getPaged(pn: _latestTopicPageNumber, sb: "id", sd: AppConstants.SORT_DESC);
 
-      if (pagedTopic != null) {
-        topics.addAll(pagedTopic.content!);
+      if (response != null) {
+        latestTopics.addAll(response.content!);
 
-        _pageNumber++;
-        _totalPages = (pagedTopic.totalPages! - 1);
+        _latestTopicPageNumber++;
+        _latestTopicTotalPages = (response.totalPages! - 1);
       }
     }
   }
 
-  Future<void> refresh() async {
-    clear();
-    await getPagedTopics();
+  Future<void> refreshLatestTopics() async {
+    clearLatestTopics();
+    await getPagedLatestTopics();
   }
 
-  clear() {
-    topics.clear();
-    _pageNumber = 0;
-    _totalPages = null;
+  clearLatestTopics() {
+    latestTopics.clear();
+    _latestTopicPageNumber = 0;
+    _latestTopicTotalPages = null;
+  }
+
+  // -------------------------------------------------------------------------------------------------------------------
+  // LATEST TOPICS                                                                                                     /
+  // /topic/today                                                                                                      /
+  // -------------------------------------------------------------------------------------------------------------------
+  List<Topic> trendTopics = [];
+
+  int _trendTopicPageNumber = 0;
+  int? _trendTopicTotalPages;
+
+  Future<void> getPagedTrendTopics() async {
+    if (isLoading) return;
+
+    if (_trendTopicTotalPages == null || _trendTopicPageNumber < _trendTopicTotalPages!) {
+      Page<Topic>? response = await getPaged(additionalPath: "/trend", pn: _trendTopicPageNumber);
+
+      if (response != null) {
+        trendTopics.addAll(response.content!);
+
+        _trendTopicPageNumber++;
+        _trendTopicTotalPages = (response.totalPages! - 1);
+      }
+    }
+  }
+
+  Future<void> refreshTrendTopics() async {
+    clearLatestTopics();
+    await getPagedLatestTopics();
+  }
+
+  clearTrendTopics() {
+    trendTopics.clear();
+    _trendTopicPageNumber = 0;
+    _trendTopicTotalPages = null;
   }
 }

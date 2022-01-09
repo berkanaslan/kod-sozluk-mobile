@@ -16,7 +16,6 @@ import 'package:kod_sozluk_mobile/view/profile_view/profile_view.dart';
 import 'package:kod_sozluk_mobile/view/root_view.dart';
 import 'package:kod_sozluk_mobile/view/search_view/search_view.dart';
 import 'package:kod_sozluk_mobile/view/topic_view/topic_detail_view/topic_detail_view.dart';
-import 'package:kod_sozluk_mobile/view/topic_view/topic_view.dart';
 import 'package:provider/provider.dart';
 
 const HOME_SCREEN = 0;
@@ -38,8 +37,6 @@ class NavigationProvider extends ChangeNotifier {
         return SlideLeftRoute(page: const NotFoundView());
       case HomeView.PATH:
         return SlideLeftRoute(page: const HomeView());
-      case TopicView.PATH:
-        return SlideLeftRoute(page: const TopicView());
       case EntryDetailView.PATH:
         if (settings.arguments is EntryDetailArgs) {
           return SlideLeftRoute(page: EntryDetailView(args: settings.arguments as EntryDetailArgs));
