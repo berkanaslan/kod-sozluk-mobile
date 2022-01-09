@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_utils/src/extensions/context_extensions.dart';
 import 'package:kod_sozluk_mobile/core/constant/app_constants.dart';
 import 'package:kod_sozluk_mobile/core/constant/extension/string_extension.dart';
 import 'package:kod_sozluk_mobile/core/constant/lang/locale_keys.g.dart';
@@ -49,7 +50,7 @@ class _PasswordHelperTextFieldState extends State<PasswordHelperTextField> {
       child: RichText(
         text: TextSpan(
           text: LocaleKeys.password_minimum.locale,
-          style: const TextStyle(color: AppColors.grey4),
+          style: const TextStyle(color: AppColors.grey),
           children: <TextSpan>[
             TextSpan(
               text: LocaleKeys.eight_chars.locale,
@@ -81,6 +82,6 @@ class _PasswordHelperTextFieldState extends State<PasswordHelperTextField> {
 
   Color getColor(bool value) {
     if (value) return AppColors.success;
-    return AppColors.black;
+    return context.theme.textTheme.headline1!.color!;
   }
 }

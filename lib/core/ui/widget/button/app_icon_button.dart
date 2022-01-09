@@ -27,10 +27,7 @@ class AppIconButton extends StatelessWidget {
       iconSize: size!,
       highlightColor: AppColors.transparent,
       splashColor: AppColors.transparent,
-      icon: Icon(
-        icon,
-        color: color,
-      ),
+      icon: Icon(icon, color: color),
       onPressed: onPressed,
     );
   }

@@ -1,3 +1,4 @@
+import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -26,17 +27,18 @@ Future<void> main() async {
 
   await SharedPrefs().init();
 
+  final savedThemeMode = await AdaptiveTheme.getThemeMode();
   runApp(EasyLocalization(
     path: AppConstants.ASSETS_LANG_PATH,
     supportedLocales: AppConstants.SUPPORTED_LOCALE,
     fallbackLocale: AppConstants.TR_LOCALE,
-    child: buildBlocProviders(),
+    child: buildBlocProviders(savedThemeMode),
   ));
 
   configLoadingIndicator();
 }
 
-MultiProvider buildBlocProviders() {
+MultiProvider buildBlocProviders(final AdaptiveThemeMode? savedThemeMode) {
   return MultiProvider(
     providers: [
       ChangeNotifierProvider<NavigationProvider>(create: (context) => NavigationProvider(), lazy: false),
@@ -50,25 +52,33 @@ MultiProvider buildBlocProviders() {
         BlocProvider<TopicViewModel>(create: (context) => TopicViewModel()),
         BlocProvider<EntryViewModel>(create: (context) => EntryViewModel()),
       ],
-      child: const KodSozlukApplication(),
+      child:  KodSozlukApplication(savedThemeMode: savedThemeMode),
     ),
   );
 }
 
 class KodSozlukApplication extends StatelessWidget {
-  const KodSozlukApplication({Key? key}) : super(key: key);
+  final AdaptiveThemeMode? savedThemeMode;
+
+  const KodSozlukApplication({Key? key, this.savedThemeMode}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-      debugShowCheckedModeBanner: false,
-      locale: context.locale,
-      supportedLocales: context.supportedLocales,
-      localizationsDelegates: context.localizationDelegates,
-      builder: EasyLoading.init(builder: (context, child) => ConnectivityListener(child: child!)),
-      theme: theme,
-      initialRoute: RootView.PATH,
-      onGenerateRoute: NavigationProvider.of(context).onGenerateRoute,
+    return AdaptiveTheme(
+      light: theme,
+      dark: darkTheme,
+      initial: savedThemeMode ?? AdaptiveThemeMode.light,
+      builder: (theme, darkTheme) => GetMaterialApp(
+        debugShowCheckedModeBanner: false,
+        locale: context.locale,
+        supportedLocales: context.supportedLocales,
+        localizationsDelegates: context.localizationDelegates,
+        builder: EasyLoading.init(builder: (context, child) => ConnectivityListener(child: child!)),
+        theme: theme,
+        darkTheme: darkTheme,
+        initialRoute: RootView.PATH,
+        onGenerateRoute: NavigationProvider.of(context).onGenerateRoute,
+      ),
     );
   }
 }

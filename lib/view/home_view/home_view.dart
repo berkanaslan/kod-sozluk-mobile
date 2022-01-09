@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:kod_sozluk_mobile/core/constant/extension/string_extension.dart';
 import 'package:kod_sozluk_mobile/core/constant/lang/locale_keys.g.dart';
 import 'package:kod_sozluk_mobile/core/constant/logger.dart';
-import 'package:kod_sozluk_mobile/view/root_view.dart';
 import 'package:kod_sozluk_mobile/view/topic_view/topic_view.dart';
 import 'package:kod_sozluk_mobile/viewmodel/home_viewmodel.dart';
 import 'package:provider/provider.dart';
@@ -56,8 +55,6 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
       physics: const BouncingScrollPhysics(),
       labelPadding: const EdgeInsets.only(left: 20, right: 20),
       controller: _tabController,
-      labelColor: Colors.black,
-      unselectedLabelColor: Colors.grey,
       isScrollable: true,
       indicatorWeight: 3,
       indicatorSize: TabBarIndicatorSize.label,

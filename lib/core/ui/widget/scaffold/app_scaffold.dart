@@ -6,6 +6,7 @@ class AppScaffold extends StatelessWidget {
   final Widget? titleWidget;
   final List<Widget>? actions;
   final Widget body;
+  final bool rootNavigator;
 
   const AppScaffold({
     Key? key,
@@ -13,16 +14,13 @@ class AppScaffold extends StatelessWidget {
     this.titleWidget,
     this.actions,
     required this.body,
+    this.rootNavigator = true,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(
-        title: title,
-        child: titleWidget,
-        actions: actions,
-      ),
+      appBar: CustomAppBar(rootNavigator: rootNavigator, title: title, child: titleWidget, actions: actions),
       body: body,
     );
   }

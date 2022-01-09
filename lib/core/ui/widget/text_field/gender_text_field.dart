@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:kod_sozluk_mobile/core/constant/extension/string_extension.dart';
 import 'package:kod_sozluk_mobile/core/constant/lang/locale_keys.g.dart';
 import 'package:kod_sozluk_mobile/core/constant/ui_constants.dart';
-import 'package:kod_sozluk_mobile/core/ui/theme/app_theme.dart';
 import 'package:kod_sozluk_mobile/core/ui/widget/text_field/form_field_wrapper.dart';
 
 enum Gender { MALE, FEMALE, OTHER, UNDEFINED }
@@ -23,20 +22,20 @@ class GenderSelectionFormField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FormFieldWrapper(
-        child: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(LocaleKeys.gender_.locale),
-        UIConstants.HORIZONTAL_MEDIUM_SIZED_BOX,
-        Expanded(
-          child: CupertinoSlidingSegmentedControl<Gender>(
-            backgroundColor: AppColors.grey2.withOpacity(0.5),
-            groupValue: value,
-            children: genderTabs,
-            onValueChanged: onChanged,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(LocaleKeys.gender_.locale),
+          UIConstants.HORIZONTAL_MEDIUM_SIZED_BOX,
+          Expanded(
+            child: CupertinoSlidingSegmentedControl<Gender>(
+              groupValue: value,
+              children: genderTabs,
+              onValueChanged: onChanged,
+            ),
           ),
-        ),
-      ],
-    ));
+        ],
+      ),
+    );
   }
 }

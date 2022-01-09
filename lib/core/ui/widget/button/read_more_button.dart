@@ -15,9 +15,9 @@ class ReadMoreButton extends StatelessWidget {
     return Visibility(
       visible: visible,
       child: TextButton.icon(
-        icon: const Icon(AppIcons.more, color: AppColors.grey3, size: 15),
+        icon: const Icon(AppIcons.more, color: AppColors.lightGrey, size: 15),
         label: Text(LocaleKeys.read_more.locale,
-            style: const TextStyle(color: AppColors.grey3, fontStyle: FontStyle.italic, fontSize: 12)),
+            style: const TextStyle(color: AppColors.lightGrey, fontStyle: FontStyle.italic, fontSize: 12)),
         style: ButtonStyle(overlayColor: MaterialStateProperty.all(AppColors.transparent)),
         onPressed: onPressed,
       ),

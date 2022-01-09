@@ -1,3 +1,4 @@
+import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:kod_sozluk_mobile/core/constant/app_constants.dart';
 import 'package:kod_sozluk_mobile/core/constant/extension/context_extension.dart';
@@ -9,6 +10,8 @@ class Logo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Image.asset(AppConstants.LOGO, width: size ?? context.width * 0.5);
+    return Image.asset(
+        AdaptiveTheme.of(context).mode == AdaptiveThemeMode.dark ? AppConstants.LOGO_DARK : AppConstants.LOGO,
+        width: size ?? context.width * 0.5);
   }
 }
