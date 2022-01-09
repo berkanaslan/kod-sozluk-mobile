@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_utils/src/extensions/context_extensions.dart';
 import 'package:kod_sozluk_mobile/core/constant/util/string_util.dart';
 import 'package:kod_sozluk_mobile/core/ui/theme/app_icons.dart';
 import 'package:kod_sozluk_mobile/core/ui/theme/app_theme.dart';
@@ -15,18 +16,18 @@ class AboutEntry extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
-        buildAuthor(),
+        buildAuthor(context),
         const SizedBox(width: 8.0),
         buildAvatar(),
       ],
     );
   }
 
-  Column buildAuthor() {
+  Column buildAuthor(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
-        buildUsername(),
+        buildUsername(context),
         buildDateTimeArea(),
       ],
     );
@@ -41,14 +42,14 @@ class AboutEntry extends StatelessWidget {
 
     return Text(
       dateTime,
-      style: const TextStyle(fontSize: 10, color: AppColors.grey3),
+      style: const TextStyle(fontSize: 10, color: AppColors.lightGrey),
     );
   }
 
-  Text buildUsername() {
+  Text buildUsername(BuildContext context) {
     return Text(
       entry.createdBy!,
-      style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: AppColors.primary),
+      style:  TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: context.theme.primaryColor),
     );
   }
 
@@ -56,7 +57,7 @@ class AboutEntry extends StatelessWidget {
     return GestureDetector(
       child: const CircleAvatar(
         radius: 16,
-        backgroundColor: AppColors.grey2,
+        backgroundColor: AppColors.lightGrey,
         child: Icon(AppIcons.person, color: AppColors.white),
       ),
       onTap: onAvatarPressed,

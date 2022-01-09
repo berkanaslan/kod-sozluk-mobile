@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_utils/src/extensions/context_extensions.dart';
 import 'package:kod_sozluk_mobile/core/ui/theme/app_icons.dart';
-import 'package:kod_sozluk_mobile/core/ui/theme/app_theme.dart';
 import 'package:kod_sozluk_mobile/core/ui/widget/button/app_icon_button.dart';
 
 class AddEntryIconButton extends StatelessWidget {
@@ -12,7 +12,7 @@ class AddEntryIconButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return AppIconButton(
       icon: AppIcons.edit,
-      color: AppColors.primary,
+      color: context.theme.primaryColor,
       onPressed: onPressed,
     );
   }

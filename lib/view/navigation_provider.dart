@@ -11,6 +11,7 @@ import 'package:kod_sozluk_mobile/view/home_view/home_view.dart';
 import 'package:kod_sozluk_mobile/view/message_view/messages_view.dart';
 import 'package:kod_sozluk_mobile/view/profile_view/components/login_view.dart';
 import 'package:kod_sozluk_mobile/view/profile_view/components/register_view.dart';
+import 'package:kod_sozluk_mobile/view/profile_view/profile_settings_view.dart';
 import 'package:kod_sozluk_mobile/view/profile_view/profile_view.dart';
 import 'package:kod_sozluk_mobile/view/root_view.dart';
 import 'package:kod_sozluk_mobile/view/search_view/search_view.dart';
@@ -52,6 +53,8 @@ class NavigationProvider extends ChangeNotifier {
         return SlideLeftRoute(page: const FollowingTopicsView());
       case ProfileView.PATH:
         return SlideLeftRoute(page: const ProfileView());
+      case ProfileSettingsView.PATH:
+        return SlideLeftRoute(page: const ProfileSettingsView());
       default:
         return SlideLeftRoute(page: const RootView());
     }
@@ -126,6 +129,8 @@ class NavigationProvider extends ChangeNotifier {
             return FadeRoute(page: const RegisterView());
           case LoginView.PATH:
             return FadeRoute(page: const LoginView());
+          case ProfileSettingsView.PATH:
+            return SlideLeftRoute(page: const ProfileSettingsView());
           default:
             return SlideLeftRoute(page: const ProfileView());
         }

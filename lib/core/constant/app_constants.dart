@@ -38,6 +38,7 @@ mixin AppConstants {
   // IMAGE PATHs                                                                                                      /
   // ------------------------------------------------------------------------------------------------------------------
   static const String LOGO = "assets/images/kod-sozluk-logo.png";
+  static const String LOGO_DARK = "assets/images/kod-sozluk-logo-dark.png";
 
   // ------------------------------------------------------------------------------------------------------------------
   // REGEX                                                                                                   /

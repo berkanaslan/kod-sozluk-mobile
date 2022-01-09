@@ -25,6 +25,7 @@ dependencies:
   flutter_easyloading: ^3.0.3           # Loading Indicator
   material_color_generator: ^1.1.0      # Material Color Generator
   datetime_picker_formfield: ^2.0.0     # Date Time Selection Component
+  adaptive_theme: ^2.3.0                # Theme
 
   # STATE & DATA MANAGEMENT & CONVERTING
   provider: ^6.0.1                      # Provider

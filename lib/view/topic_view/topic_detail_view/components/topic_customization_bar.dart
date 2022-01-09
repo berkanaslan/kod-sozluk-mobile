@@ -16,7 +16,7 @@ class TopicCustomizationBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: AppColors.grey,
+      color: context.theme.hoverColor,
       height: 40,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8.0),
@@ -24,7 +24,7 @@ class TopicCustomizationBar extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text(title, style: const TextStyle(color: AppColors.grey3)),
+            Text(title, style: const TextStyle(color: AppColors.lightGrey)),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               mainAxisSize: MainAxisSize.min,

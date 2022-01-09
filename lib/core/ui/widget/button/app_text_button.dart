@@ -1,6 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:kod_sozluk_mobile/core/ui/theme/app_theme.dart';
+import 'package:get/get_utils/src/extensions/context_extensions.dart';
 
 class AppTextButton extends StatelessWidget {
   final String title;
@@ -16,7 +16,7 @@ class AppTextButton extends StatelessWidget {
     required this.title,
     this.onPressed,
     this.fontSize,
-    this.color = AppColors.primary,
+    this.color,
     this.leadingText,
     this.trailingText,
     this.textAlign = TextAlign.center,
@@ -28,11 +28,11 @@ class AppTextButton extends StatelessWidget {
       child: RichText(
         text: TextSpan(
           text: leadingText,
-          style: const TextStyle(color: AppColors.black),
+          style: TextStyle(color: context.textTheme.bodyText1!.color),
           children: <TextSpan>[
             TextSpan(
               text: title,
-              style: const TextStyle(color: AppColors.primary),
+              style: TextStyle(color: context.theme.primaryColor),
               recognizer: TapGestureRecognizer()..onTap = onPressed,
             ),
             TextSpan(text: trailingText),

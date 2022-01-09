@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:kod_sozluk_mobile/core/constant/extension/context_extension.dart';
 import 'package:kod_sozluk_mobile/core/constant/extension/string_extension.dart';
 import 'package:kod_sozluk_mobile/core/constant/lang/locale_keys.g.dart';
+import 'package:kod_sozluk_mobile/core/constant/ui_constants.dart';
 import 'package:kod_sozluk_mobile/core/ui/theme/app_icons.dart';
 import 'package:kod_sozluk_mobile/core/ui/widget/button/app_text_button.dart';
 import 'package:kod_sozluk_mobile/core/ui/widget/button/rounded_button.dart';
@@ -28,6 +29,7 @@ class NotLoggedProfileView extends StatelessWidget {
           Text(LocaleKeys.register_then_start_write.locale),
           const Spacer(flex: 2),
           RoundedButton(title: LocaleKeys.register.locale, onPressed: onRegisterButtonPressed),
+          UIConstants.VERTICAL_SMALL_SIZED_BOX,
           AppTextButton(
             leadingText: LocaleKeys.already_have_an_acount.locale,
             title: LocaleKeys.login.locale,
