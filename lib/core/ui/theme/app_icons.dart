@@ -22,6 +22,10 @@ class AppIcons {
   static const IconData mail = EvaIcons.emailOutline;
   static const IconData calendar = EvaIcons.calendarOutline;
   static const IconData password = Icons.vpn_key;
+  static const IconData twitter = EvaIcons.twitter;
+  static const IconData facebook = EvaIcons.facebook;
+  static const IconData github = EvaIcons.github;
+  static const IconData instagram = FontAwesomeIcons.instagram;
   static const IconData settings = Icons.settings;
   static const IconData edit = IconData(0xe800, fontFamily: "AppCustomFont", fontPackage: null);
   static const IconData more = IconData(0xf318, fontFamily: "AppCustomFont", fontPackage: null);

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kod_sozluk_mobile/core/ui/theme/app_icons.dart';
 import 'package:kod_sozluk_mobile/core/ui/widget/button/app_icon_button.dart';
+import 'package:kod_sozluk_mobile/core/ui/widget/button/like_button.dart';
 import 'package:kod_sozluk_mobile/core/ui/widget/button/vote_button.dart';
 
 class EntryActionsBar extends StatelessWidget {
@@ -32,6 +33,10 @@ class EntryActionsBar extends StatelessWidget {
             VoteButton(
               up: false,
               onPressed: onDownVotePressed,
+            ),
+            LikeButton(
+              liked: true,
+              onPressed: () {},
             ),
           ],
         ),

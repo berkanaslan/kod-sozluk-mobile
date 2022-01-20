@@ -142,13 +142,14 @@ class _RegisterViewState extends State<RegisterView> {
   }
 
   AppTextField get newPasswordAgainTextField => AppTextField(
-      icon: AppIcons.password,
-      labelText: LocaleKeys.new_password_again.locale,
-      obscureText: true,
-      validator: (value) {
-        if (value != viewModel.newPasswordController.text) return LocaleKeys.passwords_are_not_same.locale;
-        return null;
-      });
+        icon: AppIcons.password,
+        labelText: LocaleKeys.new_password_again.locale,
+        obscureText: true,
+        validator: (value) {
+          if (value != viewModel.newPasswordController.text) return LocaleKeys.passwords_are_not_same.locale;
+          return null;
+        },
+      );
 
   StatefulBuilder get userAgreementTextField {
     return StatefulBuilder(
