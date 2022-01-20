@@ -49,16 +49,36 @@ class AboutEntry extends StatelessWidget {
   Text buildUsername(BuildContext context) {
     return Text(
       entry.createdBy!,
-      style:  TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: context.theme.primaryColor),
+      style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: context.theme.primaryColor),
     );
   }
 
-  GestureDetector buildAvatar() {
+  UserAvatar buildAvatar() {
+    return UserAvatar(onAvatarPressed: onAvatarPressed);
+  }
+}
+
+class UserAvatar extends StatelessWidget {
+  final void Function()? onAvatarPressed;
+  final double radius;
+
+  const UserAvatar({
+    Key? key,
+    required this.onAvatarPressed,
+    this.radius = 16,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
     return GestureDetector(
-      child: const CircleAvatar(
-        radius: 16,
+      child: CircleAvatar(
+        radius: radius,
         backgroundColor: AppColors.lightGrey,
-        child: Icon(AppIcons.person, color: AppColors.white),
+        child: Icon(
+          AppIcons.person,
+          color: AppColors.white,
+          size: radius,
+        ),
       ),
       onTap: onAvatarPressed,
     );

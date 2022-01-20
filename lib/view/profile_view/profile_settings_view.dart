@@ -32,7 +32,7 @@ class _ProfileSettingsViewState extends State<ProfileSettingsView> {
           firstRowBackground,
           const SettingsListTile(title: "tercihler"),
           const SettingsListTile(title: "bağlı hesaplar"),
-          const SettingsListTile(title: "kişsel bilgilerim"),
+          const SettingsListTile(title: "kişisel bilgilerim"),
           const SettingsListTile(title: "yazı boyutu"),
           const SettingsListTile(title: "reklamsız"),
           const SettingsListTile(title: "takip/engellenmiş"),
