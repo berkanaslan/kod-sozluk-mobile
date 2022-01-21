@@ -9,6 +9,7 @@ import 'package:kod_sozluk_mobile/model/base/screen.dart';
 import 'package:kod_sozluk_mobile/view/followings_topics_view/following_topics_view.dart';
 import 'package:kod_sozluk_mobile/view/home_view/home_view.dart';
 import 'package:kod_sozluk_mobile/view/message_view/messages_view.dart';
+import 'package:kod_sozluk_mobile/view/profile_view/components/connected_apps_view.dart';
 import 'package:kod_sozluk_mobile/view/profile_view/components/login_view.dart';
 import 'package:kod_sozluk_mobile/view/profile_view/components/register_view.dart';
 import 'package:kod_sozluk_mobile/view/profile_view/profile_settings_view.dart';
@@ -52,6 +53,8 @@ class NavigationProvider extends ChangeNotifier {
         return SlideLeftRoute(page: const ProfileView());
       case ProfileSettingsView.PATH:
         return SlideLeftRoute(page: const ProfileSettingsView());
+      case ConnectedAppsView.PATH:
+        return SlideLeftRoute(page: const ConnectedAppsView());
       default:
         return SlideLeftRoute(page: const RootView());
     }

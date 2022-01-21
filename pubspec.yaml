@@ -36,6 +36,7 @@ dependencies:
   shared_preferences: ^2.0.8            # Persistent Storage
   easy_localization: ^3.0.0             # Multi-Lang Support
   connectivity: ^3.0.6                  # Connection controller
+  url_launcher: ^6.0.18                 # Browder launcher
 
 dev_dependencies:
   flutter_test:

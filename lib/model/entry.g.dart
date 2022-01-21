@@ -9,8 +9,8 @@ part of 'entry.dart';
 Entry _$EntryFromJson(Map<String, dynamic> json) => Entry(
       id: json['id'] as int?,
       createdBy: json['createdBy'] as String?,
-      creationDate: json['creationDate'] as String?,
-      lastModifiedDate: json['lastModifiedDate'] as String?,
+      creationDate: dateTimeFromTimestamp(json['creationDate']),
+      lastModifiedDate: dateTimeFromTimestamp(json['lastModifiedDate']),
       topic: json['topic'] == null
           ? null
           : Topic.fromJson(json['topic'] as Map<String, dynamic>),
@@ -24,8 +24,8 @@ Entry _$EntryFromJson(Map<String, dynamic> json) => Entry(
 Map<String, dynamic> _$EntryToJson(Entry instance) => <String, dynamic>{
       'id': instance.id,
       'createdBy': instance.createdBy,
-      'creationDate': instance.creationDate,
-      'lastModifiedDate': instance.lastModifiedDate,
+      'creationDate': instance.creationDate?.toIso8601String(),
+      'lastModifiedDate': instance.lastModifiedDate?.toIso8601String(),
       'topic': instance.topic,
       'message': instance.message,
       'favorites': instance.favorites,

@@ -13,9 +13,13 @@ User _$UserFromJson(Map<String, dynamic> json) => User(
       enabled: json['enabled'] as bool?,
       blocked: json['blocked'] as bool?,
       role: json['role'] as String?,
+      connectedApplications: json['connectedApplications'] == null
+          ? null
+          : ConnectedApplications.fromJson(
+              json['connectedApplications'] as Map<String, dynamic>),
     )
       ..gender = json['gender'] as String?
-      ..dateOfBirth = User.dateTimeFromTimestamp(json['dateOfBirth']);
+      ..dateOfBirth = dateTimeFromTimestamp(json['dateOfBirth']);
 
 Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
       'id': instance.id,
@@ -26,4 +30,23 @@ Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
       'role': instance.role,
       'gender': instance.gender,
       'dateOfBirth': instance.dateOfBirth?.toIso8601String(),
+      'connectedApplications': instance.connectedApplications,
+    };
+
+ConnectedApplications _$ConnectedApplicationsFromJson(
+        Map<String, dynamic> json) =>
+    ConnectedApplications(
+      facebook: json['facebook'] as String?,
+      twitter: json['twitter'] as String?,
+      instagram: json['instagram'] as String?,
+      github: json['github'] as String?,
+    );
+
+Map<String, dynamic> _$ConnectedApplicationsToJson(
+        ConnectedApplications instance) =>
+    <String, dynamic>{
+      'facebook': instance.facebook,
+      'twitter': instance.twitter,
+      'instagram': instance.instagram,
+      'github': instance.github,
     };

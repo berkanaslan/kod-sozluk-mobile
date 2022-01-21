@@ -49,4 +49,5 @@ mixin AppConstants {
   static const String LOWERCASE_REGEX = "[a-z]";
   static const String EIGHT_CHAR_REGEX = ".{8,}";
   static const String DIGIT_REGEX = "[0-9]";
+  static const String VALID_USERNAME_REGEX = r"^[A-Za-z][A-Za-z0-9_]{0,29}$";
 }
