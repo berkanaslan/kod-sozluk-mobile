@@ -1,5 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:kod_sozluk_mobile/model/base/serializable.dart';
+import 'package:kod_sozluk_mobile/model/base/serilization_helper.dart';
 import 'package:kod_sozluk_mobile/model/topic.dart';
 import 'package:kod_sozluk_mobile/model/user.dart';
 
@@ -9,8 +10,10 @@ part 'entry.g.dart';
 class Entry extends Serializable {
   int? id;
   String? createdBy;
-  String? creationDate;
-  String? lastModifiedDate;
+  @JsonKey(fromJson: dateTimeFromTimestamp)
+  DateTime? creationDate;
+  @JsonKey(fromJson: dateTimeFromTimestamp)
+  DateTime? lastModifiedDate;
   Topic? topic;
   String? message;
   List<User>? favorites;

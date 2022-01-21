@@ -8,6 +8,7 @@ import 'package:kod_sozluk_mobile/core/ui/theme/app_theme.dart';
 import 'package:kod_sozluk_mobile/core/ui/widget/list_tile/settings_list_tile.dart';
 import 'package:kod_sozluk_mobile/core/ui/widget/list_tile/settings_list_toggle_tile.dart';
 import 'package:kod_sozluk_mobile/core/ui/widget/scaffold/app_scaffold.dart';
+import 'package:kod_sozluk_mobile/view/profile_view/components/connected_apps_view.dart';
 import 'package:kod_sozluk_mobile/viewmodel/login_viewmodel.dart';
 import 'package:provider/provider.dart';
 
@@ -31,7 +32,7 @@ class _ProfileSettingsViewState extends State<ProfileSettingsView> {
         children: [
           firstRowBackground,
           const SettingsListTile(title: "tercihler"),
-          const SettingsListTile(title: "bağlı hesaplar"),
+          buildConnectedAppsOption(context),
           const SettingsListTile(title: "kişisel bilgilerim"),
           const SettingsListTile(title: "yazı boyutu"),
           const SettingsListTile(title: "reklamsız"),
@@ -48,6 +49,13 @@ class _ProfileSettingsViewState extends State<ProfileSettingsView> {
           buildLogoutButton(context),
         ],
       ),
+    );
+  }
+
+  SettingsListTile buildConnectedAppsOption(BuildContext context) {
+    return SettingsListTile(
+      title: "bağlı hesaplar",
+      onPressed: () => context.rootNavigator.pushNamed(ConnectedAppsView.PATH),
     );
   }
 

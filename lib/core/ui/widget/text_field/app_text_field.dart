@@ -50,6 +50,7 @@ class AppTextField extends StatelessWidget {
         onChanged: onChanged,
         autovalidateMode: AutovalidateMode.onUserInteraction,
         decoration: InputDecoration(
+          icon: icon == null ? null : Icon(icon),
           isDense: true,
           hintText: hintText,
           labelText: labelText,

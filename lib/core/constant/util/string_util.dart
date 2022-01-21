@@ -5,10 +5,9 @@ mixin StringUtil {
 
   static bool isNotEmptyString(String? string) => !isEmptyString(string);
 
-  static String toFormattedDate(String date) {
-    final DateTime dt = DateTime.parse(date);
+  static String toFormattedDate(final DateTime date) {
     final DateFormat formatter = DateFormat(dateTimePattern);
-    return formatter.format(dt.toLocal());
+    return formatter.format(date.toLocal());
   }
 }
 
