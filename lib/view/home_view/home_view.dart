@@ -22,13 +22,7 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
   void initState() {
     super.initState();
     viewModel = context.read<HomeViewModel>();
-    _tabController = TabController(length: 0, vsync: this);
-  }
-
-  @override
-  void didChangeDependencies() {
     _tabController = TabController(length: viewModel.heads.length, vsync: this);
-    super.didChangeDependencies();
   }
 
   @override

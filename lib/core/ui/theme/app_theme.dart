@@ -15,6 +15,9 @@ class AppColors {
   static const Color success = Color(0xff76CB66);
   static const Color warning = Color(0xffFBC757);
   static const Color error = Color(0xffBA0001);
+  static const Color facebook = Color(0xff3b5998);
+  static const Color twitter = Color(0xff1da1f2);
+  static const Color instagram = Color(0xffc32aa3);
 }
 
 ThemeData get theme => ThemeData(

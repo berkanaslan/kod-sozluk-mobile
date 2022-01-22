@@ -57,6 +57,6 @@ class _LatestTopicViewState extends State<LatestTopicView> with AutomaticKeepAli
   }
 
   void onTopicSelected(final Topic topic) {
-    context.rootNavigator.pushNamed(EntryDetailView.PATH, arguments: EntryDetailArgs(topic: topic));
+    context.rootNavigator.pushNamed(TopicDetailView.PATH, arguments: TopicDetailArgs(topic: topic));
   }
 }
