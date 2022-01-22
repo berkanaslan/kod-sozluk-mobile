@@ -52,7 +52,7 @@ MultiProvider buildBlocProviders(final AdaptiveThemeMode? savedThemeMode) {
         BlocProvider<TopicViewModel>(create: (context) => TopicViewModel()),
         BlocProvider<EntryViewModel>(create: (context) => EntryViewModel()),
       ],
-      child:  KodSozlukApplication(savedThemeMode: savedThemeMode),
+      child: KodSozlukApplication(savedThemeMode: savedThemeMode),
     ),
   );
 }

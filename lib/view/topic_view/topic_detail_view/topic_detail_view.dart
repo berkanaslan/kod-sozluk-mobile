@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kod_sozluk_mobile/core/constant/extension/string_extension.dart';
 import 'package:kod_sozluk_mobile/core/constant/lang/locale_keys.g.dart';
+import 'package:kod_sozluk_mobile/core/constant/logger.dart';
 import 'package:kod_sozluk_mobile/core/ui/widget/button/add_entry_icon_button.dart';
 import 'package:kod_sozluk_mobile/core/ui/widget/scaffold/app_scaffold.dart';
 import 'package:kod_sozluk_mobile/model/topic.dart';
@@ -9,24 +10,24 @@ import 'package:kod_sozluk_mobile/view/topic_view/topic_detail_view/components/t
 import 'package:kod_sozluk_mobile/viewmodel/entry_viewmodel.dart';
 import 'package:provider/provider.dart';
 
-class EntryDetailArgs {
+class TopicDetailArgs {
   final Topic topic;
 
-  EntryDetailArgs({required this.topic});
+  TopicDetailArgs({required this.topic});
 }
 
-class EntryDetailView extends StatefulWidget {
+class TopicDetailView extends StatefulWidget {
   static const String PATH = "/topic/detail";
 
-  final EntryDetailArgs args;
+  final TopicDetailArgs args;
 
-  const EntryDetailView({Key? key, required this.args}) : super(key: key);
+  const TopicDetailView({Key? key, required this.args}) : super(key: key);
 
   @override
-  _EntryDetailViewState createState() => _EntryDetailViewState();
+  _TopicDetailViewState createState() => _TopicDetailViewState();
 }
 
-class _EntryDetailViewState extends State<EntryDetailView> {
+class _TopicDetailViewState extends State<TopicDetailView> {
   late final EntryViewModel viewModel;
   late final Topic topic;
 
@@ -46,6 +47,7 @@ class _EntryDetailViewState extends State<EntryDetailView> {
 
   @override
   Widget build(BuildContext context) {
+    Logger.buildLogger("TopicDetailView");
     return scaffold;
   }
 
