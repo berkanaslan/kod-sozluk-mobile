@@ -16,6 +16,9 @@ class User extends Serializable {
   @JsonKey(fromJson: dateTimeFromTimestamp)
   DateTime? dateOfBirth;
   ConnectedApplications? connectedApplications;
+  int? entryCount;
+  int? followersCount;
+  int? followingCount;
 
   User({
     this.id,
@@ -25,6 +28,9 @@ class User extends Serializable {
     this.blocked,
     this.role,
     this.connectedApplications,
+    this.entryCount,
+    this.followersCount,
+    this.followingCount,
   });
 
   static User fromJson(Map<String, dynamic> json) => _$UserFromJson(json);

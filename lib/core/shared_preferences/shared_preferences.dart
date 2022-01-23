@@ -136,10 +136,9 @@ class SharedPrefs {
 
   // Remove user data before log-out etc.
   static Future<void> removeUserData() async {
-    // From memory prefs:
     await _memoryPrefs.remove(_userKey);
-
-    // From shared prefs::
     await _sharedPrefs!.remove(_userKey);
+    await _memoryPrefs.remove(_authTokenKey);
+    await _sharedPrefs!.remove(_authTokenKey);
   }
 }

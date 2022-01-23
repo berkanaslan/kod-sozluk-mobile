@@ -57,11 +57,17 @@ class _ProfileViewState extends State<ProfileView> with TickerProviderStateMixin
     super.initState();
     tabController = TabController(length: 3, vsync: this);
 
+    initialTasks();
+  }
+
+  initialTasks() async {
     Future.microtask(() async {
+      _key.currentState?.outerController.removeListener(listenScrollPosition);
       _key.currentState?.outerController.addListener(listenScrollPosition);
 
       if (SharedPrefs.getUser() != null || StringUtil.isNotEmptyString(widget.args.username)) {
         user = await context.read<UserRepository>().getUserByUsername(widget.args.username);
+        setState(() {});
       }
     });
   }
@@ -151,16 +157,7 @@ class _ProfileViewState extends State<ProfileView> with TickerProviderStateMixin
     );
   }
 
-  SliverToBoxAdapter buildProfileHeader() {
-    return SliverToBoxAdapter(
-      child: ProfileHeader(
-        username: user?.username ?? "",
-        entryCount: "12",
-        followings: "13",
-        followers: "14",
-      ),
-    );
-  }
+  SliverToBoxAdapter buildProfileHeader() => SliverToBoxAdapter(child: ProfileHeader(user: user));
 
   Widget buildBody() => Column(children: [buildTabBarButtons(), buildTabBarViews()]);
 

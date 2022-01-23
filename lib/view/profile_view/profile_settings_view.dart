@@ -10,6 +10,7 @@ import 'package:kod_sozluk_mobile/core/ui/widget/list_tile/settings_list_toggle_
 import 'package:kod_sozluk_mobile/core/ui/widget/scaffold/app_scaffold.dart';
 import 'package:kod_sozluk_mobile/repository/user_repository.dart';
 import 'package:kod_sozluk_mobile/view/profile_view/components/connected_apps_view.dart';
+import 'package:kod_sozluk_mobile/view/root_view.dart';
 import 'package:provider/provider.dart';
 
 class ProfileSettingsView extends StatefulWidget {
@@ -86,7 +87,7 @@ class _ProfileSettingsViewState extends State<ProfileSettingsView> {
       title: "çıkış",
       onPressed: () async {
         await SharedPrefs.removeUserData();
-        context.navigator.pop();
+        context.navigator.pushNamedAndRemoveUntil(RootView.PATH, (route) => false);
         context.read<UserRepository>().checkAuthenticationAndEmit();
       },
     );

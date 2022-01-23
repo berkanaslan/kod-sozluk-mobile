@@ -2,21 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:kod_sozluk_mobile/core/constant/ui_constants.dart';
 import 'package:kod_sozluk_mobile/core/ui/widget/sized_box/app_sized_box.dart';
 import 'package:kod_sozluk_mobile/core/ui/widget/text_field/bold_text.dart';
+import 'package:kod_sozluk_mobile/model/user.dart';
 import 'package:kod_sozluk_mobile/view/topic_view/single_topic_view/components/about_entry.dart';
 
 class ProfileHeader extends StatelessWidget {
-  const ProfileHeader({
-    Key? key,
-    required this.username,
-    required this.entryCount,
-    required this.followings,
-    required this.followers,
-  }) : super(key: key);
+  final User? user;
 
-  final String username;
-  final String entryCount;
-  final String followings;
-  final String followers;
+  const ProfileHeader({Key? key, required this.user}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -27,14 +19,7 @@ class ProfileHeader extends StatelessWidget {
         children: [
           UserAvatar(radius: 36, onAvatarPressed: () {}),
           const AppSizedBox(style: AppBoxStyle.HORIZONTAL, size: AppBoxSize.M),
-          Expanded(
-            child: UserStatisticWithUsername(
-              username: username,
-              entryCount: entryCount,
-              followings: followings,
-              followers: followers,
-            ),
-          ),
+          Expanded(child: UserStatisticWithUsername(user: user)),
         ],
       ),
     );
@@ -42,18 +27,9 @@ class ProfileHeader extends StatelessWidget {
 }
 
 class UserStatisticWithUsername extends StatelessWidget {
-  final String username;
-  final String entryCount;
-  final String followings;
-  final String followers;
+  final User? user;
 
-  const UserStatisticWithUsername({
-    Key? key,
-    required this.username,
-    required this.entryCount,
-    required this.followings,
-    required this.followers,
-  }) : super(key: key);
+  const UserStatisticWithUsername({Key? key, required this.user}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -61,36 +37,29 @@ class UserStatisticWithUsername extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        BoldText(text: username),
-        UserStatisticWidget(entryCount: entryCount, followings: followings, followers: followers),
+        BoldText(text: user?.username ?? ""),
+        UserStatisticWidget(user: user),
       ],
     );
   }
 }
 
+// TODO: Translation
 class UserStatisticWidget extends StatelessWidget {
-  final String entryCount;
-  final String followings;
-  final String followers;
+  final User? user;
 
-  const UserStatisticWidget({
-    Key? key,
-    required this.entryCount,
-    required this.followings,
-    required this.followers,
-  }) : super(key: key);
+  const UserStatisticWidget({Key? key, required this.user}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    // TODO: Translation
     return Padding(
       padding: const EdgeInsets.only(right: 16, top: 16, bottom: 16),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          StatisticWithName(value: entryCount, name: "entry"),
-          StatisticWithName(value: followings, name: "takip edilen"),
-          StatisticWithName(value: followers, name: "takipçi"),
+          StatisticWithName(value: user?.entryCount?.toString() ?? "", name: "entry"),
+          StatisticWithName(value: user?.followingCount?.toString() ?? "", name: "takip edilen"),
+          StatisticWithName(value: user?.followersCount?.toString() ?? "", name: "takipçi"),
         ],
       ),
     );
