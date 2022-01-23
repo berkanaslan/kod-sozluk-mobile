@@ -1,6 +1,6 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:kod_sozluk_mobile/core/constant/extension/context_extension.dart';
+import 'package:kod_sozluk_mobile/core/constant/ui_constants.dart';
 import 'package:kod_sozluk_mobile/core/ui/theme/app_theme.dart';
 
 class SlidableButtons extends StatelessWidget {
@@ -28,6 +28,7 @@ class SlidableButtons extends StatelessWidget {
 
   Widget buildButtons(BuildContext context) {
     return Container(
+      padding: UIConstants.SMALL_PADDING,
       width: width ?? context.width,
       color: context.theme.scaffoldBackgroundColor,
       child: CupertinoSegmentedControl<int>(

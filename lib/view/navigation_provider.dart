@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kod_sozluk_mobile/core/constant/extension/string_extension.dart';
 import 'package:kod_sozluk_mobile/core/constant/lang/locale_keys.g.dart';
+import 'package:kod_sozluk_mobile/core/shared_preferences/shared_preferences.dart';
 import 'package:kod_sozluk_mobile/core/ui/theme/app_icons.dart';
 import 'package:kod_sozluk_mobile/core/ui/widget/animations/fade_route.dart';
 import 'package:kod_sozluk_mobile/core/ui/widget/animations/slide_left_route.dart';
@@ -39,8 +40,8 @@ class NavigationProvider extends ChangeNotifier {
       case HomeView.PATH:
         return SlideLeftRoute(page: const HomeView());
       case TopicDetailView.PATH:
-        if (settings.arguments is TopicDetailArgs) {
-          return SlideLeftRoute(page: TopicDetailView(args: settings.arguments as TopicDetailArgs));
+        if (settings.arguments is TopicDetailViewArgs) {
+          return SlideLeftRoute(page: TopicDetailView(args: settings.arguments as TopicDetailViewArgs));
         }
         return SlideLeftRoute(page: const NotFoundView());
       case SearchView.PATH:
@@ -50,7 +51,10 @@ class NavigationProvider extends ChangeNotifier {
       case FollowingTopicsView.PATH:
         return SlideLeftRoute(page: const FollowingTopicsView());
       case ProfileView.PATH:
-        return SlideLeftRoute(page: const ProfileView());
+        if (settings.arguments is ProfileViewArgs) {
+          return SlideLeftRoute(page: ProfileView(args: settings.arguments as ProfileViewArgs));
+        }
+        return SlideLeftRoute(page: const NotFoundView());
       case ProfileSettingsView.PATH:
         return SlideLeftRoute(page: const ProfileSettingsView());
       case ConnectedAppsView.PATH:
@@ -120,7 +124,7 @@ class NavigationProvider extends ChangeNotifier {
     PROFILE_SCREEN: Screen(
       title: LocaleKeys.profile,
       icon: AppIcons.person,
-      child: const ProfileView(),
+      child: ProfileView(args: ProfileViewArgs(username: "superadmin")),
       initialRoute: HomeView.PATH,
       navigatorState: GlobalKey<NavigatorState>(),
       onGenerateRoute: (settings) {
@@ -132,7 +136,9 @@ class NavigationProvider extends ChangeNotifier {
           case ProfileSettingsView.PATH:
             return SlideLeftRoute(page: const ProfileSettingsView());
           default:
-            return SlideLeftRoute(page: const ProfileView());
+            return SlideLeftRoute(
+              page: ProfileView(args: ProfileViewArgs(username: SharedPrefs.getUser()?.username ?? "")),
+            );
         }
       },
       scrollController: ScrollController(),

@@ -27,6 +27,7 @@ dependencies:
   datetime_picker_formfield: ^2.0.0     # Date Time Selection Component
   adaptive_theme: ^2.3.0                # Theme
   extended_nested_scroll_view: ^5.0.0
+  visibility_detector: ^0.2.2
 
   # STATE & DATA MANAGEMENT & CONVERTING
   provider: ^6.0.1                      # Provider

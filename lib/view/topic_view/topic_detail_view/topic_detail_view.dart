@@ -1,25 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:kod_sozluk_mobile/core/constant/extension/context_extension.dart';
 import 'package:kod_sozluk_mobile/core/constant/extension/string_extension.dart';
 import 'package:kod_sozluk_mobile/core/constant/lang/locale_keys.g.dart';
 import 'package:kod_sozluk_mobile/core/constant/logger.dart';
 import 'package:kod_sozluk_mobile/core/ui/widget/button/add_entry_icon_button.dart';
 import 'package:kod_sozluk_mobile/core/ui/widget/scaffold/app_scaffold.dart';
 import 'package:kod_sozluk_mobile/model/topic.dart';
+import 'package:kod_sozluk_mobile/view/profile_view/profile_view.dart';
 import 'package:kod_sozluk_mobile/view/topic_view/topic_detail_view/components/single_entry_view.dart';
 import 'package:kod_sozluk_mobile/view/topic_view/topic_detail_view/components/topic_customization_bar.dart';
 import 'package:kod_sozluk_mobile/viewmodel/entry_viewmodel.dart';
 import 'package:provider/provider.dart';
 
-class TopicDetailArgs {
+class TopicDetailViewArgs {
   final Topic topic;
 
-  TopicDetailArgs({required this.topic});
+  TopicDetailViewArgs({required this.topic});
 }
 
 class TopicDetailView extends StatefulWidget {
   static const String PATH = "/topic/detail";
 
-  final TopicDetailArgs args;
+  final TopicDetailViewArgs args;
 
   const TopicDetailView({Key? key, required this.args}) : super(key: key);
 
@@ -72,7 +74,15 @@ class _TopicDetailViewState extends State<TopicDetailView> {
     return ListView.separated(
       separatorBuilder: (context, index) => const Divider(),
       itemCount: context.watch<EntryViewModel>().entries.length,
-      itemBuilder: (context, i) => SingleEntryView(entry: viewModel.entries[i]),
+      itemBuilder: (context, i) => SingleEntryView(
+        entry: viewModel.entries[i],
+        onAvatarPressed: () => onAvatarPressed(context, i),
+      ),
     );
+  }
+
+  void onAvatarPressed(BuildContext context, int i) {
+    context.rootNavigator
+        .pushNamed(ProfileView.PATH, arguments: ProfileViewArgs(username: viewModel.entries[i].createdBy ?? ""));
   }
 }

@@ -1,3 +1,4 @@
+import 'package:kod_sozluk_mobile/core/constant/app_constants.dart';
 import 'package:kod_sozluk_mobile/core/constant/uri_constants.dart';
 import 'package:kod_sozluk_mobile/core/locator.dart';
 import 'package:kod_sozluk_mobile/model/base/page.dart';
@@ -18,13 +19,17 @@ class EntryViewModel extends BaseViewModel<Entry> {
     if (isLoading) return;
 
     if (_totalPages == null || _pageNumber < _totalPages!) {
-      Page<Entry>? pagedEntry = await getPaged(requestParams: "${URLConstants.TOPIC}/$topicId");
+      Page<Entry>? pagedEntry = await getPaged(
+        pn: _pageNumber,
+        sd: AppConstants.SORT_DESC,
+        requestParams: "${URLConstants.TOPIC}/$topicId",
+      );
 
       if (pagedEntry != null) {
         entries.addAll(pagedEntry.content!);
 
         _pageNumber++;
-        _totalPages = (pagedEntry.totalPages! - 1);
+        _totalPages = pagedEntry.totalPages;
       }
     }
   }
