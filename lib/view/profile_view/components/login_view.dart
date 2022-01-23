@@ -11,7 +11,7 @@ import 'package:kod_sozluk_mobile/core/ui/widget/text_field/app_text_field.dart'
 import 'package:kod_sozluk_mobile/model/dto/user_dto.dart';
 import 'package:kod_sozluk_mobile/model/user.dart';
 import 'package:kod_sozluk_mobile/repository/user_repository.dart';
-
+import 'package:kod_sozluk_mobile/view/root_view.dart';
 import 'package:provider/provider.dart';
 
 class LoginView extends StatefulWidget {
@@ -106,6 +106,6 @@ class _LoginViewState extends State<LoginView> {
     _formKey.currentState!.save();
 
     final User? user = await viewModel.login(userDTO);
-    if (user != null) context.navigator.pop();
+    if (user != null) context.navigator.pushNamedAndRemoveUntil(RootView.PATH, (route) => false);
   }
 }

@@ -17,6 +17,9 @@ User _$UserFromJson(Map<String, dynamic> json) => User(
           ? null
           : ConnectedApplications.fromJson(
               json['connectedApplications'] as Map<String, dynamic>),
+      entryCount: json['entryCount'] as int?,
+      followersCount: json['followersCount'] as int?,
+      followingCount: json['followingCount'] as int?,
     )
       ..gender = json['gender'] as String?
       ..dateOfBirth = dateTimeFromTimestamp(json['dateOfBirth']);
@@ -31,6 +34,9 @@ Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
       'gender': instance.gender,
       'dateOfBirth': instance.dateOfBirth?.toIso8601String(),
       'connectedApplications': instance.connectedApplications,
+      'entryCount': instance.entryCount,
+      'followersCount': instance.followersCount,
+      'followingCount': instance.followingCount,
     };
 
 ConnectedApplications _$ConnectedApplicationsFromJson(
