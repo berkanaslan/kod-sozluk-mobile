@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:kod_sozluk_mobile/core/constant/ui_constants.dart';
 import 'package:kod_sozluk_mobile/core/ui/widget/sized_box/app_sized_box.dart';
 import 'package:kod_sozluk_mobile/core/ui/widget/text_field/bold_text.dart';
-import 'package:kod_sozluk_mobile/view/topic_view/topic_detail_view/components/about_entry.dart';
+import 'package:kod_sozluk_mobile/view/topic_view/single_topic_view/components/about_entry.dart';
 
 class ProfileHeader extends StatelessWidget {
   const ProfileHeader({
@@ -21,7 +21,7 @@ class ProfileHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: UIConstants.MEDIUM_PADDING,
+      padding: UIConstants.SMALL_PADDING,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

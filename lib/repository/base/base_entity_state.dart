@@ -1,3 +1,6 @@
+import 'package:kod_sozluk_mobile/model/base/network_error.dart';
+import 'package:kod_sozluk_mobile/model/base/serializable.dart';
+
 // -------------------------------------------------------------------------------------------------------------------
 // BASE ENTITY STATE => Deals with:                                                                                  /
 // - InitialState                                                                                                    /
@@ -5,9 +8,6 @@
 // - CompletedState                                                                                                  /
 // - Error State                                                                                                     /
 // -------------------------------------------------------------------------------------------------------------------
-import 'package:kod_sozluk_mobile/model/base/network_error.dart';
-import 'package:kod_sozluk_mobile/model/base/serializable.dart';
-
 abstract class BaseEntityState {
   const BaseEntityState();
 }
@@ -37,4 +37,3 @@ class ErrorState extends BaseEntityState {
 
   const ErrorState(this.networkError);
 }
-

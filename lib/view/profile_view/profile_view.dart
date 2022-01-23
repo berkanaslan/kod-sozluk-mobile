@@ -1,12 +1,9 @@
 // ignore_for_file: must_call_super
-
-import 'dart:developer';
-
 import 'package:extended_nested_scroll_view/extended_nested_scroll_view.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Page;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kod_sozluk_mobile/core/constant/extension/context_extension.dart';
-import 'package:kod_sozluk_mobile/core/locator.dart';
+import 'package:kod_sozluk_mobile/core/constant/util/string_util.dart';
 import 'package:kod_sozluk_mobile/core/shared_preferences/shared_preferences.dart';
 import 'package:kod_sozluk_mobile/core/ui/theme/app_icons.dart';
 import 'package:kod_sozluk_mobile/core/ui/widget/button/app_icon_button.dart';
@@ -14,19 +11,18 @@ import 'package:kod_sozluk_mobile/core/ui/widget/button/slidable_buttons.dart';
 import 'package:kod_sozluk_mobile/core/ui/widget/button/social_media_buttons.dart';
 import 'package:kod_sozluk_mobile/core/ui/widget/sized_box/app_sized_box.dart';
 import 'package:kod_sozluk_mobile/core/ui/widget/text_field/bold_text.dart';
+import 'package:kod_sozluk_mobile/model/base/page.dart';
+import 'package:kod_sozluk_mobile/model/entry.dart';
 import 'package:kod_sozluk_mobile/model/user.dart';
-import 'package:kod_sozluk_mobile/service/auth_service.dart';
+import 'package:kod_sozluk_mobile/repository/entry_repository.dart';
+import 'package:kod_sozluk_mobile/repository/user_repository.dart';
 import 'package:kod_sozluk_mobile/view/profile_view/components/login_view.dart';
 import 'package:kod_sozluk_mobile/view/profile_view/components/not_logged_profile_view.dart';
 import 'package:kod_sozluk_mobile/view/profile_view/components/profile_view_header.dart';
 import 'package:kod_sozluk_mobile/view/profile_view/components/register_view.dart';
 import 'package:kod_sozluk_mobile/view/profile_view/profile_settings_view.dart';
-import 'package:kod_sozluk_mobile/view/topic_view/topic_detail_view/components/about_entry.dart';
-import 'package:kod_sozluk_mobile/view/topic_view/topic_detail_view/components/single_entry_view.dart';
-import 'package:kod_sozluk_mobile/viewmodel/base/base_viewmodel.dart';
-import 'package:kod_sozluk_mobile/viewmodel/base/i_base_viewmodel.dart';
-import 'package:kod_sozluk_mobile/viewmodel/entry_viewmodel.dart';
-import 'package:kod_sozluk_mobile/viewmodel/login_viewmodel.dart';
+import 'package:kod_sozluk_mobile/view/topic_view/single_topic_view/components/about_entry.dart';
+import 'package:kod_sozluk_mobile/view/topic_view/single_topic_view/components/single_entry_view.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
 class ProfileViewArgs {
@@ -63,17 +59,24 @@ class _ProfileViewState extends State<ProfileView> with TickerProviderStateMixin
 
     Future.microtask(() async {
       _key.currentState?.outerController.addListener(listenScrollPosition);
-      final BaseViewModel<User> userService = BaseViewModel(const InitialState(), locator<UserService>());
-      log("Berkan ${widget.args.username}");
-      user = await userService.get(requestParams: "?username=${widget.args.username}");
+
+      if (SharedPrefs.getUser() != null || StringUtil.isNotEmptyString(widget.args.username)) {
+        user = await context.read<UserRepository>().getUserByUsername(widget.args.username);
+      }
     });
+  }
+
+  @override
+  void dispose() {
+    tabController.dispose();
+    super.dispose();
   }
 
   void listenScrollPosition() {
     bool isScrolled = _displayAppBar;
     if (_key.currentState!.outerController.offset <= 10.0) {
       isScrolled = false;
-    } else if (_key.currentState!.outerController.offset >= 160.0) {
+    } else if (_key.currentState!.outerController.offset >= 144.0) {
       isScrolled = true;
     }
 
@@ -84,14 +87,8 @@ class _ProfileViewState extends State<ProfileView> with TickerProviderStateMixin
   }
 
   @override
-  void dispose() {
-    tabController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return BlocConsumer<LoginViewModel, AuthState>(
+    return BlocConsumer<UserRepository, AuthState>(
       listenWhen: (previous, current) => previous != current,
       listener: (context, state) {},
       buildWhen: (previous, current) => previous != current,
@@ -157,7 +154,7 @@ class _ProfileViewState extends State<ProfileView> with TickerProviderStateMixin
   SliverToBoxAdapter buildProfileHeader() {
     return SliverToBoxAdapter(
       child: ProfileHeader(
-        username: SharedPrefs.getUser()?.username ?? "",
+        username: user?.username ?? "",
         entryCount: "12",
         followings: "13",
         followers: "14",
@@ -210,23 +207,52 @@ class _ProfileViewState extends State<ProfileView> with TickerProviderStateMixin
   }
 }
 
-class ProfileTabBarView extends StatelessWidget {
+class ProfileTabBarView extends StatefulWidget {
   final void Function(VisibilityInfo info)? onEndOfDrag;
 
   const ProfileTabBarView({Key? key, this.onEndOfDrag}) : super(key: key);
 
   @override
+  State<ProfileTabBarView> createState() => _ProfileTabBarViewState();
+}
+
+class _ProfileTabBarViewState extends State<ProfileTabBarView> {
+  late final EntryRepository entryRepository;
+  int pageNumber = 0;
+  int? totalPages;
+  List<Entry> entries = [];
+
+  @override
+  void initState() {
+    super.initState();
+    entryRepository = context.read<EntryRepository>();
+    Future.microtask(getEntriesByTopicId);
+  }
+
+  Future<void> getEntriesByTopicId() async {
+    // TODO: Change function
+    Page<Entry>? response =
+        await entryRepository.getEntriesByTopicId(topicId: 1, pageNumber: pageNumber, totalPages: totalPages);
+
+    if (response != null) {
+      pageNumber++;
+      totalPages = response.totalPages;
+      entries.addAll(response.content!);
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return ListView(children: [
-      ...context.watch<EntryViewModel>().entries.map((e) => SingleEntryView(entry: e)).toList(),
-      if (onEndOfDrag != null) buildVisibilityDetector(),
+      ...entries.map((e) => SingleEntryView(entry: e)).toList(),
+      if (widget.onEndOfDrag != null) buildVisibilityDetector(),
     ]);
   }
 
   Widget buildVisibilityDetector() {
     return VisibilityDetector(
       key: Key("UK_$hashCode"),
-      onVisibilityChanged: onEndOfDrag!,
+      onVisibilityChanged: widget.onEndOfDrag!,
       child: const AppSizedBox(),
     );
   }

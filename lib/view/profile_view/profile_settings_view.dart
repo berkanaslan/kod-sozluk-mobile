@@ -8,8 +8,8 @@ import 'package:kod_sozluk_mobile/core/ui/theme/app_theme.dart';
 import 'package:kod_sozluk_mobile/core/ui/widget/list_tile/settings_list_tile.dart';
 import 'package:kod_sozluk_mobile/core/ui/widget/list_tile/settings_list_toggle_tile.dart';
 import 'package:kod_sozluk_mobile/core/ui/widget/scaffold/app_scaffold.dart';
+import 'package:kod_sozluk_mobile/repository/user_repository.dart';
 import 'package:kod_sozluk_mobile/view/profile_view/components/connected_apps_view.dart';
-import 'package:kod_sozluk_mobile/viewmodel/login_viewmodel.dart';
 import 'package:provider/provider.dart';
 
 class ProfileSettingsView extends StatefulWidget {
@@ -87,7 +87,7 @@ class _ProfileSettingsViewState extends State<ProfileSettingsView> {
       onPressed: () async {
         await SharedPrefs.removeUserData();
         context.navigator.pop();
-        context.read<LoginViewModel>().checkAuthenticationAndEmit();
+        context.read<UserRepository>().checkAuthenticationAndEmit();
       },
     );
   }

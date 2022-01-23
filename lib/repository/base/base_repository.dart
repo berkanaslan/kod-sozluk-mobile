@@ -7,14 +7,14 @@ import 'package:kod_sozluk_mobile/core/ui/widget/dialog/app_exit_dialog.dart';
 import 'package:kod_sozluk_mobile/model/base/network_error.dart';
 import 'package:kod_sozluk_mobile/model/base/page.dart';
 import 'package:kod_sozluk_mobile/model/base/serializable.dart';
+import 'package:kod_sozluk_mobile/repository/base/base_entity_state.dart';
 import 'package:kod_sozluk_mobile/service/base/entity_service.dart';
 import 'package:kod_sozluk_mobile/service/base/i_entity_service.dart';
-import 'package:kod_sozluk_mobile/viewmodel/base/i_base_viewmodel.dart';
 
-class BaseViewModel<T extends Serializable> extends Cubit<BaseEntityState> implements IEntityService<T> {
+class BaseRepository<T extends Serializable> extends Cubit<BaseEntityState> implements IEntityService<T> {
   final EntityService<T> service;
 
-  BaseViewModel(BaseEntityState initialState, this.service) : super(initialState);
+  BaseRepository(BaseEntityState initialState, this.service) : super(initialState);
 
   // -------------------------------------------------------------------------------------------------------------------
   // LOADING INDICATOR                                                                                                 /
