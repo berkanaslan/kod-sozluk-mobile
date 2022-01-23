@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:kod_sozluk_mobile/core/constant/extension/string_extension.dart';
 import 'package:kod_sozluk_mobile/core/constant/lang/locale_keys.g.dart';
 import 'package:kod_sozluk_mobile/core/constant/logger.dart';
-import 'package:kod_sozluk_mobile/viewmodel/home_viewmodel.dart';
-import 'package:provider/provider.dart';
+import 'package:kod_sozluk_mobile/model/head.dart';
+import 'package:kod_sozluk_mobile/view/topic_view/latest_topic_view.dart';
 
 class HomeView extends StatefulWidget {
   static const String PATH = "/home";
@@ -15,14 +15,24 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
-  late final HomeViewModel viewModel;
+  final List<Head> heads = [
+    Head(name: "bugün", body: const LatestTopicView()),
+    Head(name: "gündem"),
+    Head(name: "debe"),
+    Head(name: "sorunsallar"),
+    Head(name: "takip"),
+    Head(name: "tarihte bugün"),
+    Head(name: "son"),
+    Head(name: "kenar"),
+    Head(name: "çaylaklar"),
+  ];
+
   late TabController _tabController;
 
   @override
   void initState() {
     super.initState();
-    viewModel = context.read<HomeViewModel>();
-    _tabController = TabController(length: viewModel.heads.length, vsync: this);
+    _tabController = TabController(length: heads.length, vsync: this);
   }
 
   @override
@@ -50,7 +60,7 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
       isScrollable: true,
       indicatorWeight: 3,
       indicatorSize: TabBarIndicatorSize.label,
-      tabs: viewModel.heads.map((head) => Tab(text: head.name)).toList(),
+      tabs: heads.map((head) => Tab(text: head.name)).toList(),
     );
   }
 
@@ -58,7 +68,7 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
     return Expanded(
       child: TabBarView(
         controller: _tabController,
-        children: viewModel.heads.map((head) => head.body ?? nothingFoundWidget).toList(),
+        children: heads.map((head) => head.body ?? nothingFoundWidget).toList(),
       ),
     );
   }

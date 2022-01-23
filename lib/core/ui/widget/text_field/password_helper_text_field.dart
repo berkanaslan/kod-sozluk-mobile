@@ -5,17 +5,19 @@ import 'package:kod_sozluk_mobile/core/constant/extension/string_extension.dart'
 import 'package:kod_sozluk_mobile/core/constant/lang/locale_keys.g.dart';
 import 'package:kod_sozluk_mobile/core/ui/theme/app_theme.dart';
 import 'package:kod_sozluk_mobile/core/ui/widget/text_field/form_field_wrapper.dart';
-import 'package:kod_sozluk_mobile/viewmodel/register_viewmodel.dart';
-import 'package:provider/provider.dart';
 
 class PasswordHelperTextField extends StatefulWidget {
-  const PasswordHelperTextField({Key? key}) : super(key: key);
+  final TextEditingController controller;
+
+  const PasswordHelperTextField({Key? key, required this.controller}) : super(key: key);
 
   @override
   State<PasswordHelperTextField> createState() => _PasswordHelperTextFieldState();
 }
 
 class _PasswordHelperTextFieldState extends State<PasswordHelperTextField> {
+  late final TextEditingController controller;
+
   bool isGreaterThanEight = false;
   bool hasUpperCase = false;
   bool hasLowerCase = false;
@@ -24,9 +26,9 @@ class _PasswordHelperTextFieldState extends State<PasswordHelperTextField> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(() {
-      final controller = context.read<RegisterViewModel>().newPasswordController;
+    controller = widget.controller;
 
+    Future.microtask(() {
       controller.addListener(() {
         isGreaterThanEight = RegExp(AppConstants.EIGHT_CHAR_REGEX).hasMatch(controller.text);
         hasUpperCase = RegExp(AppConstants.UPPERCASE_REGEX).hasMatch(controller.text);

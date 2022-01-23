@@ -9,14 +9,12 @@ import 'package:kod_sozluk_mobile/core/locator.dart';
 import 'package:kod_sozluk_mobile/core/shared_preferences/shared_preferences.dart';
 import 'package:kod_sozluk_mobile/core/ui/theme/app_theme.dart';
 import 'package:kod_sozluk_mobile/core/ui/widget/scaffold/connection_listener.dart';
+import 'package:kod_sozluk_mobile/repository/entry_repository.dart';
+import 'package:kod_sozluk_mobile/repository/topic_repository.dart';
+import 'package:kod_sozluk_mobile/repository/user_repository.dart';
 import 'package:kod_sozluk_mobile/view/navigation_provider.dart';
 import 'package:kod_sozluk_mobile/view/root_view.dart';
-import 'package:kod_sozluk_mobile/viewmodel/connectivity_viewmodel.dart';
-import 'package:kod_sozluk_mobile/viewmodel/entry_viewmodel.dart';
-import 'package:kod_sozluk_mobile/viewmodel/home_viewmodel.dart';
-import 'package:kod_sozluk_mobile/viewmodel/login_viewmodel.dart';
-import 'package:kod_sozluk_mobile/viewmodel/register_viewmodel.dart';
-import 'package:kod_sozluk_mobile/viewmodel/topic_viewmodel.dart';
+import 'package:kod_sozluk_mobile/viewmodel/connectivity_controller.dart';
 import 'package:provider/provider.dart';
 
 Future<void> main() async {
@@ -45,12 +43,10 @@ MultiProvider buildBlocProviders(final AdaptiveThemeMode? savedThemeMode) {
     ],
     child: MultiBlocProvider(
       providers: [
-        BlocProvider<ConnectivityViewModel>(create: (context) => ConnectivityViewModel(), lazy: false),
-        BlocProvider<LoginViewModel>(create: (context) => LoginViewModel(), lazy: false),
-        BlocProvider<RegisterViewModel>(create: (context) => RegisterViewModel()),
-        BlocProvider<HomeViewModel>(create: (context) => HomeViewModel()),
-        BlocProvider<TopicViewModel>(create: (context) => TopicViewModel()),
-        BlocProvider<EntryViewModel>(create: (context) => EntryViewModel()),
+        BlocProvider<ConnectivityController>(create: (context) => ConnectivityController(), lazy: false),
+        BlocProvider<UserRepository>(create: (context) => UserRepository(), lazy: false),
+        BlocProvider<EntryRepository>(create: (context) => EntryRepository()),
+        BlocProvider<TopicRepository>(create: (context) => TopicRepository()),
       ],
       child: KodSozlukApplication(savedThemeMode: savedThemeMode),
     ),

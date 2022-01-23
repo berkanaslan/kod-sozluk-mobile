@@ -8,8 +8,10 @@ import 'package:kod_sozluk_mobile/core/ui/widget/button/app_text_button.dart';
 import 'package:kod_sozluk_mobile/core/ui/widget/button/rounded_button.dart';
 import 'package:kod_sozluk_mobile/core/ui/widget/image/logo.dart';
 import 'package:kod_sozluk_mobile/core/ui/widget/text_field/app_text_field.dart';
+import 'package:kod_sozluk_mobile/model/dto/user_dto.dart';
 import 'package:kod_sozluk_mobile/model/user.dart';
-import 'package:kod_sozluk_mobile/viewmodel/login_viewmodel.dart';
+import 'package:kod_sozluk_mobile/repository/user_repository.dart';
+
 import 'package:provider/provider.dart';
 
 class LoginView extends StatefulWidget {
@@ -22,12 +24,15 @@ class LoginView extends StatefulWidget {
 }
 
 class _LoginViewState extends State<LoginView> {
-  late final LoginViewModel viewModel;
+  late final UserRepository viewModel;
+
+  UserDTO userDTO = UserDTO();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
     super.initState();
-    viewModel = context.read<LoginViewModel>();
+    viewModel = context.read<UserRepository>();
   }
 
   @override
@@ -40,7 +45,7 @@ class _LoginViewState extends State<LoginView> {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Form(
-      key: viewModel.loginFormKey,
+      key: _formKey,
       child: Column(
         children: [
           const Spacer(),
@@ -78,7 +83,7 @@ class _LoginViewState extends State<LoginView> {
       labelText: LocaleKeys.username.locale,
       icon: AppIcons.person,
       textInputType: TextInputType.emailAddress,
-      onSaved: (value) => viewModel.userDTO.username = value,
+      onSaved: (value) => userDTO.username = value,
     );
   }
 
@@ -87,15 +92,20 @@ class _LoginViewState extends State<LoginView> {
       icon: AppIcons.password,
       labelText: LocaleKeys.password.locale,
       obscureText: true,
-      onSaved: (value) => viewModel.userDTO.password = value,
+      onSaved: (value) => userDTO.password = value,
     );
   }
 
-  RoundedButton get loginButton => RoundedButton(
-        title: LocaleKeys.try_login.locale,
-        onPressed: () async {
-          final User? user = await viewModel.onLoginButtonPressed();
-          if (user != null) context.navigator.pop();
-        },
-      );
+  RoundedButton get loginButton => RoundedButton(title: LocaleKeys.try_login.locale, onPressed: onLoginButtonPressed);
+
+  void onLoginButtonPressed() async {
+    if (!_formKey.currentState!.validate()) {
+      return;
+    }
+
+    _formKey.currentState!.save();
+
+    final User? user = await viewModel.login(userDTO);
+    if (user != null) context.navigator.pop();
+  }
 }

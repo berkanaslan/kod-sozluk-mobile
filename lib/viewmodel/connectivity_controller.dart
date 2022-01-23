@@ -1,8 +1,8 @@
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class ConnectivityViewModel extends Cubit<NetworkState> {
-  ConnectivityViewModel() : super(const ConnectionInitial()) {
+class ConnectivityController extends Cubit<NetworkState> {
+  ConnectivityController() : super(const ConnectionInitial()) {
     Connectivity().onConnectivityChanged.listen((ConnectivityResult event) {
       if (event == ConnectivityResult.wifi ||
           event == ConnectivityResult.mobile) {

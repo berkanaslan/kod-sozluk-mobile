@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:kod_sozluk_mobile/core/constant/ui_constants.dart';
 import 'package:kod_sozluk_mobile/model/entry.dart';
-import 'package:kod_sozluk_mobile/view/topic_view/topic_detail_view/components/about_entry.dart';
-import 'package:kod_sozluk_mobile/view/topic_view/topic_detail_view/components/entry_actions_bar.dart';
-import 'package:kod_sozluk_mobile/view/topic_view/topic_detail_view/components/entry_reader.dart';
+import 'package:kod_sozluk_mobile/view/topic_view/single_topic_view/components/about_entry.dart';
+import 'package:kod_sozluk_mobile/view/topic_view/single_topic_view/components/entry_actions_bar.dart';
+import 'package:kod_sozluk_mobile/view/topic_view/single_topic_view/components/entry_reader.dart';
 
 class SingleEntryView extends StatelessWidget {
   final Entry entry;
