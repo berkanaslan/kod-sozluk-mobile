@@ -41,13 +41,16 @@ class BaseViewModel<T extends Serializable> extends Cubit<BaseEntityState> imple
   // -------------------------------------------------------------------------------------------------------------------
   @override
   Future<T?> get({
-    String requestParams = "",
     String additionalPath = "",
+    String requestParams = "",
   }) async {
     try {
       showLoading();
 
-      final T? response = await service.get(requestParams: requestParams);
+      final T? response = await service.get(
+        additionalPath: additionalPath,
+        requestParams: requestParams,
+      );
 
       emit(CompletedState(response: response));
 
@@ -62,15 +65,15 @@ class BaseViewModel<T extends Serializable> extends Cubit<BaseEntityState> imple
 
   @override
   Future<List<T>?> getAll({
-    String requestParams = "",
     String additionalPath = "",
+    String requestParams = "",
   }) async {
     try {
       showLoading();
 
       final List<T>? responseList = await service.getAll(
-        requestParams: requestParams,
         additionalPath: additionalPath,
+        requestParams: requestParams,
       );
 
       emit(CompletedState(responseList: responseList));
@@ -90,8 +93,8 @@ class BaseViewModel<T extends Serializable> extends Cubit<BaseEntityState> imple
     int ps = AppConstants.PER_PAGE_20,
     String sb = "",
     String sd = AppConstants.SORT_ASC,
-    String requestParams = "",
     String additionalPath = "",
+    String requestParams = "",
   }) async {
     try {
       showLoading();
@@ -101,8 +104,8 @@ class BaseViewModel<T extends Serializable> extends Cubit<BaseEntityState> imple
         ps: ps,
         sb: sb,
         sd: sd,
-        requestParams: requestParams,
         additionalPath: additionalPath,
+        requestParams: requestParams,
       );
 
       emit(CompletedState(response: response));
@@ -119,16 +122,16 @@ class BaseViewModel<T extends Serializable> extends Cubit<BaseEntityState> imple
   @override
   Future<T?> post({
     required Serializable requestBody,
-    String requestParams = "",
     String additionalPath = "",
+    String requestParams = "",
   }) async {
     try {
       showLoading();
 
       final T? response = await service.post(
         requestBody: requestBody,
-        requestParams: requestParams,
         additionalPath: additionalPath,
+        requestParams: requestParams,
       );
 
       emit(CompletedState(response: response));
@@ -145,42 +148,16 @@ class BaseViewModel<T extends Serializable> extends Cubit<BaseEntityState> imple
   @override
   Future<List<T>?> postAll({
     required Serializable requestBody,
-    String requestParams = "",
     String additionalPath = "",
+    String requestParams = "",
   }) async {
     try {
       showLoading();
 
       final List<T>? responseList = await service.postAll(
         requestBody: requestBody,
-        requestParams: requestParams,
         additionalPath: additionalPath,
-      );
-
-      emit(CompletedState(responseList: responseList));
-
-      return responseList;
-    } on NetworkError catch (error) {
-      emit(ErrorState(error));
-      showNetworkError(error);
-    } finally {
-      dismissLoading();
-    }
-  }
-
-  @override
-  Future<List<T>?> postAllList({
-    required List<Serializable> requestBody,
-    String requestParams = "",
-    String additionalPath = "",
-  }) async {
-    try {
-      showLoading();
-
-      final List<T>? responseList = await service.postAllList(
-        requestBody: requestBody,
         requestParams: requestParams,
-        additionalPath: additionalPath,
       );
 
       emit(CompletedState(responseList: responseList));
@@ -201,8 +178,8 @@ class BaseViewModel<T extends Serializable> extends Cubit<BaseEntityState> imple
     int ps = AppConstants.PER_PAGE_20,
     String sb = "",
     String sd = AppConstants.SORT_ASC,
-    String requestParams = "",
     String additionalPath = "",
+    String requestParams = "",
   }) async {
     try {
       showLoading();
@@ -213,8 +190,8 @@ class BaseViewModel<T extends Serializable> extends Cubit<BaseEntityState> imple
         sb: sb,
         sd: sd,
         requestBody: requestBody,
-        requestParams: requestParams,
         additionalPath: additionalPath,
+        requestParams: requestParams,
       );
 
       emit(CompletedState(response: response));
@@ -229,16 +206,42 @@ class BaseViewModel<T extends Serializable> extends Cubit<BaseEntityState> imple
   }
 
   @override
-  Future<bool?> delete({
-    String requestParams = "",
+  Future<List<T>?> postAllList({
+    required List<Serializable> requestBody,
     String additionalPath = "",
+    String requestParams = "",
+  }) async {
+    try {
+      showLoading();
+
+      final List<T>? responseList = await service.postAllList(
+        requestBody: requestBody,
+        additionalPath: additionalPath,
+        requestParams: requestParams,
+      );
+
+      emit(CompletedState(responseList: responseList));
+
+      return responseList;
+    } on NetworkError catch (error) {
+      emit(ErrorState(error));
+      showNetworkError(error);
+    } finally {
+      dismissLoading();
+    }
+  }
+
+  @override
+  Future<bool?> delete({
+    String additionalPath = "",
+    String requestParams = "",
   }) async {
     try {
       showLoading();
 
       bool? response = await service.delete(
-        requestParams: requestParams,
         additionalPath: additionalPath,
+        requestParams: requestParams,
       );
 
       response ??= false;

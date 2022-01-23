@@ -57,6 +57,6 @@ class _LatestTopicViewState extends State<TrendTopicView> with AutomaticKeepAliv
   }
 
   void onTopicSelected(final Topic topic) {
-    context.rootNavigator.pushNamed(TopicDetailView.PATH, arguments: TopicDetailArgs(topic: topic));
+    context.rootNavigator.pushNamed(TopicDetailView.PATH, arguments: TopicDetailViewArgs(topic: topic));
   }
 }
