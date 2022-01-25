@@ -3,7 +3,6 @@ import 'package:extended_nested_scroll_view/extended_nested_scroll_view.dart';
 import 'package:flutter/material.dart' hide Page;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kod_sozluk_mobile/core/constant/extension/context_extension.dart';
-import 'package:kod_sozluk_mobile/core/constant/util/string_util.dart';
 import 'package:kod_sozluk_mobile/core/shared_preferences/shared_preferences.dart';
 import 'package:kod_sozluk_mobile/core/ui/theme/app_icons.dart';
 import 'package:kod_sozluk_mobile/core/ui/widget/button/app_icon_button.dart';
@@ -11,24 +10,21 @@ import 'package:kod_sozluk_mobile/core/ui/widget/button/slidable_buttons.dart';
 import 'package:kod_sozluk_mobile/core/ui/widget/button/social_media_buttons.dart';
 import 'package:kod_sozluk_mobile/core/ui/widget/sized_box/app_sized_box.dart';
 import 'package:kod_sozluk_mobile/core/ui/widget/text_field/bold_text.dart';
-import 'package:kod_sozluk_mobile/model/base/page.dart';
-import 'package:kod_sozluk_mobile/model/entry.dart';
 import 'package:kod_sozluk_mobile/model/user.dart';
-import 'package:kod_sozluk_mobile/repository/entry_repository.dart';
 import 'package:kod_sozluk_mobile/repository/user_repository.dart';
 import 'package:kod_sozluk_mobile/view/profile_view/components/login_view.dart';
 import 'package:kod_sozluk_mobile/view/profile_view/components/not_logged_profile_view.dart';
 import 'package:kod_sozluk_mobile/view/profile_view/components/profile_view_header.dart';
 import 'package:kod_sozluk_mobile/view/profile_view/components/register_view.dart';
+import 'package:kod_sozluk_mobile/view/profile_view/components/user_entries_view.dart';
+import 'package:kod_sozluk_mobile/view/profile_view/components/user_favorites_view.dart';
 import 'package:kod_sozluk_mobile/view/profile_view/profile_settings_view.dart';
 import 'package:kod_sozluk_mobile/view/topic_view/single_topic_view/components/about_entry.dart';
-import 'package:kod_sozluk_mobile/view/topic_view/single_topic_view/components/single_entry_view.dart';
-import 'package:visibility_detector/visibility_detector.dart';
 
 class ProfileViewArgs {
-  final String username;
+  final int userId;
 
-  ProfileViewArgs({required this.username});
+  ProfileViewArgs({required this.userId});
 }
 
 class ProfileView extends StatefulWidget {
@@ -50,23 +46,24 @@ class _ProfileViewState extends State<ProfileView> with TickerProviderStateMixin
   // Active index of tabs
   int _currentIndex = 0;
 
+  late final int userId;
   User? user;
 
   @override
   void initState() {
     super.initState();
+    userId = widget.args.userId;
     tabController = TabController(length: 3, vsync: this);
 
     initialTasks();
   }
 
-  initialTasks() async {
+  Future<void> initialTasks() async {
     Future.microtask(() async {
-      _key.currentState?.outerController.removeListener(listenScrollPosition);
       _key.currentState?.outerController.addListener(listenScrollPosition);
 
-      if (SharedPrefs.getUser() != null || StringUtil.isNotEmptyString(widget.args.username)) {
-        user = await context.read<UserRepository>().getUserByUsername(widget.args.username);
+      if (SharedPrefs.getUser() != null) {
+        user = await context.read<UserRepository>().getUserById(userId);
         setState(() {});
       }
     });
@@ -75,6 +72,7 @@ class _ProfileViewState extends State<ProfileView> with TickerProviderStateMixin
   @override
   void dispose() {
     tabController.dispose();
+    _key.currentState?.outerController.dispose();
     super.dispose();
   }
 
@@ -124,8 +122,8 @@ class _ProfileViewState extends State<ProfileView> with TickerProviderStateMixin
   List<Widget> buildSliverHeader(BuildContext context, bool innerBoxIsScrolled) {
     return <Widget>[
       buildAppBar(context),
-      buildProfileHeader(),
-      const SliverToBoxAdapter(child: SocialMediaButtons()),
+      SliverToBoxAdapter(child: ProfileHeader(user: user)),
+      SliverToBoxAdapter(child: SocialMediaButtons(user: user)),
     ];
   }
 
@@ -153,29 +151,31 @@ class _ProfileViewState extends State<ProfileView> with TickerProviderStateMixin
     return AppIconButton(
       icon: AppIcons.settings,
       color: context.theme.primaryColor,
-      onPressed: () => context.navigator.pushNamed(ProfileSettingsView.PATH),
+      onPressed: () async {
+        context.navigator.pushNamed(ProfileSettingsView.PATH).then((value) async {
+          user = SharedPrefs.getUser();
+          setState(() {});
+        });
+      },
     );
   }
 
-  SliverToBoxAdapter buildProfileHeader() => SliverToBoxAdapter(child: ProfileHeader(user: user));
+  Widget buildBody() {
+    return Column(children: [
+      buildTabBarButtons(),
+      Expanded(child: buildTabBarViews()),
+    ]);
+  }
 
-  Widget buildBody() => Column(children: [buildTabBarButtons(), buildTabBarViews()]);
-
-  Expanded buildTabBarViews() {
-    return Expanded(
-      child: Builder(
-        builder: (context) {
-          return TabBarView(
-            controller: tabController,
-            physics: const NeverScrollableScrollPhysics(),
-            children: const <Widget>[
-              ProfileTabBarView(),
-              ProfileTabBarView(),
-              ProfileTabBarView(),
-            ],
-          );
-        },
-      ),
+  Widget buildTabBarViews() {
+    return TabBarView(
+      controller: tabController,
+      physics: const NeverScrollableScrollPhysics(),
+      children: <Widget>[
+        UserEntriesView(userId: userId),
+        UserFavoritesView(userId: userId),
+        UserEntriesView(userId: userId),
+      ],
     );
   }
 
@@ -199,85 +199,6 @@ class _ProfileViewState extends State<ProfileView> with TickerProviderStateMixin
         _currentIndex = index!;
         tabController.animateTo(_currentIndex);
         setState(() {});
-      },
-    );
-  }
-}
-
-class ProfileTabBarView extends StatefulWidget {
-  final void Function(VisibilityInfo info)? onEndOfDrag;
-
-  const ProfileTabBarView({Key? key, this.onEndOfDrag}) : super(key: key);
-
-  @override
-  State<ProfileTabBarView> createState() => _ProfileTabBarViewState();
-}
-
-class _ProfileTabBarViewState extends State<ProfileTabBarView> {
-  late final EntryRepository entryRepository;
-  int pageNumber = 0;
-  int? totalPages;
-  List<Entry> entries = [];
-
-  @override
-  void initState() {
-    super.initState();
-    entryRepository = context.read<EntryRepository>();
-    Future.microtask(getEntriesByTopicId);
-  }
-
-  Future<void> getEntriesByTopicId() async {
-    // TODO: Change function
-    Page<Entry>? response =
-        await entryRepository.getEntriesByTopicId(topicId: 1, pageNumber: pageNumber, totalPages: totalPages);
-
-    if (response != null) {
-      pageNumber++;
-      totalPages = response.totalPages;
-      entries.addAll(response.content!);
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return ListView(children: [
-      ...entries.map((e) => SingleEntryView(entry: e)).toList(),
-      if (widget.onEndOfDrag != null) buildVisibilityDetector(),
-    ]);
-  }
-
-  Widget buildVisibilityDetector() {
-    return VisibilityDetector(
-      key: Key("UK_$hashCode"),
-      onVisibilityChanged: widget.onEndOfDrag!,
-      child: const AppSizedBox(),
-    );
-  }
-}
-
-class UserEntriesView extends StatefulWidget {
-  final bool wantKeepAlive;
-
-  const UserEntriesView({
-    Key? key,
-    this.wantKeepAlive = true,
-  }) : super(key: key);
-
-  @override
-  _UserEntriesViewState createState() => _UserEntriesViewState();
-}
-
-class _UserEntriesViewState extends State<UserEntriesView> with AutomaticKeepAliveClientMixin {
-  @override
-  bool get wantKeepAlive => widget.wantKeepAlive;
-
-  @override
-  Widget build(BuildContext context) {
-    return ProfileTabBarView(
-      onEndOfDrag: (info) {
-        if (info.visibleFraction == 1.0) {
-          // TODO: Pagination
-        }
       },
     );
   }

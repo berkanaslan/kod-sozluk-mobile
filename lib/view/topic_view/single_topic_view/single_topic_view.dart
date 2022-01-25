@@ -61,7 +61,6 @@ class _SingleTopicViewState extends State<SingleTopicView> {
 
   @override
   void dispose() {
-    entryRepository.clear();
     super.dispose();
   }
 
@@ -103,6 +102,9 @@ class _SingleTopicViewState extends State<SingleTopicView> {
   }
 
   void onAvatarPressed(BuildContext context, int i) {
-    context.rootNavigator.pushNamed(ProfileView.PATH, arguments: ProfileViewArgs(username: entries[i].createdBy ?? ""));
+    context.rootNavigator.pushNamed(
+      ProfileView.PATH,
+      arguments: ProfileViewArgs(userId: entries[i].author!.id!),
+    );
   }
 }

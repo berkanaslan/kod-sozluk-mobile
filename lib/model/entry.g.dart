@@ -8,9 +8,6 @@ part of 'entry.dart';
 
 Entry _$EntryFromJson(Map<String, dynamic> json) => Entry(
       id: json['id'] as int?,
-      createdBy: json['createdBy'] as String?,
-      creationDate: dateTimeFromTimestamp(json['creationDate']),
-      lastModifiedDate: dateTimeFromTimestamp(json['lastModifiedDate']),
       topic: json['topic'] == null
           ? null
           : Topic.fromJson(json['topic'] as Map<String, dynamic>),
@@ -19,16 +16,26 @@ Entry _$EntryFromJson(Map<String, dynamic> json) => Entry(
           ?.map((e) => User.fromJson(e as Map<String, dynamic>))
           .toList(),
       favoritesCount: json['favoritesCount'] as int?,
-    )..expanded = json['expanded'] as bool?;
+      author: json['author'] == null
+          ? null
+          : User.fromJson(json['author'] as Map<String, dynamic>),
+    )
+      ..createdBy = json['createdBy'] as String?
+      ..creationDate = dateTimeFromTimestamp(json['creationDate'])
+      ..lastModifiedBy = json['lastModifiedBy'] as String?
+      ..lastModifiedDate = dateTimeFromTimestamp(json['lastModifiedDate'])
+      ..expanded = json['expanded'] as bool?;
 
 Map<String, dynamic> _$EntryToJson(Entry instance) => <String, dynamic>{
-      'id': instance.id,
       'createdBy': instance.createdBy,
       'creationDate': instance.creationDate?.toIso8601String(),
+      'lastModifiedBy': instance.lastModifiedBy,
       'lastModifiedDate': instance.lastModifiedDate?.toIso8601String(),
+      'id': instance.id,
       'topic': instance.topic,
       'message': instance.message,
       'favorites': instance.favorites,
       'favoritesCount': instance.favoritesCount,
+      'author': instance.author,
       'expanded': instance.expanded,
     };

@@ -124,7 +124,7 @@ class NavigationProvider extends ChangeNotifier {
     PROFILE_SCREEN: Screen(
       title: LocaleKeys.profile,
       icon: AppIcons.person,
-      child: ProfileView(args: ProfileViewArgs(username: "superadmin")),
+      child: ProfileView(args: ProfileViewArgs(userId: 1)),
       initialRoute: HomeView.PATH,
       navigatorState: GlobalKey<NavigatorState>(),
       onGenerateRoute: (settings) {
@@ -137,7 +137,7 @@ class NavigationProvider extends ChangeNotifier {
             return SlideLeftRoute(page: const ProfileSettingsView());
           default:
             return SlideLeftRoute(
-              page: ProfileView(args: ProfileViewArgs(username: SharedPrefs.getUser()?.username ?? "")),
+              page: ProfileView(args: ProfileViewArgs(userId: SharedPrefs.getUser()?.id ?? 0)),
             );
         }
       },

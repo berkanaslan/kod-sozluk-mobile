@@ -21,5 +21,4 @@ class TopicRepository extends BaseRepository<Topic> {
     }
   }
 
-  void clear() {}
 }
