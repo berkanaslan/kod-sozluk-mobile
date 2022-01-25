@@ -48,7 +48,7 @@ class AboutEntry extends StatelessWidget {
 
   Text buildUsername(BuildContext context) {
     return Text(
-      entry.createdBy!,
+      entry.author!.username!,
       style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: context.theme.primaryColor),
     );
   }

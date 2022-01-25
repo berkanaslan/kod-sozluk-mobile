@@ -1,6 +1,5 @@
 // ignore_for_file: must_call_super
 
-
 import 'package:flutter/material.dart' hide Page;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kod_sozluk_mobile/core/constant/extension/context_extension.dart';
@@ -49,10 +48,11 @@ class _LatestTopicViewState extends State<LatestTopicView> with AutomaticKeepAli
     }
   }
 
-  @override
-  void deactivate() {
-    topicRepository.clear();
-    super.deactivate();
+  Future<void> onRefresh() async {
+    pageNumber = 0;
+    totalPages = null;
+    topics.clear();
+    await getLatestTopics();
   }
 
   @override
@@ -75,13 +75,6 @@ class _LatestTopicViewState extends State<LatestTopicView> with AutomaticKeepAli
         ),
       ),
     );
-  }
-
-  Future<void> onRefresh() async {
-    pageNumber = 0;
-    totalPages = null;
-    topics.clear();
-    await getLatestTopics();
   }
 
   void onTopicSelected(final Topic topic) {

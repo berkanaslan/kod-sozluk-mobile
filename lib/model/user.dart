@@ -55,16 +55,6 @@ class ConnectedApplications extends Serializable {
 
   static ConnectedApplications fromJson(Map<String, dynamic> json) => _$ConnectedApplicationsFromJson(json);
 
-  static const String PATH_DELIMITER = "/";
-
-  static String getJustUsernameOfLink(String? url) {
-    if (url == null) return "";
-
-    if (!url.contains(PATH_DELIMITER)) return url;
-
-    return url.split(PATH_DELIMITER).last;
-  }
-
   @override
   Map<String, dynamic> toJson() => _$ConnectedApplicationsToJson(this);
 

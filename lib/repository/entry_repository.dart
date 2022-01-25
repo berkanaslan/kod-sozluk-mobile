@@ -16,11 +16,34 @@ class EntryRepository extends BaseRepository<Entry> {
     if (totalPages == null || pageNumber < totalPages) {
       return await getPaged(
         pn: pageNumber,
-        sd: AppConstants.SORT_DESC,
+        sd: AppConstants.SORT_ASC,
         requestParams: "${URLConstants.TOPIC}/$topicId",
       );
     }
   }
 
-  void clear() {}
+  Future<Page<Entry>?> getEntriesOfUser({required int userId, required int pageNumber, int? totalPages}) async {
+    if (isLoading) return null;
+
+    if (totalPages == null || pageNumber < totalPages) {
+      return await getPaged(
+        pn: pageNumber,
+        sd: AppConstants.SORT_DESC,
+        requestParams: "${URLConstants.USER}/$userId",
+      );
+    }
+  }
+
+  Future<Page<Entry>?> getFavoritedEntriesOfUser({required int userId, required int pageNumber, int? totalPages}) async {
+    if (isLoading) return null;
+
+    if (totalPages == null || pageNumber < totalPages) {
+      return await getPaged(
+        pn: pageNumber,
+        sd: AppConstants.SORT_DESC,
+        requestParams: "${URLConstants.USER}/$userId${URLConstants.FAVORITES}",
+      );
+    }
+  }
+
 }

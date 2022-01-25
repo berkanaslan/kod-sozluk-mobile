@@ -42,11 +42,7 @@ class _RegisterViewState extends State<RegisterView> {
     authRepository = context.read<UserRepository>();
   }
 
-  @override
-  void deactivate() {
-    authRepository.clear();
-    super.deactivate();
-  }
+
 
   @override
   Widget build(BuildContext context) {

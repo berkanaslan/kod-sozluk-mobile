@@ -36,12 +36,6 @@ class _LoginViewState extends State<LoginView> {
   }
 
   @override
-  void deactivate() {
-    viewModel.clear();
-    super.deactivate();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return SafeArea(
         child: Form(

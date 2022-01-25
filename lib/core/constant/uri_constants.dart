@@ -9,4 +9,5 @@ class URLConstants {
 
   static const String TOPIC = "/topic";
   static const String ENTRY = "/entry";
+  static const String FAVORITES = "/favorites";
 }

@@ -52,6 +52,10 @@ class UserRepository extends Cubit<AuthState> {
     return await _userService.post(requestBody: user);
   }
 
+  Future<User?> getUserById(final int userId) async {
+    return await _userService.get(additionalPath: "/$userId");
+  }
+
   Future<User?> getUserByUsername(final String username) async {
     return await _userService.get(requestParams: "?username=$username");
   }
@@ -67,11 +71,6 @@ class UserRepository extends Cubit<AuthState> {
       emit(const AuthenticatedState());
     }
   }
-
-  // ------------------------------------------------------------------------------------------------------------------
-  // CLEAR                                                                                                            /
-  // ------------------------------------------------------------------------------------------------------------------
-  void clear() {}
 }
 
 abstract class AuthState {

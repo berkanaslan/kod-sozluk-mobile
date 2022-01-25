@@ -24,19 +24,19 @@ class ConnectedAppsView extends StatefulWidget {
 
 class _ConnectedAppsViewState extends State<ConnectedAppsView> {
   final TextEditingController facebookController = TextEditingController(
-    text: ConnectedApplications.getJustUsernameOfLink(SharedPrefs.getUser()?.connectedApplications?.facebook),
+    text: SharedPrefs.getUser()?.connectedApplications?.facebook,
   );
 
   final TextEditingController twitterController = TextEditingController(
-    text: ConnectedApplications.getJustUsernameOfLink(SharedPrefs.getUser()?.connectedApplications?.twitter),
+    text: SharedPrefs.getUser()?.connectedApplications?.twitter,
   );
 
   final TextEditingController instagramController = TextEditingController(
-    text: ConnectedApplications.getJustUsernameOfLink(SharedPrefs.getUser()?.connectedApplications?.instagram),
+    text: SharedPrefs.getUser()?.connectedApplications?.instagram,
   );
 
   final TextEditingController githubController = TextEditingController(
-    text: ConnectedApplications.getJustUsernameOfLink(SharedPrefs.getUser()?.connectedApplications?.github),
+    text: SharedPrefs.getUser()?.connectedApplications?.github,
   );
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
