@@ -15,16 +15,16 @@ import 'package:kod_sozluk_mobile/view/profile_view/profile_view.dart';
 import 'package:kod_sozluk_mobile/view/topic_view/single_topic_view/components/single_entry_view.dart';
 import 'package:kod_sozluk_mobile/view/topic_view/single_topic_view/components/topic_customization_bar.dart';
 
-class TopicDetailViewArgs {
+class SingleTopicViewArgs {
   final Topic topic;
 
-  TopicDetailViewArgs({required this.topic});
+  SingleTopicViewArgs({required this.topic});
 }
 
 class SingleTopicView extends StatefulWidget {
   static const String PATH = "/topic/detail";
 
-  final TopicDetailViewArgs args;
+  final SingleTopicViewArgs args;
 
   const SingleTopicView({Key? key, required this.args}) : super(key: key);
 

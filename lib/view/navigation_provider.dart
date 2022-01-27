@@ -40,8 +40,8 @@ class NavigationProvider extends ChangeNotifier {
       case HomeView.PATH:
         return SlideLeftRoute(page: const HomeView());
       case SingleTopicView.PATH:
-        if (settings.arguments is TopicDetailViewArgs) {
-          return SlideLeftRoute(page: SingleTopicView(args: settings.arguments as TopicDetailViewArgs));
+        if (settings.arguments is SingleTopicViewArgs) {
+          return SlideLeftRoute(page: SingleTopicView(args: settings.arguments as SingleTopicViewArgs));
         }
         return SlideLeftRoute(page: const NotFoundView());
       case SearchView.PATH:
