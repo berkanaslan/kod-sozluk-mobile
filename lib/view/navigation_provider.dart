@@ -161,7 +161,13 @@ class NavigationProvider extends ChangeNotifier {
   void _scrollToTopOfPage() {
     if (currentScreen.scrollController != null && currentScreen.scrollController!.hasClients) {
       currentScreen.scrollController!.animateTo(0.0, duration: const Duration(seconds: 1), curve: Curves.easeInOut);
+      return;
     }
+
+    final NavigatorState? currentNavigatorState = currentScreen.navigatorState.currentState;
+    if (currentNavigatorState == null) return;
+
+    if (currentNavigatorState.canPop()) currentNavigatorState.pop();
   }
 
   Future<bool> onWillPop(BuildContext context) async {
