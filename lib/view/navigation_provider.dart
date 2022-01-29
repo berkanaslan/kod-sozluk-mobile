@@ -67,7 +67,8 @@ class NavigationProvider extends ChangeNotifier {
   final Map<int, Screen> _screens = {
     HOME_SCREEN: Screen(
       title: LocaleKeys.home,
-      icon: AppIcons.logo,
+      outlinedIcon: AppIcons.logo,
+      filledIcon: AppIcons.logo,
       child: const HomeView(),
       initialRoute: HomeView.PATH,
       navigatorState: GlobalKey<NavigatorState>(),
@@ -81,7 +82,8 @@ class NavigationProvider extends ChangeNotifier {
     ),
     SEARCH_SCREEN: Screen(
       title: LocaleKeys.search,
-      icon: AppIcons.search,
+      outlinedIcon: AppIcons.search,
+      filledIcon: AppIcons.searchFilled,
       child: const SearchView(),
       initialRoute: HomeView.PATH,
       navigatorState: GlobalKey<NavigatorState>(),
@@ -95,7 +97,8 @@ class NavigationProvider extends ChangeNotifier {
     ),
     MESSAGES_SCREEN: Screen(
       title: LocaleKeys.messages,
-      icon: AppIcons.message,
+      outlinedIcon: AppIcons.message,
+      filledIcon: AppIcons.messageFilled,
       child: const MessagesView(),
       initialRoute: HomeView.PATH,
       navigatorState: GlobalKey<NavigatorState>(),
@@ -109,7 +112,8 @@ class NavigationProvider extends ChangeNotifier {
     ),
     FOLLOWING_TOPICS_SCREEN: Screen(
       title: LocaleKeys.followings,
-      icon: AppIcons.bell,
+      outlinedIcon: AppIcons.bell,
+      filledIcon: AppIcons.bellFilled,
       child: const FollowingTopicsView(),
       initialRoute: HomeView.PATH,
       navigatorState: GlobalKey<NavigatorState>(),
@@ -123,7 +127,8 @@ class NavigationProvider extends ChangeNotifier {
     ),
     PROFILE_SCREEN: Screen(
       title: LocaleKeys.profile,
-      icon: AppIcons.person,
+      outlinedIcon: AppIcons.person,
+      filledIcon: AppIcons.personFilled,
       child: ProfileView(args: ProfileViewArgs(userId: 1)),
       initialRoute: HomeView.PATH,
       navigatorState: GlobalKey<NavigatorState>(),

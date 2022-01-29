@@ -13,8 +13,14 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 class UserEntriesView extends StatefulWidget {
   final bool wantKeepAlive;
   final int userId;
+  final void Function()? onRefresh;
 
-  const UserEntriesView({Key? key, this.wantKeepAlive = true, required this.userId}) : super(key: key);
+  const UserEntriesView({
+    Key? key,
+    this.wantKeepAlive = true,
+    required this.userId,
+    this.onRefresh,
+  }) : super(key: key);
 
   @override
   _UserEntriesViewState createState() => _UserEntriesViewState();
@@ -54,6 +60,8 @@ class _UserEntriesViewState extends State<UserEntriesView> with AutomaticKeepAli
   }
 
   Future<void> onRefresh() async {
+    if (widget.onRefresh != null) widget.onRefresh!();
+
     pageNumber = 0;
     totalPages = null;
     entries.clear();

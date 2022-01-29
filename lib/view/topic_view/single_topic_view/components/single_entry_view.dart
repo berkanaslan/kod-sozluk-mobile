@@ -25,7 +25,7 @@ class SingleEntryView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: UIConstants.SMALL_PADDING,
+      padding: UIConstants.MEDIUM_PADDING,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

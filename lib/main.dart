@@ -45,6 +45,7 @@ MultiProvider buildBlocProviders(final AdaptiveThemeMode? savedThemeMode) {
       providers: [
         BlocProvider<ConnectivityController>(create: (context) => ConnectivityController(), lazy: false),
         BlocProvider<UserRepository>(create: (context) => UserRepository(), lazy: false),
+        BlocProvider<UserRepository>(create: (context) => UserRepository(), lazy: false),
         BlocProvider<EntryRepository>(create: (context) => EntryRepository()),
         BlocProvider<TopicRepository>(create: (context) => TopicRepository()),
       ],

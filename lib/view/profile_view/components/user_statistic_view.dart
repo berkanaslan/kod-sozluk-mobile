@@ -8,8 +8,14 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 class UserStatisticView extends StatefulWidget {
   final bool wantKeepAlive;
   final int userId;
+  final void Function()? onRefresh;
 
-  const UserStatisticView({Key? key, this.wantKeepAlive = true, required this.userId}) : super(key: key);
+  const UserStatisticView({
+    Key? key,
+    this.wantKeepAlive = true,
+    required this.userId,
+    this.onRefresh,
+  }) : super(key: key);
 
   @override
   _UserStatisticViewState createState() => _UserStatisticViewState();
@@ -33,7 +39,10 @@ class _UserStatisticViewState extends State<UserStatisticView> with AutomaticKee
   Widget build(BuildContext context) {
     return AppRefreshIndicator(
       controller: _refreshController,
-      onRefresh: () => _refreshController.refreshCompleted(),
+      onRefresh: () {
+        if (widget.onRefresh != null) widget.onRefresh!();
+        _refreshController.refreshCompleted();
+      },
       child: ListView(
         children: const [
           AppListTile(title: "en çok favorilenenler"),

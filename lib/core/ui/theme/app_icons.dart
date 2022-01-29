@@ -6,12 +6,18 @@ class AppIcons {
   AppIcons._();
 
   static const IconData logo = EvaIcons.code;
-  static const IconData back = EvaIcons.arrowIosBack;
-  static const IconData forward = EvaIcons.arrowIosForward;
-  static const IconData search = EvaIcons.search;
   static const IconData message = EvaIcons.messageCircleOutline;
   static const IconData bell = EvaIcons.bellOutline;
   static const IconData person = EvaIcons.personOutline;
+  static const IconData search = EvaIcons.search;
+
+  static const IconData messageFilled = EvaIcons.messageCircle;
+  static const IconData bellFilled = EvaIcons.bell;
+  static const IconData personFilled = EvaIcons.person;
+  static const IconData searchFilled = EvaIcons.searchOutline;
+
+  static const IconData back = EvaIcons.arrowIosBack;
+  static const IconData forward = EvaIcons.arrowIosForward;
   static const IconData squarePen = FontAwesomeIcons.solidEdit;
   static const IconData dollar = FontAwesomeIcons.dollarSign;
   static const IconData sliders = FontAwesomeIcons.slidersH;

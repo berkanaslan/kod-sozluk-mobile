@@ -45,3 +45,32 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
     );
   }
 }
+
+class CustomSliverAppBar extends StatelessWidget {
+  final Widget? title;
+  final List<Widget>? actions;
+
+  const CustomSliverAppBar({
+    Key? key,
+    required this.title,
+    required this.actions,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverAppBar(
+      leading: buildLeadingIcon(context),
+      elevation: 0,
+      pinned: true,
+      leadingWidth: title == null ? 4 : 32,
+      titleSpacing: title == null ? 32 : 8,
+      title: title,
+      actions: actions,
+    );
+  }
+
+  Widget? buildLeadingIcon(BuildContext context) {
+    if (!context.rootNavigator.canPop()) return null;
+    return AppIconButton(icon: AppIcons.back, onPressed: context.rootNavigator.pop);
+  }
+}
