@@ -7,13 +7,19 @@ import 'package:kod_sozluk_mobile/model/user.dart';
 part 'entry.g.dart';
 
 @JsonSerializable()
-class Entry extends Auditable {
+class Entry extends Serializable {
   int? id;
   Topic? topic;
   String? message;
   List<User>? favorites;
   int? favoritesCount;
   User? author;
+  bool favorited;
+
+  @JsonKey(fromJson: dateTimeFromTimestamp)
+  DateTime? createdAt;
+  @JsonKey(fromJson: dateTimeFromTimestamp)
+  DateTime? modifiedAt;
 
   @JsonKey(ignore: true)
   bool? _expanded;
@@ -34,6 +40,9 @@ class Entry extends Auditable {
     this.favorites,
     this.favoritesCount,
     this.author,
+    required this.favorited,
+    this.createdAt,
+    this.modifiedAt,
   });
 
   static Entry fromJson(Map<String, dynamic> json) => _$EntryFromJson(json);

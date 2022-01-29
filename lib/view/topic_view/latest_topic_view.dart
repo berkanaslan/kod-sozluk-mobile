@@ -7,12 +7,14 @@ import 'package:kod_sozluk_mobile/core/constant/extension/string_extension.dart'
 import 'package:kod_sozluk_mobile/core/constant/lang/locale_keys.g.dart';
 import 'package:kod_sozluk_mobile/core/constant/logger.dart';
 import 'package:kod_sozluk_mobile/core/ui/widget/list_tile/topic_tile.dart';
+import 'package:kod_sozluk_mobile/core/ui/widget/refresh/refresh_indicator.dart';
 import 'package:kod_sozluk_mobile/model/base/page.dart';
 import 'package:kod_sozluk_mobile/model/topic.dart';
 import 'package:kod_sozluk_mobile/repository/base/base_entity_state.dart';
 import 'package:kod_sozluk_mobile/repository/topic_repository.dart';
 import 'package:kod_sozluk_mobile/view/navigation_provider.dart';
 import 'package:kod_sozluk_mobile/view/topic_view/single_topic_view/single_topic_view.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class LatestTopicView extends StatefulWidget {
   const LatestTopicView({Key? key}) : super(key: key);
@@ -25,6 +27,8 @@ class _LatestTopicViewState extends State<LatestTopicView> with AutomaticKeepAli
   @override
   bool get wantKeepAlive => true;
 
+  final RefreshController _refreshController = RefreshController(initialRefresh: true);
+
   late final TopicRepository topicRepository;
 
   int pageNumber = 0;
@@ -35,7 +39,6 @@ class _LatestTopicViewState extends State<LatestTopicView> with AutomaticKeepAli
   void initState() {
     super.initState();
     topicRepository = context.read<TopicRepository>();
-    Future.microtask(getLatestTopics);
   }
 
   Future<void> getLatestTopics() async {
@@ -53,18 +56,25 @@ class _LatestTopicViewState extends State<LatestTopicView> with AutomaticKeepAli
     totalPages = null;
     topics.clear();
     await getLatestTopics();
+    _refreshController.refreshCompleted();
+  }
+
+  void onLoading() async {
+    await getLatestTopics();
+    _refreshController.loadComplete();
   }
 
   @override
   Widget build(BuildContext context) {
     Logger.buildLogger("LatestTopicView");
 
-    return RefreshIndicator(
+    return AppRefreshIndicator(
+      controller: _refreshController,
       onRefresh: onRefresh,
+      onLoading: onLoading,
       child: BlocConsumer<TopicRepository, BaseEntityState>(
         listener: (context, state) {},
         builder: (context, state) => ListView.builder(
-          physics: const AlwaysScrollableScrollPhysics(),
           controller: NavigationProvider.of(context).screens[HOME_SCREEN].scrollController,
           shrinkWrap: true,
           itemCount: topics.length,

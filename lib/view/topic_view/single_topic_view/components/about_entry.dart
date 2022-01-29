@@ -3,6 +3,7 @@ import 'package:get/get_utils/src/extensions/context_extensions.dart';
 import 'package:kod_sozluk_mobile/core/constant/util/string_util.dart';
 import 'package:kod_sozluk_mobile/core/ui/theme/app_icons.dart';
 import 'package:kod_sozluk_mobile/core/ui/theme/app_theme.dart';
+import 'package:kod_sozluk_mobile/core/ui/widget/sized_box/app_sized_box.dart';
 import 'package:kod_sozluk_mobile/model/entry.dart';
 
 class AboutEntry extends StatelessWidget {
@@ -17,7 +18,7 @@ class AboutEntry extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         buildAuthor(context),
-        const SizedBox(width: 8.0),
+        const AppSizedBox(style: AppBoxStyle.HORIZONTAL),
         buildAvatar(),
       ],
     );
@@ -28,16 +29,26 @@ class AboutEntry extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         buildUsername(context),
+        const AppSizedBox(),
         buildDateTimeArea(),
       ],
     );
   }
 
-  Text buildDateTimeArea() {
-    String dateTime = StringUtil.toFormattedDate(entry.creationDate!);
+  Widget buildDateTimeArea() {
+    if (entry.createdAt == null) return SizedBox.shrink();
 
-    if (entry.lastModifiedDate != null && entry.creationDate != entry.lastModifiedDate) {
-      dateTime += " - " + StringUtil.toFormattedDate(entry.lastModifiedDate!);
+    String dateTime = StringUtil.toFormattedDate(entry.createdAt!);
+
+    if (entry.modifiedAt == null) {
+      return Text(
+        dateTime,
+        style: const TextStyle(fontSize: 10, color: AppColors.lightGrey),
+      );
+    }
+
+    if (entry.modifiedAt != null && entry.createdAt != entry.modifiedAt) {
+      dateTime += " - " + StringUtil.toFormattedDate(entry.modifiedAt!);
     }
 
     return Text(
@@ -54,7 +65,7 @@ class AboutEntry extends StatelessWidget {
   }
 
   UserAvatar buildAvatar() {
-    return UserAvatar(onAvatarPressed: onAvatarPressed);
+    return UserAvatar(onAvatarPressed: onAvatarPressed, radius: 20);
   }
 }
 
@@ -62,11 +73,7 @@ class UserAvatar extends StatelessWidget {
   final void Function()? onAvatarPressed;
   final double radius;
 
-  const UserAvatar({
-    Key? key,
-    required this.onAvatarPressed,
-    this.radius = 16,
-  }) : super(key: key);
+  const UserAvatar({Key? key, required this.onAvatarPressed, this.radius = 16}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

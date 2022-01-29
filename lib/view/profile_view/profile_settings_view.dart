@@ -32,29 +32,29 @@ class _ProfileSettingsViewState extends State<ProfileSettingsView> {
       body: ListView(
         children: [
           firstRowBackground,
-          const SettingsListTile(title: "tercihler"),
+          const AppListTile(title: "tercihler"),
           buildConnectedAppsOption(context),
-          const SettingsListTile(title: "kişisel bilgilerim"),
-          const SettingsListTile(title: "yazı boyutu"),
-          const SettingsListTile(title: "reklamsız"),
-          const SettingsListTile(title: "takip/engellenmiş"),
-          const SettingsListTile(title: "çöp"),
-          const SettingsListTile(title: "e-mail adresimi değiştir"),
-          const SettingsListTile(title: "şifremi değiştir"),
+          const AppListTile(title: "kişisel bilgilerim"),
+          const AppListTile(title: "yazı boyutu"),
+          const AppListTile(title: "reklamsız"),
+          const AppListTile(title: "takip/engellenmiş"),
+          const AppListTile(title: "çöp"),
+          const AppListTile(title: "e-mail adresimi değiştir"),
+          const AppListTile(title: "şifremi değiştir"),
           buildDarkModeToggle(context),
           buildInAppNotificationsOption(context),
-          const SettingsListTile(title: "kullanıcı sözleşmesi"),
-          const SettingsListTile(title: "gizlilik politikası"),
-          const SettingsListTile(title: "kullanım koşulları"),
-          const SettingsListTile(title: "iletişim"),
+          const AppListTile(title: "kullanıcı sözleşmesi"),
+          const AppListTile(title: "gizlilik politikası"),
+          const AppListTile(title: "kullanım koşulları"),
+          const AppListTile(title: "iletişim"),
           buildLogoutButton(context),
         ],
       ),
     );
   }
 
-  SettingsListTile buildConnectedAppsOption(BuildContext context) {
-    return SettingsListTile(
+  AppListTile buildConnectedAppsOption(BuildContext context) {
+    return AppListTile(
       title: "bağlı hesaplar",
       onPressed: () => context.rootNavigator.pushNamed(ConnectedAppsView.PATH),
     );
@@ -82,8 +82,8 @@ class _ProfileSettingsViewState extends State<ProfileSettingsView> {
     );
   }
 
-  SettingsListTile buildLogoutButton(BuildContext context) {
-    return SettingsListTile(
+  AppListTile buildLogoutButton(BuildContext context) {
+    return AppListTile(
       title: "çıkış",
       onPressed: () async {
         await SharedPrefs.removeUserData();

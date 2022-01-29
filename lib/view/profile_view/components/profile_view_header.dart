@@ -38,17 +38,17 @@ class UserStatisticWithUsername extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         BoldText(text: user?.username ?? ""),
-        UserStatisticWidget(user: user),
+        UserHeaderStatisticWidget(user: user),
       ],
     );
   }
 }
 
 // TODO: Translation
-class UserStatisticWidget extends StatelessWidget {
+class UserHeaderStatisticWidget extends StatelessWidget {
   final User? user;
 
-  const UserStatisticWidget({Key? key, required this.user}) : super(key: key);
+  const UserHeaderStatisticWidget({Key? key, required this.user}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -20,7 +20,7 @@ class VoteButton extends StatelessWidget {
       alignment: Alignment.centerLeft,
       padding: EdgeInsets.zero,
       icon: up ? AppIcons.up : AppIcons.down,
-      size: 16,
+      size: 20,
       onPressed: onPressed,
     );
   }
