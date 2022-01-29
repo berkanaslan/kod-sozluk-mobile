@@ -32,6 +32,11 @@ AppBarTheme get appBarTheme => const AppBarTheme(
       iconTheme: IconThemeData(color: AppColors.black),
       titleTextStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
       backgroundColor: AppColors.white,
+      systemOverlayStyle: SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+        statusBarIconBrightness: Brightness.dark, // For Android (dark icons)
+        statusBarBrightness: Brightness.light, // For iOS (dark icons)
+      ),
     );
 
 TabBarTheme get tabBarTheme {
@@ -67,10 +72,3 @@ void configLoadingIndicator() {
     ..indicatorWidget = const CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(AppColors.primary))
     ..dismissOnTap = false;
 }
-
-// TODO: Apply:
-SystemUiOverlayStyle get systemOverlayStyle => const SystemUiOverlayStyle(
-      statusBarColor: AppColors.transparent,
-      statusBarIconBrightness: Brightness.dark,
-      statusBarBrightness: Brightness.light,
-    );
