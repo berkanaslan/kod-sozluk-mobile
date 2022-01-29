@@ -31,7 +31,7 @@ class SingleEntryView extends StatelessWidget {
         children: [
           if (showTitle) TopicTitle(topic: entry.topic!),
           EntryReader(entry: entry),
-          const EntryActionsBar(),
+          EntryActionsBar(entry: entry),
           AboutEntry(entry: entry, onAvatarPressed: onAvatarPressed),
         ],
       ),

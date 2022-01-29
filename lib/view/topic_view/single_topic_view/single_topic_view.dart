@@ -5,6 +5,7 @@ import 'package:kod_sozluk_mobile/core/constant/extension/string_extension.dart'
 import 'package:kod_sozluk_mobile/core/constant/lang/locale_keys.g.dart';
 import 'package:kod_sozluk_mobile/core/constant/logger.dart';
 import 'package:kod_sozluk_mobile/core/ui/widget/button/add_entry_icon_button.dart';
+import 'package:kod_sozluk_mobile/core/ui/widget/refresh/refresh_indicator.dart';
 import 'package:kod_sozluk_mobile/core/ui/widget/scaffold/app_scaffold.dart';
 import 'package:kod_sozluk_mobile/model/base/page.dart';
 import 'package:kod_sozluk_mobile/model/entry.dart';
@@ -14,6 +15,7 @@ import 'package:kod_sozluk_mobile/repository/entry_repository.dart';
 import 'package:kod_sozluk_mobile/view/profile_view/profile_view.dart';
 import 'package:kod_sozluk_mobile/view/topic_view/single_topic_view/components/single_entry_view.dart';
 import 'package:kod_sozluk_mobile/view/topic_view/single_topic_view/components/topic_customization_bar.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class SingleTopicViewArgs {
   final Topic topic;
@@ -33,6 +35,8 @@ class SingleTopicView extends StatefulWidget {
 }
 
 class _SingleTopicViewState extends State<SingleTopicView> {
+  final RefreshController _refreshController = RefreshController(initialRefresh: true);
+
   late final EntryRepository entryRepository;
   late final Topic topic;
 
@@ -45,7 +49,19 @@ class _SingleTopicViewState extends State<SingleTopicView> {
     super.initState();
     entryRepository = context.read<EntryRepository>();
     topic = widget.args.topic;
-    Future.microtask(getEntriesByTopicId);
+  }
+
+  Future<void> onRefresh() async {
+    pageNumber = 0;
+    totalPages = null;
+    entries.clear();
+    await getEntriesByTopicId();
+    _refreshController.refreshCompleted();
+  }
+
+  void onLoading() async {
+    await getEntriesByTopicId();
+    _refreshController.loadComplete();
   }
 
   Future<void> getEntriesByTopicId() async {
@@ -78,7 +94,7 @@ class _SingleTopicViewState extends State<SingleTopicView> {
     );
   }
 
-  Column get body {
+  Widget get body {
     return Column(
       children: [
         TopicCustomizationBar(title: LocaleKeys.favs_all.locale),
@@ -90,12 +106,17 @@ class _SingleTopicViewState extends State<SingleTopicView> {
   Widget buildEntryListView(BuildContext context) {
     return BlocConsumer<EntryRepository, BaseEntityState>(
       listener: (context, state) {},
-      builder: (context, state) => ListView.separated(
-        separatorBuilder: (context, index) => const Divider(),
-        itemCount: entries.length,
-        itemBuilder: (context, i) => SingleEntryView(
-          entry: entries[i],
-          onAvatarPressed: () => onAvatarPressed(context, i),
+      builder: (context, state) => AppRefreshIndicator(
+        controller: _refreshController,
+        onRefresh: onRefresh,
+        onLoading: onLoading,
+        child: ListView.separated(
+          separatorBuilder: (context, index) => const Divider(),
+          itemCount: entries.length,
+          itemBuilder: (context, i) => SingleEntryView(
+            entry: entries[i],
+            onAvatarPressed: () => onAvatarPressed(context, i),
+          ),
         ),
       ),
     );

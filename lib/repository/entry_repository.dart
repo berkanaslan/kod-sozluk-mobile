@@ -17,7 +17,7 @@ class EntryRepository extends BaseRepository<Entry> {
       return await getPaged(
         pn: pageNumber,
         sd: AppConstants.SORT_ASC,
-        requestParams: "${URLConstants.TOPIC}/$topicId",
+        additionalPath: "${URLConstants.TOPIC}/$topicId",
       );
     }
   }
@@ -29,21 +29,25 @@ class EntryRepository extends BaseRepository<Entry> {
       return await getPaged(
         pn: pageNumber,
         sd: AppConstants.SORT_DESC,
-        requestParams: "${URLConstants.USER}/$userId",
+        additionalPath: "${URLConstants.USER}/$userId",
       );
     }
   }
 
-  Future<Page<Entry>?> getFavoritedEntriesOfUser({required int userId, required int pageNumber, int? totalPages}) async {
+  Future<Page<Entry>?> getFavoritedEntriesOfUser(
+      {required int userId, required int pageNumber, int? totalPages}) async {
     if (isLoading) return null;
 
     if (totalPages == null || pageNumber < totalPages) {
       return await getPaged(
         pn: pageNumber,
         sd: AppConstants.SORT_DESC,
-        requestParams: "${URLConstants.USER}/$userId${URLConstants.FAVORITES}",
+        additionalPath: "${URLConstants.USER}/$userId${URLConstants.FAVORITES}",
       );
     }
   }
 
+  Future<bool> addToFavorite({required int entryId}) async {
+    return await locator<EntryService>().addToFavorite(entryId);
+  }
 }

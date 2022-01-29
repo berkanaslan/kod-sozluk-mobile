@@ -1,4 +1,5 @@
 // ignore_for_file: must_call_super
+
 import 'package:extended_nested_scroll_view/extended_nested_scroll_view.dart';
 import 'package:flutter/material.dart' hide Page;
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -18,6 +19,7 @@ import 'package:kod_sozluk_mobile/view/profile_view/components/profile_view_head
 import 'package:kod_sozluk_mobile/view/profile_view/components/register_view.dart';
 import 'package:kod_sozluk_mobile/view/profile_view/components/user_entries_view.dart';
 import 'package:kod_sozluk_mobile/view/profile_view/components/user_favorites_view.dart';
+import 'package:kod_sozluk_mobile/view/profile_view/components/user_statistic_view.dart';
 import 'package:kod_sozluk_mobile/view/profile_view/profile_settings_view.dart';
 import 'package:kod_sozluk_mobile/view/topic_view/single_topic_view/components/about_entry.dart';
 
@@ -80,7 +82,7 @@ class _ProfileViewState extends State<ProfileView> with TickerProviderStateMixin
     bool isScrolled = _displayAppBar;
     if (_key.currentState!.outerController.offset <= 10.0) {
       isScrolled = false;
-    } else if (_key.currentState!.outerController.offset >= 144.0) {
+    } else if (_key.currentState!.outerController.offset >= context.height * 0.15) {
       isScrolled = true;
     }
 
@@ -174,7 +176,7 @@ class _ProfileViewState extends State<ProfileView> with TickerProviderStateMixin
       children: <Widget>[
         UserEntriesView(userId: userId),
         UserFavoritesView(userId: userId),
-        UserEntriesView(userId: userId),
+        UserStatisticView(userId: userId),
       ],
     );
   }

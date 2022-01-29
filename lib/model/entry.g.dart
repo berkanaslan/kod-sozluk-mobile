@@ -19,23 +19,20 @@ Entry _$EntryFromJson(Map<String, dynamic> json) => Entry(
       author: json['author'] == null
           ? null
           : User.fromJson(json['author'] as Map<String, dynamic>),
-    )
-      ..createdBy = json['createdBy'] as String?
-      ..creationDate = dateTimeFromTimestamp(json['creationDate'])
-      ..lastModifiedBy = json['lastModifiedBy'] as String?
-      ..lastModifiedDate = dateTimeFromTimestamp(json['lastModifiedDate'])
-      ..expanded = json['expanded'] as bool?;
+      favorited: json['favorited'] as bool,
+      createdAt: dateTimeFromTimestamp(json['createdAt']),
+      modifiedAt: dateTimeFromTimestamp(json['modifiedAt']),
+    )..expanded = json['expanded'] as bool?;
 
 Map<String, dynamic> _$EntryToJson(Entry instance) => <String, dynamic>{
-      'createdBy': instance.createdBy,
-      'creationDate': instance.creationDate?.toIso8601String(),
-      'lastModifiedBy': instance.lastModifiedBy,
-      'lastModifiedDate': instance.lastModifiedDate?.toIso8601String(),
       'id': instance.id,
       'topic': instance.topic,
       'message': instance.message,
       'favorites': instance.favorites,
       'favoritesCount': instance.favoritesCount,
       'author': instance.author,
+      'favorited': instance.favorited,
+      'createdAt': instance.createdAt?.toIso8601String(),
+      'modifiedAt': instance.modifiedAt?.toIso8601String(),
       'expanded': instance.expanded,
     };

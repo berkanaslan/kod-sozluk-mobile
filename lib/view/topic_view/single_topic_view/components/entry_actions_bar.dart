@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:kod_sozluk_mobile/core/ui/theme/app_icons.dart';
 import 'package:kod_sozluk_mobile/core/ui/widget/button/app_icon_button.dart';
-import 'package:kod_sozluk_mobile/core/ui/widget/button/like_button.dart';
+import 'package:kod_sozluk_mobile/core/ui/widget/button/favorite_button.dart';
 import 'package:kod_sozluk_mobile/core/ui/widget/button/vote_button.dart';
+import 'package:kod_sozluk_mobile/model/entry.dart';
 
 class EntryActionsBar extends StatelessWidget {
+  final Entry entry;
   final void Function()? onUpVotePressed;
   final void Function()? onDownVotePressed;
   final void Function()? onSharePressed;
@@ -12,6 +14,7 @@ class EntryActionsBar extends StatelessWidget {
 
   const EntryActionsBar({
     Key? key,
+    required this.entry,
     this.onUpVotePressed,
     this.onDownVotePressed,
     this.onSharePressed,
@@ -34,10 +37,7 @@ class EntryActionsBar extends StatelessWidget {
               up: false,
               onPressed: onDownVotePressed,
             ),
-            LikeButton(
-              liked: true,
-              onPressed: () {},
-            ),
+            FavoriteButton(entry: entry),
           ],
         ),
         Row(

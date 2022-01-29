@@ -8,6 +8,9 @@ class URLConstants {
   static const String LOGIN = "/login";
 
   static const String TOPIC = "/topic";
+
   static const String ENTRY = "/entry";
+  static const String ADD_TO_FAVORITE = "/add-to-favorite";
+
   static const String FAVORITES = "/favorites";
 }

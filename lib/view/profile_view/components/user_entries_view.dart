@@ -2,13 +2,13 @@
 
 import 'package:flutter/material.dart' hide Page;
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:kod_sozluk_mobile/core/ui/widget/sized_box/app_sized_box.dart';
+import 'package:kod_sozluk_mobile/core/ui/widget/refresh/refresh_indicator.dart';
 import 'package:kod_sozluk_mobile/model/base/page.dart';
 import 'package:kod_sozluk_mobile/model/entry.dart';
 import 'package:kod_sozluk_mobile/repository/base/base_entity_state.dart';
 import 'package:kod_sozluk_mobile/repository/entry_repository.dart';
 import 'package:kod_sozluk_mobile/view/topic_view/single_topic_view/components/single_entry_view.dart';
-import 'package:visibility_detector/visibility_detector.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class UserEntriesView extends StatefulWidget {
   final bool wantKeepAlive;
@@ -24,6 +24,8 @@ class _UserEntriesViewState extends State<UserEntriesView> with AutomaticKeepAli
   @override
   bool get wantKeepAlive => widget.wantKeepAlive;
 
+  final RefreshController _refreshController = RefreshController(initialRefresh: true);
+
   late final int? userId;
   late final EntryRepository entryRepository;
   int pageNumber = 0;
@@ -35,7 +37,6 @@ class _UserEntriesViewState extends State<UserEntriesView> with AutomaticKeepAli
     super.initState();
     userId = widget.userId;
     entryRepository = context.read<EntryRepository>();
-    Future.microtask(() => getEntriesOfUser);
   }
 
   Future<void> getEntriesOfUser() async {
@@ -57,6 +58,7 @@ class _UserEntriesViewState extends State<UserEntriesView> with AutomaticKeepAli
     totalPages = null;
     entries.clear();
     await getEntriesOfUser();
+    _refreshController.refreshCompleted();
   }
 
   @override
@@ -65,27 +67,21 @@ class _UserEntriesViewState extends State<UserEntriesView> with AutomaticKeepAli
 
     return BlocConsumer<EntryRepository, BaseEntityState>(
       listener: (context, state) {},
-      builder: (context, state) => ListView(
-        physics: const BouncingScrollPhysics(),
-        children: [
-          ...entries.map((e) => SingleEntryView(entry: e, showTitle: true)).toList(),
-          buildVisibilityDetector(),
-        ],
+      builder: (context, state) => AppRefreshIndicator(
+        controller: _refreshController,
+        onRefresh: onRefresh,
+        onLoading: onLoading,
+        child: ListView.separated(
+          itemCount: entries.length,
+          separatorBuilder: (context, index) => const Divider(),
+          itemBuilder: (context, index) => SingleEntryView(entry: entries[index], showTitle: true),
+        ),
       ),
     );
   }
 
-  Widget buildVisibilityDetector() {
-    return VisibilityDetector(
-      key: Key("UK_$hashCode"),
-      onVisibilityChanged: onEndOfDrag,
-      child: const AppSizedBox(),
-    );
-  }
-
-  void onEndOfDrag(info) async {
-    if (info.visibleFraction == 1.0) {
-      await getEntriesOfUser();
-    }
+  void onLoading() async {
+    await getEntriesOfUser();
+    _refreshController.loadComplete();
   }
 }
