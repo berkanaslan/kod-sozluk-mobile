@@ -16,14 +16,14 @@ class UserRepository extends Cubit<AuthState> {
   }
 
   User? user;
-  final _loginService = BaseRepository(const InitialState(), locator<LoginService>());
-  final _userService = BaseRepository(const InitialState(), locator<UserService>());
+  final loginService = BaseRepository(const InitialState(), locator<LoginService>());
+  final userService = BaseRepository(const InitialState(), locator<UserService>());
 
   // ------------------------------------------------------------------------------------------------------------------
   // LOGIN                                                                                                            /
   // ------------------------------------------------------------------------------------------------------------------
   Future<User?> login(final UserDTO userDTO) async {
-    User? user = await _loginService.post(requestBody: userDTO);
+    User? user = await loginService.post(requestBody: userDTO);
 
     if (user != null) {
       await SharedPrefs.setUser(user);
@@ -39,7 +39,7 @@ class UserRepository extends Cubit<AuthState> {
   // REGISTER                                                                                                         /
   // ------------------------------------------------------------------------------------------------------------------
   Future<User?> register(final UserDTO userDTO) async {
-    User? user = await _userService.post(requestBody: userDTO);
+    User? user = await userService.post(requestBody: userDTO);
 
     if (user != null) {
       AppSnackBar.showSnackBar(message: LocaleKeys.successful_registration.locale, type: SnackBarType.SUCCESS);
@@ -49,15 +49,16 @@ class UserRepository extends Cubit<AuthState> {
   }
 
   Future<User?> saveUser(final User user) async {
-    return await _userService.post(requestBody: user);
+    return await userService.post(requestBody: user);
   }
 
   Future<User?> getUserById(final int userId) async {
-    return await _userService.get(additionalPath: "/$userId");
+
+    return await userService.get(additionalPath: "/$userId");
   }
 
   Future<User?> getUserByUsername(final String username) async {
-    return await _userService.get(requestParams: "?username=$username");
+    return await userService.get(requestParams: "?username=$username");
   }
 
   // ------------------------------------------------------------------------------------------------------------------

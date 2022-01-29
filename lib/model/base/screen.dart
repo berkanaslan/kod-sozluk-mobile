@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 class Screen {
   final String title;
-  final IconData icon;
+  final IconData outlinedIcon;
+  final IconData filledIcon;
   final Widget child;
   final RouteFactory onGenerateRoute;
   final String initialRoute;
@@ -11,7 +12,8 @@ class Screen {
 
   Screen({
     required this.title,
-    required this.icon,
+    required this.outlinedIcon,
+    required this.filledIcon,
     required this.child,
     required this.onGenerateRoute,
     required this.initialRoute,

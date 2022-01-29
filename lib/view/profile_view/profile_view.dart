@@ -6,9 +6,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kod_sozluk_mobile/core/constant/extension/context_extension.dart';
 import 'package:kod_sozluk_mobile/core/shared_preferences/shared_preferences.dart';
 import 'package:kod_sozluk_mobile/core/ui/theme/app_icons.dart';
+import 'package:kod_sozluk_mobile/core/ui/widget/appbar/appbar.dart';
 import 'package:kod_sozluk_mobile/core/ui/widget/button/app_icon_button.dart';
 import 'package:kod_sozluk_mobile/core/ui/widget/button/slidable_buttons.dart';
-import 'package:kod_sozluk_mobile/core/ui/widget/button/social_media_buttons.dart';
 import 'package:kod_sozluk_mobile/core/ui/widget/sized_box/app_sized_box.dart';
 import 'package:kod_sozluk_mobile/core/ui/widget/text_field/bold_text.dart';
 import 'package:kod_sozluk_mobile/model/user.dart';
@@ -42,6 +42,7 @@ class ProfileView extends StatefulWidget {
 
 class _ProfileViewState extends State<ProfileView> with TickerProviderStateMixin {
   final GlobalKey<ExtendedNestedScrollViewState> _key = GlobalKey<ExtendedNestedScrollViewState>();
+
   late final TabController tabController;
   bool _displayAppBar = false;
 
@@ -63,12 +64,15 @@ class _ProfileViewState extends State<ProfileView> with TickerProviderStateMixin
   Future<void> initialTasks() async {
     Future.microtask(() async {
       _key.currentState?.outerController.addListener(listenScrollPosition);
-
-      if (SharedPrefs.getUser() != null) {
-        user = await context.read<UserRepository>().getUserById(userId);
-        setState(() {});
-      }
+      getUser();
     });
+  }
+
+  Future<void> getUser() async {
+    if (SharedPrefs.getUser() != null) {
+      user = await context.read<UserRepository>().getUserById(userId);
+      setState(() {});
+    }
   }
 
   @override
@@ -125,15 +129,11 @@ class _ProfileViewState extends State<ProfileView> with TickerProviderStateMixin
     return <Widget>[
       buildAppBar(context),
       SliverToBoxAdapter(child: ProfileHeader(user: user)),
-      SliverToBoxAdapter(child: SocialMediaButtons(user: user)),
     ];
   }
 
-  SliverAppBar buildAppBar(BuildContext context) {
-    return SliverAppBar(
-      elevation: 0,
-      pinned: true,
-      titleSpacing: 4.0,
+  CustomSliverAppBar buildAppBar(BuildContext context) {
+    return CustomSliverAppBar(
       title: buildAppBarTitle(),
       actions: [buildProfileSettingsViewIconButton(context)],
     );
@@ -174,9 +174,9 @@ class _ProfileViewState extends State<ProfileView> with TickerProviderStateMixin
       controller: tabController,
       physics: const NeverScrollableScrollPhysics(),
       children: <Widget>[
-        UserEntriesView(userId: userId),
-        UserFavoritesView(userId: userId),
-        UserStatisticView(userId: userId),
+        UserEntriesView(userId: userId, onRefresh: getUser),
+        UserFavoritesView(userId: userId, onRefresh: getUser),
+        UserStatisticView(userId: userId, onRefresh: getUser),
       ],
     );
   }

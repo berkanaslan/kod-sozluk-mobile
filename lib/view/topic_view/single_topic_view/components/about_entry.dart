@@ -36,7 +36,7 @@ class AboutEntry extends StatelessWidget {
   }
 
   Widget buildDateTimeArea() {
-    if (entry.createdAt == null) return SizedBox.shrink();
+    if (entry.createdAt == null) return const SizedBox.shrink();
 
     String dateTime = StringUtil.toFormattedDate(entry.createdAt!);
 

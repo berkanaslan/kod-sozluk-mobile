@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:kod_sozluk_mobile/core/constant/extension/context_extension.dart';
 import 'package:kod_sozluk_mobile/core/constant/ui_constants.dart';
+import 'package:kod_sozluk_mobile/core/ui/theme/app_theme.dart';
+import 'package:kod_sozluk_mobile/core/ui/widget/button/social_media_buttons.dart';
 import 'package:kod_sozluk_mobile/core/ui/widget/sized_box/app_sized_box.dart';
 import 'package:kod_sozluk_mobile/core/ui/widget/text_field/bold_text.dart';
 import 'package:kod_sozluk_mobile/model/user.dart';
+import 'package:kod_sozluk_mobile/repository/entry_repository.dart';
+import 'package:kod_sozluk_mobile/repository/user_repository.dart';
 import 'package:kod_sozluk_mobile/view/topic_view/single_topic_view/components/about_entry.dart';
+import 'package:provider/provider.dart';
+import 'package:shimmer/shimmer.dart';
 
 class ProfileHeader extends StatelessWidget {
   final User? user;
@@ -12,14 +19,77 @@ class ProfileHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (context.watch<EntryRepository>().isLoading) {
+      return const AppShimmer(child: ProfileHeaderShimmer());
+    }
+
+    return buildHeader();
+  }
+
+  Padding buildHeader() {
     return Padding(
-      padding: UIConstants.SMALL_PADDING,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      padding: UIConstants.MEDIUM_PADDING,
+      child: Column(
         children: [
-          UserAvatar(radius: 36, onAvatarPressed: () {}),
-          const AppSizedBox(style: AppBoxStyle.HORIZONTAL, size: AppBoxSize.M),
-          Expanded(child: UserStatisticWithUsername(user: user)),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              UserAvatar(radius: 36, onAvatarPressed: () {}),
+              const AppSizedBox(style: AppBoxStyle.HORIZONTAL, size: AppBoxSize.M),
+              Expanded(child: UserStatisticWithUsername(user: user)),
+            ],
+          ),
+          SocialMediaButtons(user: user),
+        ],
+      ),
+    );
+  }
+}
+
+class AppShimmer extends StatelessWidget {
+  final Widget child;
+
+  const AppShimmer({Key? key, required this.child}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Shimmer.fromColors(
+      baseColor: AppColors.grey,
+      highlightColor: AppColors.white,
+      child: child,
+    );
+  }
+}
+
+class ProfileHeaderShimmer extends StatelessWidget {
+  const ProfileHeaderShimmer({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: UIConstants.MEDIUM_PADDING,
+      child: Column(
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              UserAvatar(radius: 36, onAvatarPressed: () {}),
+              const AppSizedBox(style: AppBoxStyle.HORIZONTAL, size: AppBoxSize.M),
+              Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(height: 15, width: context.width * 0.5, color: AppColors.primary),
+                    UserHeaderStatisticWidget(user: User()),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          SocialMediaButtons(user: User()),
         ],
       ),
     );

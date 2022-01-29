@@ -18,7 +18,10 @@ class RootView extends StatelessWidget {
     return Consumer<NavigationProvider>(
       builder: (context, provider, child) {
         final bottomNavigationBarItems = provider.screens
-            .map((screen) => BottomNavigationBarItem(icon: Icon(screen.icon), label: screen.title.locale))
+            .map((screen) => BottomNavigationBarItem(
+                  icon: Icon(screen == provider.currentScreen ? screen.filledIcon : screen.outlinedIcon),
+                  label: screen.title.locale,
+                ))
             .toList();
 
         final screenNavigators = provider.screens
@@ -31,8 +34,7 @@ class RootView extends StatelessWidget {
             body: IndexedStack(children: screenNavigators, index: provider.currentTabIndex),
             bottomNavigationBar: BottomNavigationBar(
               landscapeLayout: BottomNavigationBarLandscapeLayout.centered,
-              selectedIconTheme: const IconThemeData(size: 24),
-              unselectedIconTheme: const IconThemeData(size: 20),
+              iconSize: 24,
               showSelectedLabels: false,
               showUnselectedLabels: false,
               type: BottomNavigationBarType.fixed,

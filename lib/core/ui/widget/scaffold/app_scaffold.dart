@@ -20,7 +20,12 @@ class AppScaffold extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(rootNavigator: rootNavigator, title: title, child: titleWidget, actions: actions),
+      appBar: CustomAppBar(
+        rootNavigator: rootNavigator,
+        title: title,
+        child: titleWidget,
+        actions: actions,
+      ),
       body: body,
     );
   }

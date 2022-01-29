@@ -13,8 +13,14 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 class UserFavoritesView extends StatefulWidget {
   final bool wantKeepAlive;
   final int userId;
+  final void Function()? onRefresh;
 
-  const UserFavoritesView({Key? key, this.wantKeepAlive = true, required this.userId}) : super(key: key);
+  const UserFavoritesView({
+    Key? key,
+    this.wantKeepAlive = true,
+    required this.userId,
+    this.onRefresh,
+  }) : super(key: key);
 
   @override
   _UserFavoritesViewState createState() => _UserFavoritesViewState();
@@ -54,6 +60,8 @@ class _UserFavoritesViewState extends State<UserFavoritesView> with AutomaticKee
   }
 
   Future<void> onRefresh() async {
+    if (widget.onRefresh != null) widget.onRefresh!();
+
     pageNumber = 0;
     totalPages = null;
     entries.clear();
