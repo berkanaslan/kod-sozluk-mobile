@@ -10,6 +10,8 @@ class AppTextButton extends StatelessWidget {
   final String? leadingText;
   final String? trailingText;
   final TextAlign? textAlign;
+  final TextStyle? style;
+  final EdgeInsets padding;
 
   const AppTextButton({
     Key? key,
@@ -20,27 +22,32 @@ class AppTextButton extends StatelessWidget {
     this.leadingText,
     this.trailingText,
     this.textAlign = TextAlign.center,
+    this.style,
+    this.padding = EdgeInsets.zero,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Flexible(
-      child: RichText(
-        text: TextSpan(
-          text: leadingText,
-          style: TextStyle(color: context.textTheme.bodyText1!.color),
-          children: <TextSpan>[
-            TextSpan(
-              text: title,
-              style: TextStyle(color: context.theme.primaryColor),
-              recognizer: TapGestureRecognizer()..onTap = onPressed,
-            ),
-            TextSpan(text: trailingText),
-          ],
+      child: Padding(
+        padding: padding,
+        child: RichText(
+          text: TextSpan(
+            text: leadingText,
+            style: style ?? TextStyle(color: context.textTheme.bodyText1!.color),
+            children: <TextSpan>[
+              TextSpan(
+                text: title,
+                style: style ?? TextStyle(color: context.theme.primaryColor),
+                recognizer: TapGestureRecognizer()..onTap = onPressed,
+              ),
+              TextSpan(text: trailingText),
+            ],
+          ),
+          maxLines: 3,
+          textAlign: textAlign!,
+          overflow: TextOverflow.ellipsis,
         ),
-        maxLines: 3,
-        textAlign: textAlign!,
-        overflow: TextOverflow.ellipsis,
       ),
     );
   }

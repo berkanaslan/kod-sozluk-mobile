@@ -17,6 +17,7 @@ import 'package:kod_sozluk_mobile/view/profile_view/profile_settings_view.dart';
 import 'package:kod_sozluk_mobile/view/profile_view/profile_view.dart';
 import 'package:kod_sozluk_mobile/view/root_view.dart';
 import 'package:kod_sozluk_mobile/view/search_view/search_view.dart';
+import 'package:kod_sozluk_mobile/view/topic_view/single_topic_view/components/entry_editor_view.dart';
 import 'package:kod_sozluk_mobile/view/topic_view/single_topic_view/single_topic_view.dart';
 import 'package:provider/provider.dart';
 
@@ -36,32 +37,51 @@ class NavigationProvider extends ChangeNotifier {
   Route<dynamic>? onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
       case NotFoundView.PATH:
-        return SlideLeftRoute(page: const NotFoundView());
+        return nothingFoundRoute;
+
       case HomeView.PATH:
         return SlideLeftRoute(page: const HomeView());
+
       case SingleTopicView.PATH:
         if (settings.arguments is SingleTopicViewArgs) {
           return SlideLeftRoute(page: SingleTopicView(args: settings.arguments as SingleTopicViewArgs));
         }
-        return SlideLeftRoute(page: const NotFoundView());
+        return nothingFoundRoute;
+
+      case EntryEditorView.PATH:
+        if (settings.arguments is EntryEditorViewArgs) {
+          return SlideLeftRoute(page: EntryEditorView(args: settings.arguments as EntryEditorViewArgs));
+        }
+        return nothingFoundRoute;
+
       case SearchView.PATH:
         return SlideLeftRoute(page: const SearchView());
+
       case MessagesView.PATH:
         return SlideLeftRoute(page: const MessagesView());
+
       case FollowingTopicsView.PATH:
         return SlideLeftRoute(page: const FollowingTopicsView());
+
       case ProfileView.PATH:
         if (settings.arguments is ProfileViewArgs) {
           return SlideLeftRoute(page: ProfileView(args: settings.arguments as ProfileViewArgs));
         }
-        return SlideLeftRoute(page: const NotFoundView());
+        return nothingFoundRoute;
+
       case ProfileSettingsView.PATH:
         return SlideLeftRoute(page: const ProfileSettingsView());
+
       case ConnectedAppsView.PATH:
         return SlideLeftRoute(page: const ConnectedAppsView());
+
       default:
         return SlideLeftRoute(page: const RootView());
     }
+  }
+
+  SlideLeftRoute get nothingFoundRoute {
+    return SlideLeftRoute(page: const NotFoundView());
   }
 
   final Map<int, Screen> _screens = {

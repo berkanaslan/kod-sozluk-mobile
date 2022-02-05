@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kod_sozluk_mobile/core/constant/extension/context_extension.dart';
 import 'package:kod_sozluk_mobile/core/constant/extension/string_extension.dart';
 import 'package:kod_sozluk_mobile/core/constant/lang/locale_keys.g.dart';
-import 'package:kod_sozluk_mobile/core/constant/logger.dart';
 import 'package:kod_sozluk_mobile/core/ui/widget/button/add_entry_icon_button.dart';
 import 'package:kod_sozluk_mobile/core/ui/widget/refresh/refresh_indicator.dart';
 import 'package:kod_sozluk_mobile/core/ui/widget/scaffold/app_scaffold.dart';
@@ -13,6 +12,7 @@ import 'package:kod_sozluk_mobile/model/topic.dart';
 import 'package:kod_sozluk_mobile/repository/base/base_entity_state.dart';
 import 'package:kod_sozluk_mobile/repository/entry_repository.dart';
 import 'package:kod_sozluk_mobile/view/profile_view/profile_view.dart';
+import 'package:kod_sozluk_mobile/view/topic_view/single_topic_view/components/entry_editor_view.dart';
 import 'package:kod_sozluk_mobile/view/topic_view/single_topic_view/components/single_entry_view.dart';
 import 'package:kod_sozluk_mobile/view/topic_view/single_topic_view/components/topic_customization_bar.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -82,15 +82,23 @@ class _SingleTopicViewState extends State<SingleTopicView> {
 
   @override
   Widget build(BuildContext context) {
-    Logger.buildLogger("TopicDetailView");
     return scaffold;
   }
 
   AppScaffold get scaffold {
     return AppScaffold(
       title: "${topic.name}",
-      actions: [AddEntryIconButton(onPressed: () {})],
+      actions: [addEntryIconButton],
       body: body,
+    );
+  }
+
+  AddEntryIconButton get addEntryIconButton {
+    return AddEntryIconButton(
+      onPressed: () => context.rootNavigator.pushNamed(
+        EntryEditorView.PATH,
+        arguments: EntryEditorViewArgs(topic: topic),
+      ),
     );
   }
 

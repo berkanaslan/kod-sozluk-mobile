@@ -7,6 +7,7 @@ class AppScaffold extends StatelessWidget {
   final List<Widget>? actions;
   final Widget body;
   final bool rootNavigator;
+  final Widget? leading;
 
   const AppScaffold({
     Key? key,
@@ -15,6 +16,7 @@ class AppScaffold extends StatelessWidget {
     this.actions,
     required this.body,
     this.rootNavigator = true,
+    this.leading,
   }) : super(key: key);
 
   @override
@@ -25,6 +27,7 @@ class AppScaffold extends StatelessWidget {
         title: title,
         child: titleWidget,
         actions: actions,
+        leading: leading,
       ),
       body: body,
     );

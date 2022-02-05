@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kod_sozluk_mobile/core/constant/extension/string_extension.dart';
 import 'package:kod_sozluk_mobile/core/constant/lang/locale_keys.g.dart';
-import 'package:kod_sozluk_mobile/core/constant/logger.dart';
 import 'package:kod_sozluk_mobile/model/head.dart';
 import 'package:kod_sozluk_mobile/view/topic_view/latest_topic_view.dart';
 
@@ -37,7 +36,6 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    Logger.buildLogger("HomeView");
     return safeArea;
   }
 

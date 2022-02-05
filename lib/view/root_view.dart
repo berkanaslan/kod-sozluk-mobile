@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kod_sozluk_mobile/core/constant/extension/string_extension.dart';
 import 'package:kod_sozluk_mobile/core/constant/lang/locale_keys.g.dart';
-import 'package:kod_sozluk_mobile/core/constant/logger.dart';
 import 'package:kod_sozluk_mobile/core/ui/widget/scaffold/app_scaffold.dart';
 import 'package:kod_sozluk_mobile/view/navigation_provider.dart';
 import 'package:provider/provider.dart';
@@ -13,8 +12,6 @@ class RootView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Logger.buildLogger("RootView");
-
     return Consumer<NavigationProvider>(
       builder: (context, provider, child) {
         final bottomNavigationBarItems = provider.screens
