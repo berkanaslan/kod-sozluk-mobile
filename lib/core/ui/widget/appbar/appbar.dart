@@ -11,14 +11,22 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
   final Widget? child;
   final List<Widget>? actions;
   final bool rootNavigator;
+  final Widget? leading;
 
-  const CustomAppBar({Key? key, this.title, this.child, this.actions, required this.rootNavigator}) : super(key: key);
+  const CustomAppBar({
+    Key? key,
+    this.title,
+    this.child,
+    this.actions,
+    required this.rootNavigator,
+    this.leading,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
       elevation: 0,
-      leadingWidth: 32,
+      leadingWidth: leading != null ? 64 : 32,
       leading: buildLeadingIcon(context),
       title: getTitle(context),
       centerTitle: true,
@@ -28,11 +36,15 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
 
   Widget? buildLeadingIcon(BuildContext context) {
     if (!rootNavigator) {
-      return AppIconButton(icon: AppIcons.back, onPressed: context.navigator.pop);
+      return leading != null
+          ? GestureDetector(onTap: context.navigator.pop, child: leading)
+          : AppIconButton(icon: AppIcons.back, onPressed: context.navigator.pop);
     }
 
     if (!context.rootNavigator.canPop()) return null;
-    return AppIconButton(icon: AppIcons.back, onPressed: context.rootNavigator.pop);
+    return leading != null
+        ? GestureDetector(onTap: context.navigator.pop, child: leading)
+        : AppIconButton(icon: AppIcons.back, onPressed: context.rootNavigator.pop);
   }
 
   Widget getTitle(BuildContext context) {

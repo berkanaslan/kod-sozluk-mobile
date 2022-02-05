@@ -5,7 +5,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kod_sozluk_mobile/core/constant/extension/context_extension.dart';
 import 'package:kod_sozluk_mobile/core/constant/extension/string_extension.dart';
 import 'package:kod_sozluk_mobile/core/constant/lang/locale_keys.g.dart';
-import 'package:kod_sozluk_mobile/core/constant/logger.dart';
 import 'package:kod_sozluk_mobile/core/ui/widget/list_tile/topic_tile.dart';
 import 'package:kod_sozluk_mobile/core/ui/widget/refresh/refresh_indicator.dart';
 import 'package:kod_sozluk_mobile/model/base/page.dart';
@@ -66,8 +65,6 @@ class _LatestTopicViewState extends State<LatestTopicView> with AutomaticKeepAli
 
   @override
   Widget build(BuildContext context) {
-    Logger.buildLogger("LatestTopicView");
-
     return AppRefreshIndicator(
       controller: _refreshController,
       onRefresh: onRefresh,
