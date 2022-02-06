@@ -40,13 +40,6 @@ class _PasswordHelperTextFieldState extends State<PasswordHelperTextField> {
   }
 
   @override
-  void dispose() {
-    //  context.read<AuthViewModel>().passwordController.dispose();
-    // context.read<AuthViewModel>().passwordController = TextEditingController();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return FormFieldWrapper(
       child: RichText(

@@ -5,7 +5,7 @@ import 'package:kod_sozluk_mobile/core/shared_preferences/shared_preferences.dar
 import 'package:kod_sozluk_mobile/core/ui/theme/app_icons.dart';
 import 'package:kod_sozluk_mobile/core/ui/widget/animations/fade_route.dart';
 import 'package:kod_sozluk_mobile/core/ui/widget/animations/slide_left_route.dart';
-import 'package:kod_sozluk_mobile/core/ui/widget/dialog/app_exit_dialog.dart';
+import 'package:kod_sozluk_mobile/core/ui/widget/dialog/app_alert_dialog.dart';
 import 'package:kod_sozluk_mobile/model/base/screen.dart';
 import 'package:kod_sozluk_mobile/view/followings_topics_view/following_topics_view.dart';
 import 'package:kod_sozluk_mobile/view/home_view/home_view.dart';
@@ -211,7 +211,7 @@ class NavigationProvider extends ChangeNotifier {
       return false;
     }
 
-    return await AppAlertDialog.showConfirmationDialog(
+    return await AppDialog.showConfirmationDialog(
         LocaleKeys.exit.locale, LocaleKeys.are_you_sure_to_exit_app.locale);
   }
 }

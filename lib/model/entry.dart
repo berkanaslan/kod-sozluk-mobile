@@ -50,3 +50,4 @@ class Entry extends Serializable {
   @override
   Map<String, dynamic> toJson() => _$EntryToJson(this);
 }
+

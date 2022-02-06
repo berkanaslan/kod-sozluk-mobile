@@ -50,4 +50,7 @@ mixin AppConstants {
   static const String EIGHT_CHAR_REGEX = ".{8,}";
   static const String DIGIT_REGEX = "[0-9]";
   static const String VALID_USERNAME_REGEX = r"^[A-Za-z][A-Za-z0-9_]{0,29}$";
+
+  static const String REFERENCE_REGEX = r"\(bkz:([^()]*)\)";
+  static const String NEW_LINE_REGEX = r"\n";
 }

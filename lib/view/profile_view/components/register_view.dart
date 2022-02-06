@@ -7,7 +7,7 @@ import 'package:kod_sozluk_mobile/core/constant/extension/string_extension.dart'
 import 'package:kod_sozluk_mobile/core/constant/lang/locale_keys.g.dart';
 import 'package:kod_sozluk_mobile/core/ui/theme/app_icons.dart';
 import 'package:kod_sozluk_mobile/core/ui/widget/button/rounded_button.dart';
-import 'package:kod_sozluk_mobile/core/ui/widget/dialog/app_exit_dialog.dart';
+import 'package:kod_sozluk_mobile/core/ui/widget/dialog/app_alert_dialog.dart';
 import 'package:kod_sozluk_mobile/core/ui/widget/image/logo.dart';
 import 'package:kod_sozluk_mobile/core/ui/widget/text_field/app_text_field.dart';
 import 'package:kod_sozluk_mobile/core/ui/widget/text_field/checkbox_form_field.dart';
@@ -180,7 +180,7 @@ class _RegisterViewState extends State<RegisterView> {
     }
 
     if (!userDTO.agreementConfirmed) {
-      AppAlertDialog.show(LocaleKeys.warning.locale, LocaleKeys.user_agreement_must_be_ok.locale);
+      AppDialog.show(LocaleKeys.warning.locale, LocaleKeys.user_agreement_must_be_ok.locale);
       return;
     }
 
