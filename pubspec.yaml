@@ -40,7 +40,7 @@ dependencies:
   easy_localization: ^3.0.0             # Multi-Lang Support
   connectivity: ^3.0.6                  # Connection controller
   url_launcher: ^6.0.18                 # Browder launcher
-  html: ^0.15.0                         # HTML Tag Parse
+  flutter_html: ^2.2.1                  # HTML Tag Parse
 
 dev_dependencies:
   flutter_test:

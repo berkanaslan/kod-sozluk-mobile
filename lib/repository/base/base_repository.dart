@@ -3,7 +3,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:kod_sozluk_mobile/core/constant/app_constants.dart';
 import 'package:kod_sozluk_mobile/core/constant/extension/string_extension.dart';
 import 'package:kod_sozluk_mobile/core/constant/lang/locale_keys.g.dart';
-import 'package:kod_sozluk_mobile/core/ui/widget/dialog/app_exit_dialog.dart';
+import 'package:kod_sozluk_mobile/core/ui/widget/dialog/app_alert_dialog.dart';
 import 'package:kod_sozluk_mobile/model/base/network_error.dart';
 import 'package:kod_sozluk_mobile/model/base/page.dart';
 import 'package:kod_sozluk_mobile/model/base/serializable.dart';
@@ -258,7 +258,7 @@ class BaseRepository<T extends Serializable> extends Cubit<BaseEntityState> impl
   }
 
   void showNetworkError(NetworkError error) {
-    AppAlertDialog.show(
+    AppDialog.show(
       error.status == null ? LocaleKeys.error.locale : error.status!,
       error.detail == null ? LocaleKeys.error.locale : error.detail!,
     );

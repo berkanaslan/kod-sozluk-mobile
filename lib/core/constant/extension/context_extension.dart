@@ -31,8 +31,6 @@ extension MediaQueryExtension on BuildContext {
 extension NavigationExtension on BuildContext {
   NavigatorState get navigator => Navigator.of(this);
 
-  void pop() => navigator.pop();
-
   NavigatorState get rootNavigator => Navigator.of(this, rootNavigator: true);
 }
 

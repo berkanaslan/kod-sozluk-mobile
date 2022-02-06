@@ -94,12 +94,17 @@ class _SingleTopicViewState extends State<SingleTopicView> {
   }
 
   AddEntryIconButton get addEntryIconButton {
-    return AddEntryIconButton(
-      onPressed: () => context.rootNavigator.pushNamed(
-        EntryEditorView.PATH,
-        arguments: EntryEditorViewArgs(topic: topic),
-      ),
-    );
+    return AddEntryIconButton(onPressed: onAddEntryButtonPressed);
+  }
+
+  Future<void> onAddEntryButtonPressed() async {
+    context.rootNavigator
+        .pushNamed(EntryEditorView.PATH, arguments: EntryEditorViewArgs(topic: topic))
+        .then((entrySaved) {
+      if (entrySaved is bool && entrySaved) {
+        onRefresh();
+      }
+    });
   }
 
   Widget get body {
