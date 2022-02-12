@@ -5,10 +5,16 @@ import 'package:kod_sozluk_mobile/core/constant/extension/context_extension.dart
 
 class EntryMessageFromHTML extends StatelessWidget {
   final String message;
+  final EdgeInsets margin;
   final void Function(String? url, RenderContext context, Map<String, String> attributes, dom.Element? element)?
       onLinkTapped;
 
-  const EntryMessageFromHTML({Key? key, required this.message, this.onLinkTapped}) : super(key: key);
+  const EntryMessageFromHTML({
+    Key? key,
+    required this.message,
+    this.onLinkTapped,
+    this.margin = EdgeInsets.zero,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +22,7 @@ class EntryMessageFromHTML extends StatelessWidget {
       data: message,
       style: {
         "body": Style(
-          margin: const EdgeInsets.symmetric(vertical: 16),
+          margin: margin,
           fontSize: FontSize(context.textTheme.bodyText2?.fontSize ?? 14),
         ),
         "a": Style(

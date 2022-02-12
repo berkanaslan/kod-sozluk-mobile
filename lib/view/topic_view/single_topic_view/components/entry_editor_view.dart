@@ -1,3 +1,4 @@
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_html/html_parser.dart';
@@ -123,7 +124,7 @@ class _EntryEditorViewState extends State<EntryEditorView> {
   Widget buildEntryTextFieldArea() {
     if (previewMode) {
       return NewEntryPreviewMode(
-        message: entryController.text,
+        message: generateEntryMessage(),
         onTap: () => setState(() => previewMode = !previewMode),
       );
     }
@@ -141,7 +142,7 @@ class _EntryEditorViewState extends State<EntryEditorView> {
     final EntryDTO entryDTO = EntryDTO(
       topic: Topic(id: topic.id),
       author: SharedPrefs.getUser()!,
-      message: entryController.text.trim().toLowerCase(),
+      message: generateEntryMessage(),
     );
 
     final Entry? savedEntry = await entryRepository.save(entryDTO);
@@ -153,6 +154,21 @@ class _EntryEditorViewState extends State<EntryEditorView> {
         type: SnackBarType.SUCCESS,
       );
     }
+  }
+
+  String generateEntryMessage() {
+    final newLineRegex = RegExp(AppConstants.NEW_LINE_REGEX);
+    final entryReferenceRegex = RegExp(AppConstants.REFERENCE_REGEX);
+
+    String entry = entryController.text.trim().toLowerCase();
+
+    entry = entry.replaceAll(newLineRegex, "<br>");
+
+    entryReferenceRegex.allMatches(entry).forEach((match) {
+      entry = entry.replaceAll("${match.group(0)}", "(bkz: <a>${match.group(1)?.trim()}</a>)");
+    });
+
+    return entry;
   }
 }
 
@@ -169,25 +185,11 @@ class NewEntryPreviewMode extends StatelessWidget {
     return SingleChildScrollView(
       child: GestureDetector(
         onTap: onTap,
-        child: EntryMessageFromHTML(message: generateEntryMessage()),
+        child: EntryMessageFromHTML(
+          message: message,
+          margin: const EdgeInsets.symmetric(vertical: 16),
+        ),
       ),
     );
-  }
-
-  String generateEntryMessage() {
-    final newLineRegex = RegExp(AppConstants.NEW_LINE_REGEX);
-    final entryReferenceRegex = RegExp(AppConstants.REFERENCE_REGEX);
-
-    String editedMessage = message.trim().toLowerCase();
-
-    editedMessage = editedMessage.replaceAll(newLineRegex, "<br>");
-
-    while (entryReferenceRegex.hasMatch(editedMessage)) {
-      final firstMatch = entryReferenceRegex.firstMatch(editedMessage);
-      // TODO: Remove (!)
-      editedMessage = editedMessage.replaceFirst(entryReferenceRegex, "(!bkz: <a>${firstMatch?.group(1)?.trim()}</a>)");
-    }
-
-    return editedMessage;
   }
 }

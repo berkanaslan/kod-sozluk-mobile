@@ -5,9 +5,8 @@ import 'package:kod_sozluk_mobile/core/constant/ui_constants.dart';
 class RoundedButton extends StatelessWidget {
   final void Function()? onPressed;
   final String title;
-  final Color? color;
 
-  const RoundedButton({Key? key, this.onPressed, required this.title, this.color}) : super(key: key);
+  const RoundedButton({Key? key, this.onPressed, required this.title}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,10 +15,7 @@ class RoundedButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onPressed,
         child: Text(title),
-        style: ElevatedButton.styleFrom(
-          primary: color,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
-        ),
+        style: ElevatedButton.styleFrom(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0))),
       ),
     );
   }
