@@ -1,8 +1,4 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_html/html_parser.dart';
-import 'package:html/dom.dart' as dom;
 import 'package:kod_sozluk_mobile/core/constant/app_constants.dart';
 import 'package:kod_sozluk_mobile/core/constant/extension/context_extension.dart';
 import 'package:kod_sozluk_mobile/core/constant/ui_constants.dart';
@@ -16,7 +12,7 @@ import 'package:kod_sozluk_mobile/model/dto/entry_dto.dart';
 import 'package:kod_sozluk_mobile/model/entry.dart';
 import 'package:kod_sozluk_mobile/model/topic.dart';
 import 'package:kod_sozluk_mobile/repository/entry_repository.dart';
-import 'package:kod_sozluk_mobile/view/topic_view/single_topic_view/components/entry_editor_view/components/entry_message_from_html.dart';
+import 'package:kod_sozluk_mobile/view/topic_view/single_topic_view/components/entry_editor_view/components/new_entry_preview_mode_view.dart';
 import 'package:kod_sozluk_mobile/view/topic_view/single_topic_view/components/entry_editor_view/components/new_entry_reference_dialog.dart';
 import 'package:kod_sozluk_mobile/view/topic_view/single_topic_view/components/single_entry_view.dart';
 import 'package:provider/provider.dart';
@@ -42,7 +38,23 @@ class EntryEditorView extends StatefulWidget {
 class _EntryEditorViewState extends State<EntryEditorView> {
   late final Topic topic;
   late final EntryRepository entryRepository;
+
   bool previewMode = false;
+  EntryEditorType? selectedEditorType;
+  bool showEntryEditorTextField = false;
+  final FocusNode entryEditorFocusNode = FocusNode(debugLabel: "entry-editor");
+
+  void setShowEntryEditorTextField(bool value) {
+    showEntryEditorTextField = value;
+    setState(() {});
+
+    if (value) {
+      entryEditorFocusNode.requestFocus();
+      return;
+    }
+
+    FocusScope.of(context).nextFocus();
+  }
 
   final TextEditingController entryController = TextEditingController();
 
@@ -79,7 +91,9 @@ class _EntryEditorViewState extends State<EntryEditorView> {
       title: "kenarda dursun",
       padding: UIConstants.SMALL_PADDING,
       style: context.theme.textTheme.bodyText2,
-      onPressed: () {},
+      onPressed: () {
+        AppSnackBar.showSnackBar(message: "yakında bu buton da çalışacak.");
+      },
     );
   }
 
@@ -91,6 +105,7 @@ class _EntryEditorViewState extends State<EntryEditorView> {
         children: [
           SingleEntryTopicTitle(topic: topic),
           Expanded(child: buildEntryTextFieldArea()),
+          const Divider(),
           buildEntryEditorButtonArea(),
         ],
       ),
@@ -103,22 +118,38 @@ class _EntryEditorViewState extends State<EntryEditorView> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          EntryEditorButton(flex: 3, title: "(bkz: hede)", onPressed: onNewReferenceButtonPressed),
-          EntryEditorButton(flex: 2, title: "hede", onPressed: () {}),
-          EntryEditorButton(title: "*", onPressed: () {}),
-          EntryEditorButton(flex: 3, title: "-spoiler-", onPressed: () {}),
-          EntryEditorButton(flex: 2, title: "http://", onPressed: () {}),
-          EntryEditorButton(flex: 2, title: "görsel", onPressed: () {}),
-          EntryEditorButton(flex: 3, title: "önizleme", onPressed: () => setState(() => previewMode = !previewMode)),
-        ],
+        children: showEntryEditorTextField ? builEntryEditorTextField() : entryEditorButtons,
       ),
     );
   }
 
-  void onNewReferenceButtonPressed() {
-    setState(() => previewMode = false);
-    NewEntryReferenceDialog(context: context, onCompleted: (value) => entryController.text += value ?? "").show();
+  List<Widget> builEntryEditorTextField() => [
+        EntryEditorTextField(
+          focusNode: entryEditorFocusNode,
+          type: selectedEditorType!,
+          onCompleted: (value, type) {
+            entryController.text += value ?? "";
+            setShowEntryEditorTextField(false);
+          },
+        )
+      ];
+
+  List<Widget> get entryEditorButtons {
+    return [
+      EntryEditorButton(flex: 3, title: "(bkz: hede)", onTapped: () => onEditorSelected(EntryEditorType.REFERENCE)),
+      EntryEditorButton(flex: 2, title: "hede", onTapped: () => onEditorSelected(EntryEditorType.TITLE)),
+      EntryEditorButton(title: "*", onTapped: () {}),
+      EntryEditorButton(flex: 3, title: "-spoiler-", onTapped: () {}),
+      EntryEditorButton(flex: 2, title: "http://", onTapped: () {}),
+      EntryEditorButton(flex: 2, title: "görsel", onTapped: () {}),
+      EntryEditorButton(flex: 3, title: "önizleme", onTapped: () => setState(() => previewMode = !previewMode)),
+    ];
+  }
+
+  void onEditorSelected(EntryEditorType type) {
+    previewMode = false;
+    selectedEditorType = type;
+    setShowEntryEditorTextField(true);
   }
 
   Widget buildEntryTextFieldArea() {
@@ -156,9 +187,11 @@ class _EntryEditorViewState extends State<EntryEditorView> {
     }
   }
 
+  // TODO: Çok fazla String ataması kullanılıyor. Bunun yerine StringBuffer kullanılacak.
   String generateEntryMessage() {
     final newLineRegex = RegExp(AppConstants.NEW_LINE_REGEX);
     final entryReferenceRegex = RegExp(AppConstants.REFERENCE_REGEX);
+    final entryTitleRegex = RegExp(AppConstants.TITLE_REGEX);
 
     String entry = entryController.text.trim().toLowerCase();
 
@@ -168,28 +201,10 @@ class _EntryEditorViewState extends State<EntryEditorView> {
       entry = entry.replaceAll("${match.group(0)}", "(bkz: <a>${match.group(1)?.trim()}</a>)");
     });
 
+    entryTitleRegex.allMatches(entry).forEach((match) {
+      entry = entry.replaceAll("${match.group(0)}", "<a>${match.group(1)?.trim()}</a>");
+    });
+
     return entry;
-  }
-}
-
-class NewEntryPreviewMode extends StatelessWidget {
-  final void Function()? onTap;
-  final String message;
-  final void Function(String? url, RenderContext context, Map<String, String> attributes, dom.Element? element)?
-      onLinkTapped;
-
-  const NewEntryPreviewMode({Key? key, this.onTap, required this.message, this.onLinkTapped}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: GestureDetector(
-        onTap: onTap,
-        child: EntryMessageFromHTML(
-          message: message,
-          margin: const EdgeInsets.symmetric(vertical: 16),
-        ),
-      ),
-    );
   }
 }

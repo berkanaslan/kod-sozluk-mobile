@@ -1,35 +1,64 @@
 import 'package:flutter/material.dart';
 import 'package:kod_sozluk_mobile/core/constant/extension/context_extension.dart';
-import 'package:kod_sozluk_mobile/core/ui/widget/button/rounded_button.dart';
-import 'package:kod_sozluk_mobile/core/ui/widget/dialog/app_alert_dialog.dart';
 
-class NewEntryReferenceDialog {
-  final void Function(String? value) onCompleted;
-  final BuildContext context;
+enum EntryEditorType { REFERENCE, TITLE, ASTERISK, SPOILER, URL, IMAGE }
 
-  const NewEntryReferenceDialog({required this.context, required this.onCompleted});
+class EntryEditorTextField extends StatelessWidget {
+  final EntryEditorType type;
+  final void Function(String? value, EntryEditorType type) onCompleted;
+  final FocusNode focusNode;
 
-  show() {
+  const EntryEditorTextField({
+    Key? key,
+    required this.type,
+    required this.onCompleted,
+    required this.focusNode,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
     final TextEditingController controller = TextEditingController();
 
-    AppDialog.showCustomDialog(
-      title: "hangi başlığa bkz verilecek?",
-      content: TextFormField(
+    return Expanded(
+      child: TextFormField(
+        focusNode: focusNode,
         controller: controller,
         autofocus: true,
-        decoration: InputDecoration(filled: true, fillColor: context.theme.hoverColor, border: InputBorder.none),
+        decoration: buildInputDecoration(context),
+        textInputAction: TextInputAction.done,
+        onEditingComplete: () => onCompleted(generateString(controller.text), type),
       ),
-      actions: [
-        DialogRoundedButton(title: "vazgeç", positive: false, onPressed: () => context.navigator.pop()),
-        DialogRoundedButton(
-          title: "tamam",
-          onPressed: () {
-            if (controller.text.trim().isEmpty) return;
-            context.navigator.pop();
-            onCompleted("(bkz: ${controller.text.trim()})");
-          },
-        ),
-      ],
     );
+  }
+
+  String generateString(String entered) {
+    switch (type) {
+      case EntryEditorType.REFERENCE:
+        return "(bkz: ${entered.trim()})";
+      case EntryEditorType.TITLE:
+        return "`${entered.trim()}`";
+      default:
+        return "";
+    }
+  }
+
+  InputDecoration buildInputDecoration(BuildContext context) {
+    return InputDecoration(
+      filled: true,
+      fillColor: context.theme.hoverColor,
+      border: InputBorder.none,
+      hintText: generateHintText(),
+    );
+  }
+
+  String generateHintText() {
+    switch (type) {
+      case EntryEditorType.REFERENCE:
+        return "hangi başlığa bkz verilecek?";
+      case EntryEditorType.TITLE:
+        return "hangi başlık için link oluşturulacak?";
+      default:
+        return "";
+    }
   }
 }

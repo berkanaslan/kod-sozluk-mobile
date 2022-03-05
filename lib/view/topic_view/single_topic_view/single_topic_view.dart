@@ -80,21 +80,24 @@ class _SingleTopicViewState extends State<SingleTopicView> {
     super.dispose();
   }
 
+  // TODO: Translation
   @override
   Widget build(BuildContext context) {
+    if (topic.id == 0) {
+      return const Text("böyle bir şey yok!");
+    }
+
     return scaffold;
   }
 
   AppScaffold get scaffold {
     return AppScaffold(
       title: "${topic.name}",
-      actions: [addEntryIconButton],
+      actions: [
+        AddEntryIconButton(onPressed: onAddEntryButtonPressed),
+      ],
       body: body,
     );
-  }
-
-  AddEntryIconButton get addEntryIconButton {
-    return AddEntryIconButton(onPressed: onAddEntryButtonPressed);
   }
 
   Future<void> onAddEntryButtonPressed() async {
@@ -111,26 +114,32 @@ class _SingleTopicViewState extends State<SingleTopicView> {
     return Column(
       children: [
         TopicCustomizationBar(title: LocaleKeys.favs_all.locale),
-        Expanded(child: buildEntryListView(context)),
+        Expanded(child: buildEntryListViewBody(context)),
       ],
     );
   }
 
-  Widget buildEntryListView(BuildContext context) {
+  Widget buildEntryListViewBody(BuildContext context) {
     return BlocConsumer<EntryRepository, BaseEntityState>(
       listener: (context, state) {},
-      builder: (context, state) => AppRefreshIndicator(
-        controller: _refreshController,
-        onRefresh: onRefresh,
-        onLoading: onLoading,
-        child: ListView.separated(
-          separatorBuilder: (context, index) => const Divider(),
-          itemCount: entries.length,
-          itemBuilder: (context, i) => SingleEntryView(
-            entry: entries[i],
-            onAvatarPressed: () => onAvatarPressed(context, i),
-          ),
-        ),
+      builder: (context, state) {
+        return AppRefreshIndicator(
+          controller: _refreshController,
+          onRefresh: onRefresh,
+          onLoading: onLoading,
+          child: buildEntryListView(),
+        );
+      },
+    );
+  }
+
+  ListView buildEntryListView() {
+    return ListView.separated(
+      separatorBuilder: (context, index) => const Divider(),
+      itemCount: entries.length,
+      itemBuilder: (context, i) => SingleEntryView(
+        entry: entries[i],
+        onAvatarPressed: () => onAvatarPressed(context, i),
       ),
     );
   }
