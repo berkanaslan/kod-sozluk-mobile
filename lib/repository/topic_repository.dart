@@ -21,4 +21,7 @@ class TopicRepository extends BaseRepository<Topic> {
     }
   }
 
+  Future<Topic?> getByName({required String name}) async {
+    return await get(requestParams: "?name=$name");
+  }
 }

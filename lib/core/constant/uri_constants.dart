@@ -1,5 +1,5 @@
 class URLConstants {
-  static const String URL = "http://192.168.1.25:8080";
+  static const String URL = "http://192.168.1.29:8080";
 
   static const String I = "/i";
   static const String ALL = "/all";
